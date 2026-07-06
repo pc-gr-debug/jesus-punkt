@@ -1,0 +1,26 @@
+{
+  "_comment": "Reference shape for GET /api/events (ChurchTools proxy) — see docs/churchtools-integration.md. start = ISO 8601 local time; display strings are derived client-side (Intl de-DE).",
+  "events": [
+    { "id": 1001, "start": "2026-07-12T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1002, "start": "2026-07-17T18:30:00", "type": "jugend", "title": "Elevate Jugend", "meta": "Für Jugendliche zwischen 13 und 29 Jahren" },
+    { "id": 1003, "start": "2026-07-19T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1004, "start": "2026-07-22T19:30:00", "type": "hauskreis", "title": "Hauskreis-Abend", "meta": "In Wohnzimmern in ganz Neubrandenburg" },
+    { "id": 1005, "start": "2026-07-24T18:30:00", "type": "jugend", "title": "Elevate Jugend", "meta": "Für Jugendliche zwischen 13 und 29 Jahren" },
+    { "id": 1006, "start": "2026-07-25T13:00:00", "type": "gebet", "title": "Gebet", "meta": "Gemeinsames Gebet · alle sind willkommen" },
+    { "id": 1007, "start": "2026-07-26T10:00:00", "type": "gottesdienst", "title": "Gottesdienst mit Taufe", "meta": "Ein besonderer Sonntag — bring gern jemanden mit" },
+    { "id": 1008, "start": "2026-08-02T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1009, "start": "2026-08-07T18:30:00", "type": "jugend", "title": "Elevate Jugend", "meta": "Für Jugendliche zwischen 13 und 29 Jahren" },
+    { "id": 1010, "start": "2026-08-09T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1011, "start": "2026-08-15T14:00:00", "type": "sonstiges", "title": "Gemeindegrillen", "meta": "Für die ganze Familie · am Gemeindehaus" },
+    { "id": 1012, "start": "2026-08-16T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1013, "start": "2026-08-22T13:00:00", "type": "gebet", "title": "Gebet", "meta": "Gemeinsames Gebet · alle sind willkommen" },
+    { "id": 1014, "start": "2026-08-23T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1015, "start": "2026-08-30T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1016, "start": "2026-09-04T18:30:00", "type": "jugend", "title": "Elevate Jugend", "meta": "Start nach den Ferien" },
+    { "id": 1017, "start": "2026-09-06T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1018, "start": "2026-09-13T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1019, "start": "2026-09-19T13:00:00", "type": "gebet", "title": "Gebet", "meta": "Gemeinsames Gebet · alle sind willkommen" },
+    { "id": 1020, "start": "2026-09-20T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" },
+    { "id": 1021, "start": "2026-09-27T10:00:00", "type": "gottesdienst", "title": "Gottesdienst", "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream" }
+  ]
+}

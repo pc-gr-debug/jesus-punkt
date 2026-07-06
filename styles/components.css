@@ -1,0 +1,516 @@
+/* ============================================================
+   JESUS PUNKT — Shared components · header, footer, cards, rows, carousel
+   ============================================================ */
+
+/* ================= HEADER (fixed) ================= */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 30;
+}
+/* scrolled: the floating elements carry their own surfaces — no full-width strip */
+.header.is-scrolled .nav-pill {
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 0 0 1px var(--line-ink), var(--shadow-soft);
+}
+.header.is-scrolled .burger {
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  box-shadow: inset 0 0 0 1px var(--line-ink), var(--shadow-soft);
+}
+.header__container {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.header__logo { display: block; flex: none; transition: transform var(--t-med) var(--ease); }
+.header__logo:hover { transform: scale(1.05); }
+.header__logo img { width: 4.375rem; height: 2.5rem; object-fit: contain; }
+
+.nav-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  border-radius: var(--radius);
+  transition: background var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+/* sliding hover highlight — positioned by JS */
+.nav-pill__glider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: left 300ms var(--ease), width 300ms var(--ease), opacity 200ms var(--ease);
+}
+.nav-pill.has-glider .nav-pill__glider { opacity: 1; }
+.nav-pill__link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  font: 400 var(--fs-nav) / 1 var(--font-body);
+  color: var(--nav-muted);
+  white-space: nowrap;
+  transition: color var(--t-fast) var(--ease);
+}
+.nav-pill__link:hover { color: #000; }
+/* current page: ink text + gold dot — no background */
+.nav-pill__link.is-active { color: var(--ink); }
+.nav-pill__link.is-active::after {
+  content: "";
+  display: inline-block;
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-left: 0.375rem;
+  vertical-align: 0.06em;
+}
+/* no-JS / reduced-motion fallback keeps a visible hover */
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill__link:hover { background: var(--accent); color: #000; }
+}
+
+/* burger (≤48rem) */
+.burger {
+  display: none;
+  order: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3125rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  transition: background var(--t-fast) var(--ease);
+}
+.burger:hover { background: var(--accent); }
+.burger__bar {
+  width: 1.25rem;
+  height: 2px;
+  background: var(--ink);
+  transition: transform var(--t-med) var(--ease), opacity var(--t-fast);
+}
+.burger[aria-expanded="true"] .burger__bar:nth-child(1) { transform: translateY(0.4375rem) rotate(45deg); }
+.burger[aria-expanded="true"] .burger__bar:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] .burger__bar:nth-child(3) { transform: translateY(-0.4375rem) rotate(-45deg); }
+
+/* fullscreen slide-down menu */
+.nav-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 1.5rem) var(--space-lg) 2.5rem;
+  background: var(--paper);
+  transform: translateY(-102%);
+  visibility: hidden;
+  overflow-y: auto;
+  transition: transform var(--t-slow) var(--ease), visibility 0s var(--t-slow);
+}
+.nav-panel.is-open {
+  transform: none;
+  visibility: visible;
+  transition: transform var(--t-slow) var(--ease), visibility 0s;
+}
+.nav-panel__links { display: flex; flex-direction: column; }
+.nav-panel__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1.125rem 0.25rem;
+  border-bottom: 1px solid var(--line);
+  font: 700 clamp(1.5rem, 6vw, 2rem) / 1.1 var(--font-display);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(0.75rem);
+  /* --d staggers ONLY the entrance — hover (padding/color) must react instantly */
+  transition: opacity var(--t-med) var(--ease) var(--d, 0s),
+              transform var(--t-med) var(--ease) var(--d, 0s),
+              padding var(--t-med) var(--ease),
+              color var(--t-fast) var(--ease);
+}
+.nav-panel__link:first-child { border-top: 1px solid var(--line); }
+.nav-panel__link:hover,
+.nav-panel__link.is-active { color: var(--gold-text); padding-left: 0.875rem; }
+.nav-panel.is-open .nav-panel__link { opacity: 1; transform: none; }
+.nav-panel.is-open .nav-panel__link:nth-child(1) { --d: 0.10s; }
+.nav-panel.is-open .nav-panel__link:nth-child(2) { --d: 0.16s; }
+.nav-panel.is-open .nav-panel__link:nth-child(3) { --d: 0.22s; }
+.nav-panel.is-open .nav-panel__link:nth-child(4) { --d: 0.28s; }
+.nav-panel.is-open .nav-panel__link:nth-child(5) { --d: 0.34s; }
+.nav-panel.is-open .nav-panel__link:nth-child(6) { --d: 0.40s; }
+.nav-panel__cta {
+  margin-top: 2rem;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: opacity var(--t-med) var(--ease) 0.46s, transform var(--t-med) var(--ease) 0.46s;
+}
+.nav-panel.is-open .nav-panel__cta { opacity: 1; transform: none; }
+.nav-panel__cta .btn { width: 100%; }
+
+/* the six links don't fit comfortably below 64rem — switch to the burger early */
+@media (max-width: 64rem) {
+  .nav-pill { display: none; }
+  .burger { display: flex; }
+}
+
+/* ================= PAGE HERO (subpages) ================= */
+.page-hero {
+  position: relative;
+  min-height: 50dvh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--paper);
+}
+.page-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.48;
+}
+.page-hero__wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, #ffffff 100%);
+}
+.page-hero__inner {
+  position: relative;
+  width: 100%;
+  padding-top: calc(var(--header-h) + 3rem);
+  padding-bottom: clamp(2.5rem, 6vh, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+.page-hero__title {
+  font: 700 clamp(2.375rem, 1.5rem + 3.1vw, 3.75rem) / var(--lh-heading) var(--font-display);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.page-hero__desc { max-width: 43.75rem; color: var(--ink-2); }
+
+@media (max-width: 48rem) {
+  .page-hero { min-height: 42dvh; }
+}
+
+/* ================= TINTED SECTIONS + ZIGZAG TRANSITION =================
+   Background changes never happen on a straight line: a .zig strip forms
+   a mountain profile between paper and creme. Place `.zig--top` directly
+   before and `.zig--bottom` directly after a `.section--tint`. */
+.section--tint { background: var(--creme); }
+.zig {
+  height: 1.25rem;
+  background: var(--creme);
+}
+.zig--top {
+  -webkit-mask: conic-gradient(from -45deg at 50% 100%, #000 0 90deg, #0000 0) 50% / 2.5rem 100%;
+  mask: conic-gradient(from -45deg at 50% 100%, #000 0 90deg, #0000 0) 50% / 2.5rem 100%;
+}
+.zig--bottom {
+  -webkit-mask: conic-gradient(from 135deg at 50% 0%, #000 0 90deg, #0000 0) 50% / 2.5rem 100%;
+  mask: conic-gradient(from 135deg at 50% 0%, #000 0 90deg, #0000 0) 50% / 2.5rem 100%;
+}
+
+/* ================= EVENT LIST + ROW ================= */
+.events__list { display: flex; flex-direction: column; gap: 1.125rem; }
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 1.25rem 1rem;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+.event-row:hover, a.event-row:focus-visible {
+  transform: translateY(-0.1875rem);
+  box-shadow: var(--shadow-soft);
+}
+.event-row--highlight { background: var(--accent); }
+.event-row__when {
+  flex: none;
+  width: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1875rem;
+}
+.event-row__time { font: 700 1.5rem / 1.2 var(--font-display); color: var(--ink); }
+.event-row__date { font: 700 0.75rem / 1.25 var(--font-display); color: var(--gold-meta); }
+.event-row__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1875rem;
+}
+.event-row__title { font: 700 1.5rem / 1.2 var(--font-display); color: var(--ink); }
+.event-row__meta { font: 400 0.75rem / 1.25 var(--font-display); color: var(--gold-meta); }
+
+@media (max-width: 37.5rem) {
+  .event-row__time, .event-row__title { font-size: 1.25rem; }
+}
+
+/* ================= FLYER CARD ================= */
+.flyer-card {
+  display: block;
+  position: relative;
+  aspect-ratio: 525 / 297;
+  border: 1px solid var(--line-ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--line);
+  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+.flyer-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--t-slow) var(--ease);
+}
+a.flyer-card:hover, a.flyer-card:focus-visible {
+  transform: translateY(-0.1875rem);
+  box-shadow: var(--shadow-soft);
+}
+a.flyer-card:hover img { transform: scale(1.03); }
+
+/* ================= SERMON CARD ================= */
+.card {
+  display: block;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+a.card:hover, a.card:focus-visible {
+  transform: translateY(-0.25rem);
+  box-shadow: var(--shadow-card);
+}
+.card__media {
+  aspect-ratio: 367 / 214;
+  background: var(--line);
+  overflow: hidden;
+}
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow) var(--ease);
+}
+a.card:hover .card__media img { transform: scale(1.04); }
+.card__body {
+  padding: 1.75rem 1rem; /* generous block padding */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md); /* fig: 20 between date and title group */
+}
+.card__group { display: flex; flex-direction: column; gap: 0.75rem; /* fig: 12 */ }
+.card__date {
+  font: 700 0.875rem / 1.2 var(--font-display);
+  color: var(--gold-text);
+}
+.card__title { font: 700 var(--fs-h3) / 1.2 var(--font-display); color: var(--ink); }
+.card__meta { font-weight: 300; color: var(--ink-2); line-height: 1; }
+
+/* ================= CAROUSEL (full-bleed, shadows visible) ================= */
+.carousel {
+  /* bleed to the viewport so sliding cards remain visible to the screen edge */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  --bleed-pad: max(var(--space-lg), calc(50vw - var(--container) / 2));
+  padding-inline: var(--bleed-pad);
+  /* vertical breathing room so hover shadows aren't clipped */
+  padding-block: 1.75rem;
+  margin-block: -1.75rem;
+}
+.carousel__track {
+  display: flex;
+  gap: var(--space-md);
+  transition: transform var(--t-slow) var(--ease);
+}
+.carousel__item { flex: 0 0 calc((100% - 2 * var(--space-md)) / 3); min-width: 0; }
+
+.icon-btn {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: var(--paper);
+  transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease);
+}
+.icon-btn:hover:not([disabled]) {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-0.125rem);
+}
+.icon-btn svg { display: block; }
+.icon-btn[disabled] { color: rgba(38, 35, 28, 0.32); cursor: default; }
+
+@media (max-width: 64rem) {
+  .carousel__item { flex-basis: calc((100% - var(--space-md)) / 2); }
+}
+@media (max-width: 48rem) {
+  .carousel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--bleed-pad);
+    scrollbar-width: none;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+  .carousel__track { transform: none !important; }
+  .carousel__item { flex-basis: min(19rem, 80%); scroll-snap-align: start; }
+}
+
+/* ================= SERMONS SECTION (home + events) ================= */
+.sermons__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.sermons__nav { display: flex; gap: 1rem; flex: none; }
+.sermons__carousel { margin-top: var(--space-xl); }
+.sermons__foot {
+  margin-top: var(--space-xl);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 48rem) {
+  .sermons__nav { display: none; }
+  .sermons__foot { justify-content: stretch; }
+}
+@media (max-width: 37.5rem) {
+  .sermons__foot .btn { width: 100%; }
+}
+
+/* ================= KLEINGRUPPEN ROW ================= */
+.kg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 1.25rem;
+  background: var(--paper);
+  border-block: 1px solid var(--line); /* top/bottom hairlines only — no side strokes */
+  transition: background var(--t-fast) var(--ease), padding var(--t-med) var(--ease);
+}
+.kg-row + .kg-row,
+.kg-list li + li .kg-row { margin-top: -1px; } /* collapse borders to hairlines */
+.kg-row:hover, .kg-row:focus-visible { background: var(--surface); padding-left: 1.625rem; }
+.kg-row__info { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.kg-row__name { font: 700 1.125rem / 1.2 var(--font-display); color: var(--ink); }
+.kg-row__meta {
+  font: 700 0.875rem / 1.2 var(--font-display);
+  color: var(--gold-meta);
+  text-transform: capitalize;
+}
+.kg-row__arrow {
+  flex: none;
+  width: 1.9375rem;
+  display: flex;
+  justify-content: flex-end;
+  overflow: hidden;
+  color: var(--line);
+  transition: width var(--t-med) var(--ease), color var(--t-med) var(--ease);
+}
+.kg-row__arrow svg { flex: none; }
+.kg-row:hover .kg-row__arrow, .kg-row:focus-visible .kg-row__arrow {
+  width: 3.875rem;
+  color: var(--ink);
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  background: var(--night);
+  color: var(--creme-82);
+  padding: 6.5rem 0 3rem;
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.75rem;
+}
+.footer__brand img { width: 4.375rem; height: 2.5rem; object-fit: contain; }
+.footer__tagline {
+  margin-top: 1rem;
+  max-width: 16.25rem;
+  color: var(--creme-72);
+}
+.footer__col { text-align: right; }
+.footer__head {
+  font: 700 0.875rem / 1.2 var(--font-display);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+.footer__list {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.footer__item {
+  font: 400 0.875rem / var(--lh-footer) var(--font-display);
+  color: var(--creme-82);
+}
+span.footer__item { cursor: default; } /* plain info (Gottesdienst) — never looks clickable */
+a.footer__item {
+  background: linear-gradient(currentColor, currentColor) 100% 100% / 0 1px no-repeat;
+  transition: color var(--t-fast) var(--ease), background-size var(--t-med) var(--ease);
+}
+a.footer__item:hover { color: var(--creme); background-size: 100% 1px; }
+.footer__legal {
+  margin-top: 4rem;
+  padding-top: 1.375rem;
+  border-top: 1px solid var(--creme-16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  font: 400 0.84375rem / 1.2 var(--font-ui);
+  color: var(--creme-60);
+}
+.footer__legal a { transition: color var(--t-fast) var(--ease); }
+.footer__legal a:hover { color: var(--creme); }
+
+@media (max-width: 48rem) {
+  .footer { padding-top: 4rem; }
+  .footer__grid { grid-template-columns: 1fr 1fr; row-gap: var(--space-xl); }
+  .footer__col { text-align: left; }
+}
+@media (max-width: 30rem) {
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__legal { flex-direction: column; align-items: flex-start; }
+}

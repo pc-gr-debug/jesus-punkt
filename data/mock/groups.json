@@ -1,0 +1,10 @@
+{
+  "_comment": "Reference shape for GET /api/groups (ChurchTools Hauskreise) — see docs/churchtools-integration.md",
+  "groups": [
+    { "name": "Oststadt", "meeting": "dienstags · 19:30", "signupUrl": "https://jesus-punkt.de/kleingruppen/" },
+    { "name": "Innenstadt", "meeting": "mittwochs · 19:30", "signupUrl": "https://jesus-punkt.de/kleingruppen/" },
+    { "name": "Broda", "meeting": "donnerstags · 19:30", "signupUrl": "https://jesus-punkt.de/kleingruppen/" },
+    { "name": "Süd", "meeting": "montags · 19:00", "signupUrl": "https://jesus-punkt.de/kleingruppen/" },
+    { "name": "Junge Erwachsene", "meeting": "freitags · 20:00", "signupUrl": "https://jesus-punkt.de/kleingruppen/" }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "Reference shape for GET /api/sermons?limit=9 (YouTube-backed proxy) — see docs/churchtools-integration.md",
+  "sermons": [
+    { "date": "28. Jun 2026", "title": "Kirche neu erleben", "speaker": "Philipp Strauch · Pastor", "thumb": null, "url": "https://jesus-punkt.de/media/" },
+    { "date": "21. Jun 2026", "title": "Mehr als Sonntag", "speaker": "Claus Wittnebel", "thumb": null, "url": "https://jesus-punkt.de/media/" },
+    { "date": "14. Jun 2026", "title": "Der Herr ist mein Hirte", "speaker": "Philipp Strauch · Pastor", "thumb": null, "url": "https://jesus-punkt.de/media/" },
+    { "date": "07. Jun 2026", "title": "Neuanfang", "speaker": "Philipp Strauch · Pastor", "thumb": null, "url": "https://jesus-punkt.de/media/" },
+    { "date": "31. Mai 2026", "title": "Die Freude an Gott", "speaker": "Günther Seidt", "thumb": null, "url": "https://jesus-punkt.de/media/" },
+    { "date": "24. Mai 2026", "title": "Welcome Home", "speaker": "Philipp Strauch · Pastor", "thumb": null, "url": "https://jesus-punkt.de/media/" }
+  ]
+}

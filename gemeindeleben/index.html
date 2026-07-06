@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemeindeleben — Jesus Punkt · Neubrandenburg</title>
+  <meta name="description" content="Kindergottesdienst, ELEVATE Jugend, Hauskreise und Next Steps — so lebt Gemeinde bei Jesus Punkt.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23C9A227'/%3E%3C/svg%3E">
+  <link rel="preload" href="/fonts/raveo-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/sinkinsans-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/pages.css">
+</head>
+<body>
+
+<!-- ================= HEADER (fixed) ================= -->
+<header class="header">
+  <div class="container header__container">
+    <a class="header__logo" href="/" aria-label="Jesus Punkt — Startseite">
+      <img src="/img/logo.png" alt="Jesus Punkt" width="70" height="40">
+    </a>
+    <nav class="nav-pill" aria-label="Hauptnavigation">
+      <a class="nav-pill__link" href="/ueber-uns/">Über uns</a>
+      <a class="nav-pill__link" href="/events/">Events</a>
+      <a class="nav-pill__link is-active" href="/gemeindeleben/">Gemeindeleben</a>
+      <a class="nav-pill__link" href="/angebote/">Angebote</a>
+      <a class="nav-pill__link" href="/spenden/">Spenden</a>
+      <a class="nav-pill__link" href="/kontakt/">Kontakt</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-controls="nav-panel" aria-expanded="false">
+      <span class="burger__bar"></span>
+      <span class="burger__bar"></span>
+      <span class="burger__bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- fullscreen slide-down menu -->
+<nav class="nav-panel" id="nav-panel" aria-label="Hauptnavigation mobil">
+  <div class="nav-panel__links">
+    <a class="nav-panel__link" href="/ueber-uns/">Über uns</a>
+    <a class="nav-panel__link" href="/events/">Events</a>
+    <a class="nav-panel__link is-active" href="/gemeindeleben/">Gemeindeleben</a>
+    <a class="nav-panel__link" href="/angebote/">Angebote</a>
+    <a class="nav-panel__link" href="/spenden/">Spenden</a>
+    <a class="nav-panel__link" href="/kontakt/">Kontakt</a>
+  </div>
+  <div class="nav-panel__cta">
+    <a class="btn btn--primary btn--lg" href="https://www.youtube.com/@jesuspunkt/streams" target="_blank" rel="noopener">Livestream</a>
+  </div>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <img class="page-hero__bg" src="/img/hero-dome.jpg" alt="" fetchpriority="high">
+    <div class="page-hero__wash" aria-hidden="true"></div>
+    <div class="container page-hero__inner">
+      <div><h1 class="page-hero__title h2--dot">Gemeindeleben</h1></div>
+      <div class="page-hero__desc"><p>Gemeinde ist mehr als Sonntag. Hier findest du deinen Platz — egal, wie alt du bist und wo du gerade stehst.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= KINDERGOTTESDIENST ================= -->
+  <section class="section" id="kindergottesdienst" aria-labelledby="kigo-h">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Für Kinder</span></div>
+        <div class="section-head__title"><h2 class="h2" id="kigo-h">Kindergottesdienst</h2></div>
+        <div class="section-head__desc"><p>Während des Gottesdienstes erleben die Kinder ihr eigenes Programm — Geschichten, Musik, Basteln und jede Menge Freude.</p></div>
+      </div>
+      <div class="fact-strip">
+        <div class="fact">
+          <div><span class="fact__key">Wann?</span></div>
+          <div><span class="fact__val">Sonntags · 10:00 Uhr</span></div>
+        </div>
+        <div class="fact">
+          <div><span class="fact__key">Wo?</span></div>
+          <div><span class="fact__val">Parallel zum Gottesdienst, im selben Haus</span></div>
+        </div>
+        <div class="fact">
+          <div><span class="fact__key">Leitung</span></div>
+          <div><span class="fact__val">Lydia Wegner &amp; Anja Maas</span></div>
+        </div>
+      </div>
+      <div class="gallery" data-gallery aria-label="Bilder aus dem Kindergottesdienst">
+        <div class="gallery__track">
+          <div class="gallery__item"><img src="/img/hero-ueber-uns.jpg" alt="Gemeinschaft im Jesus Punkt" loading="lazy"></div>
+          <div class="gallery__item gallery__item--tint" aria-hidden="true"></div>
+          <div class="gallery__item" aria-hidden="true"></div>
+          <div class="gallery__item gallery__item--tint" aria-hidden="true"></div>
+        </div>
+        <div class="gallery__nav">
+          <button class="icon-btn" data-gallery-prev aria-label="Vorherige Bilder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <button class="icon-btn" data-gallery-next aria-label="Weitere Bilder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ELEVATE ================= -->
+  <div class="zig zig--top" aria-hidden="true"></div>
+  <section class="section section--tint" id="jugend" aria-labelledby="jugend-h">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Elevate Youth</span></div>
+        <div class="section-head__title"><h2 class="h2" id="jugend-h">Die Jugend</h2></div>
+        <div class="section-head__desc"><p>ELEVATE ist der Treffpunkt am Freitag für Jugendliche zwischen 13 und 29 Jahren. Coole Aktionen, tiefe Gespräche, gutes Essen — wir sind gemeinsam und mit Gott unterwegs.</p></div>
+      </div>
+      <div class="fact-strip">
+        <div class="fact">
+          <div><span class="fact__key">Wann?</span></div>
+          <div><span class="fact__val">Jeden Freitag · 18:30 – 21:30 Uhr</span></div>
+        </div>
+        <div class="fact">
+          <div><span class="fact__key">Für wen?</span></div>
+          <div><span class="fact__val">13 bis 29 Jahre</span></div>
+        </div>
+        <div class="fact">
+          <div><span class="fact__key">Team</span></div>
+          <div><span class="fact__val">Claus, Philipp, Mykhailo &amp; Natan</span></div>
+        </div>
+        <div class="fact">
+          <div><span class="fact__key">Unterwegs</span></div>
+          <div><a class="textlink" href="https://www.instagram.com/jesuspunkt" target="_blank" rel="noopener">Auf Instagram folgen <span class="textlink__arrow">→</span></a></div>
+        </div>
+      </div>
+      <div class="gallery" data-gallery aria-label="Bilder aus der Jugend">
+        <div class="gallery__track">
+          <div class="gallery__item"><img src="/img/hero-events.jpg" alt="Lobpreis bei ELEVATE" loading="lazy"></div>
+          <div class="gallery__item"><img src="/img/hero-ueber-uns.jpg" alt="Gemeinschaft bei ELEVATE" loading="lazy"></div>
+          <div class="gallery__item gallery__item--tint" aria-hidden="true"></div>
+          <div class="gallery__item" aria-hidden="true"></div>
+        </div>
+        <div class="gallery__nav">
+          <button class="icon-btn" data-gallery-prev aria-label="Vorherige Bilder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <button class="icon-btn" data-gallery-next aria-label="Weitere Bilder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="zig zig--bottom" aria-hidden="true"></div>
+
+  <!-- ================= HAUSKREISE ================= -->
+  <section class="section" id="hauskreise" aria-labelledby="hauskreise-h">
+    <div class="container feature-grid">
+      <div>
+        <ul class="kg-list" data-ct="groups">
+        <li>
+          <a class="kg-row" href="#hauskreise">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Oststadt</h3></div>
+              <div><p class="kg-row__meta">dienstags · 19:30</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="kg-row" href="#hauskreise">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Innenstadt</h3></div>
+              <div><p class="kg-row__meta">mittwochs · 19:30</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="kg-row" href="#hauskreise">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Broda</h3></div>
+              <div><p class="kg-row__meta">donnerstags · 19:30</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="kg-row" href="#hauskreise">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Süd</h3></div>
+              <div><p class="kg-row__meta">montags · 19:00</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="kg-row" href="#hauskreise">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Junge Erwachsene</h3></div>
+              <div><p class="kg-row__meta">freitags · 20:00</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        </ul>
+      </div>
+      <div class="section-head">
+        <div><span class="eyebrow">Früher: Kleingruppen</span></div>
+        <div class="section-head__title"><h2 class="h2" id="hauskreise-h">Hauskreise</h2></div>
+        <div class="section-head__desc"><p>Glaube wächst im Miteinander. In unseren Hauskreisen findest du Menschen, die mit dir durchs Leben gehen — beim Essen, beim Reden, beim Beten. Über ganz Neubrandenburg verteilt.</p></div>
+        <div class="section-head__desc"><p>Schreib uns — wir finden gemeinsam den Hauskreis, der zu deinem Leben passt.</p></div>
+        <div><a class="btn btn--primary btn--lg" href="mailto:info@jesus-punkt.de?subject=Hauskreis">Ich möchte dabei sein</a></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer on-dark">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="/img/logo-dark.png" alt="Jesus Punkt" width="70" height="40" loading="lazy">
+        <div class="footer__tagline">
+          <p>Eine evangelische Freikirche in Neubrandenburg. Welcome Home.</p>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Gottesdienst</h2></div>
+        <div class="footer__list">
+          <div><span class="footer__item">Sonntags 10:00 Uhr</span></div>
+          <div><span class="footer__item">Kruseshofer Str. 20</span></div>
+          <div><span class="footer__item">17036 Neubrandenburg</span></div>
+          <div><span class="footer__item">vor Ort und auf YouTube</span></div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Kontakt</h2></div>
+        <div class="footer__list">
+          <div><a class="footer__item" href="tel:+4915679133367">+49 156 79133367</a></div>
+          <div><a class="footer__item" href="mailto:info@jesus-punkt.de">info@jesus-punkt.de</a></div>
+          <div>
+            <span class="footer__item">
+              <a class="footer__item" href="https://www.youtube.com/@jesuspunkt" target="_blank" rel="noopener">YouTube</a> ·
+              <a class="footer__item" href="https://www.facebook.com/jesuspunkt" target="_blank" rel="noopener">Facebook</a> ·
+              <a class="footer__item" href="https://www.instagram.com/jesuspunkt" target="_blank" rel="noopener">Instagram</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Entdecken</h2></div>
+        <div class="footer__list">
+          <div><a class="footer__item" href="/ueber-uns/">Über uns</a></div>
+          <div><a class="footer__item" href="/events/">Events</a></div>
+          <div><a class="footer__item" href="/gemeindeleben/">Gemeindeleben</a></div>
+          <div><a class="footer__item" href="/angebote/">Angebote</a></div>
+          <div><a class="footer__item" href="/spenden/">Spenden</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <div><span>© 2026 Jesus Punkt</span></div>
+      <div>
+        <span>
+          <a href="/impressum/">Impressum</a> ·
+          <a href="https://jesus-punkt.de/datenschutzerklaerung/" target="_blank" rel="noopener">Datenschutz</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+<script src="/js/data.js" defer></script>
+</body>
+</html>

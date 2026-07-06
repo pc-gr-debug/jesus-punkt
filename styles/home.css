@@ -1,0 +1,268 @@
+/* ============================================================
+   JESUS PUNKT — Homepage sections · Heritage Gold
+   ============================================================ */
+
+/* ================= HERO (full screen) ================= */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  background: var(--paper);
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.48;
+}
+.hero__wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, #ffffff 100%);
+}
+.hero__container {
+  position: relative;
+  width: 100%;
+  padding-bottom: clamp(3.5rem, 8vh, 5.625rem);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(2rem, 5vw, 5.3125rem);
+}
+.hero__copy {
+  flex: 1;
+  max-width: 56.9375rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem; /* fig: 15 */
+}
+.hero__eyebrow span { font: 700 1rem / var(--lh-display) var(--font-display); color: var(--ink); }
+.hero__eyebrow-part { white-space: nowrap; } /* wrap only between address segments */
+.hero__eyebrow-part + .hero__eyebrow-part::before {
+  content: "·";
+  color: var(--gold-text);
+  margin-inline: 0.55em 0.65em;
+}
+.hero__actions { flex: none; }
+
+/* highlight block behind »lebt« — vertically centered on the word */
+.hl {
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+}
+.hl::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.05em;
+  right: -0.11em;
+  top: 50%;
+  height: 1.02em;
+  transform: translateY(-50%);
+  background: var(--accent);
+}
+
+@media (max-width: 48rem) {
+  .hero__container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.25rem;
+    padding-bottom: clamp(3rem, 9svh, 4.5rem);
+  }
+  .hero__eyebrow span { font-size: 0.9375rem; line-height: 1.45; }
+  /* once the line would wrap, stack the parts cleanly — no leading dots */
+  .hero__eyebrow > span { display: flex; flex-direction: column; gap: 0.25rem; }
+  .hero__eyebrow-part + .hero__eyebrow-part::before { content: none; }
+}
+@media (max-width: 37.5rem) {
+  .hero__actions { width: 100%; }
+  .hero__actions .btn { width: 100%; }
+}
+
+/* ================= VERANSTALTUNGEN ================= */
+.events__grid {
+  margin-top: var(--space-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* flyer beside the rows on desktop */
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.events__flyer { order: -1; aspect-ratio: auto; align-self: stretch; } /* left column */
+.events__flyer img { object-position: center; }
+.events__foot {
+  margin-top: 2.75rem; /* 44 */
+  text-align: right;
+}
+
+@media (max-width: 64rem) {
+  .events__grid { gap: var(--space-xl); }
+}
+@media (max-width: 48rem) {
+  /* single column: flyer drops BELOW the event rows */
+  .events__grid { display: flex; flex-direction: column; gap: 2rem; }
+  .events__flyer { order: 0; aspect-ratio: 525 / 297; align-self: auto; }
+  .events__foot { margin-top: 1.75rem; }
+}
+
+/* ================= KLEINGRUPPEN ================= */
+.groups__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); /* 608 | 452 */
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.groups__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem; /* fig: 32 */
+}
+
+/* the two columns get too cramped below 64rem — stack early, copy first */
+@media (max-width: 64rem) {
+  .groups__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .groups__copy { order: -1; }
+}
+@media (max-width: 48rem) {
+  .groups__grid { gap: 2rem; }
+}
+
+/* ================= WERTE (scroll wheel) ================= */
+.werte {
+  padding-block: 0 9.375rem;  /* 150px air below the wheel before the footer */
+  height: 350vh;              /* scroll runway: 7 stops */
+}
+.werte__sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  align-items: safe center;   /* on short screens: clip bottom, never the heading */
+  overflow: hidden;           /* wheel edges may poke out of the stage, not the page */
+}
+.werte__sticky > .container { width: 100%; }
+.werte__head { align-items: center; text-align: center; }
+.werte__stage {
+  margin-top: var(--space-lg);
+  padding-block: clamp(4rem, 12vh, 7.5rem); /* room for bubbles poking beyond the ring — top AND bottom */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+/* value circle (shared with the reduced-motion list) — one calm color, accent marks the active one */
+.bubble {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  text-align: center;
+  padding: 10%;
+  background: var(--sand);
+}
+.bubble__num { font: 700 0.6875rem / 1 var(--font-ui); color: var(--gold-text); }
+.bubble__name {
+  font: 700 0.9375rem / 1.15 var(--font-display);
+  color: var(--ink);
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* wheel geometry: items sit on a ring, ring turns via --wheel-turn */
+.wheel {
+  --wheel-size: min(26rem, 38vw, 50vh);
+  --wheel-turn: 0deg;
+  position: relative;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
+  margin-inline: auto;
+  transform: rotate(var(--wheel-turn));
+  transition: transform var(--t-slow) var(--ease);
+}
+.wheel__item {
+  --angle: calc(var(--i) * 51.4286deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10rem;
+  height: 10rem;
+  margin: -5rem 0 0 -5rem;
+  transform: rotate(var(--angle))
+             translateY(calc(var(--wheel-size) / -2))
+             rotate(calc(-1 * var(--angle) - var(--wheel-turn)));
+  transition: transform var(--t-slow) var(--ease), opacity var(--t-slow) var(--ease);
+  opacity: 0.55;
+}
+.wheel__item.is-active {
+  opacity: 1;
+  transform: rotate(var(--angle))
+             translateY(calc(var(--wheel-size) / -2))
+             rotate(calc(-1 * var(--angle) - var(--wheel-turn)))
+             scale(1.18);
+  z-index: 1;
+}
+.wheel__item.is-active .bubble { background: var(--accent); box-shadow: var(--shadow-soft); }
+
+/* description panel */
+.werte__panel { display: flex; flex-direction: column; gap: 0.625rem; }
+.werte__panel-num { font: 700 0.8125rem / 1 var(--font-ui); color: var(--gold-text); }
+.werte__panel-name { font: 700 var(--fs-h2) / var(--lh-heading) var(--font-display); color: var(--ink); }
+.werte__panel-line { max-width: 24rem; color: var(--ink-2); }
+.werte__panel > div {
+  transition: opacity 350ms var(--ease), transform 350ms var(--ease);
+}
+.werte__panel.is-switching > div { opacity: 0; transform: translateY(0.375rem); }
+
+@media (max-width: 64rem) {
+  .werte__stage { gap: var(--space-xl); grid-template-columns: minmax(0, 1fr) minmax(0, 19rem); }
+}
+@media (max-width: 48rem) {
+  .werte { height: 300vh; }
+  .werte__sticky { padding-top: var(--header-h); } /* heading clears the fixed header */
+  .wheel { --wheel-size: min(28rem, 120vw, 44svh); }
+  .werte__stage {
+    padding-block: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    justify-items: center;
+    text-align: center;
+  }
+  /* wheel intentionally wider than the screen — side bubbles bleed off for breathing room */
+  .wheel__item { width: 7rem; height: 7rem; margin: -3.5rem 0 0 -3.5rem; }
+  .wheel__item .bubble__name { font-size: 0.75rem; }
+  /* the active value sits in the middle of the ring, not at 12 o'clock */
+  .wheel__item.is-active {
+    transform: rotate(var(--angle))
+               translateY(0)
+               rotate(calc(-1 * var(--angle) - var(--wheel-turn)))
+               scale(1.3);
+  }
+  .werte__panel { align-items: center; min-height: 8rem; }
+}
+
+/* reduced motion: plain stacked list, no pin, no rotation */
+@media (prefers-reduced-motion: reduce) {
+  .werte { height: auto; padding-block: var(--section-pad); }
+  .werte__sticky { position: static; height: auto; overflow: visible; display: block; }
+  .werte__stage { display: flex; flex-direction: column; align-items: center; gap: var(--space-lg); }
+  .wheel { width: auto; height: auto; transform: none; display: flex; flex-direction: column; gap: var(--space-md); margin: 0; }
+  .wheel__item { position: static; margin: 0; transform: none !important; opacity: 1; width: auto; height: auto; }
+  .wheel__item .bubble { width: 12rem; height: 12rem; }
+  .werte__panel { display: none; }
+}
+
+/* full-width section CTAs on phones — consistent, symmetric */
+@media (max-width: 37.5rem) {
+  .groups__copy .btn { width: 100%; }
+}

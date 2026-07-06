@@ -1,0 +1,78 @@
+/* ============================================================
+   JESUS PUNKT — Design Tokens · Heritage Gold
+   Source: Jesus Punkt — Website (Heritage Gold).fig
+   Every color/size in the codebase must come from this file.
+   ============================================================ */
+:root {
+  /* ---- Color · Heritage palette ---- */
+  --ink:        #26231C;  /* headings, body, primary buttons */
+  --ink-2:      #5C544A;  /* section descriptions, card meta */
+  --muted:      #675E4C;  /* Next-Steps body text */
+  --gold:       #C9A227;  /* logo circle, footer headers (on dark only) */
+  --gold-text:  #7A5F12;  /* small gold text on light (AA) */
+  --gold-meta:  #AC7A06;  /* event meta, kleingruppen schedules */
+  --accent:     #F9C855;  /* highlight block, active nav, next-event row, dot */
+  --sand:       #F1E8D4;  /* hover fills */
+  --creme:      #FBF7EE;  /* text on ink/night */
+  --night:      #1A1201;  /* footer background */
+  --paper:      #FFFFFF;  /* page background */
+
+  /* ---- Color · lines & surfaces ---- */
+  --line:        #D9D9D9;                /* card borders, hairlines */
+  --line-ink:    rgba(38, 35, 28, 0.13); /* flyer card border */
+  --line-strong: rgba(38, 35, 28, 0.30); /* outline button border */
+  --surface:     #F9F9F9;                /* kleingruppen row hover */
+  --surface-2:   #EFEEEE;                /* neutral event rows */
+  --nav-muted:   #7F7568;                /* inactive nav items */
+
+  /* on-dark text (footer) */
+  --creme-82: rgba(251, 247, 238, 0.82);
+  --creme-72: rgba(251, 247, 238, 0.72);
+  --creme-60: rgba(251, 247, 238, 0.60);
+  --creme-16: rgba(251, 247, 238, 0.16);
+
+  /* ---- Typography ---- */
+  --font-display: "Raveo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:    "Sinkin Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-ui:      "Arimo", Arial, "Helvetica Neue", sans-serif;
+
+  --fs-h1:      clamp(2.625rem, 1rem + 5.42vw, 4.875rem); /* 78 desktop */
+  --fs-h2:      clamp(1.875rem, 1.25rem + 2.08vw, 2.5rem); /* 40 desktop */
+  --fs-h2-xl:   clamp(2.125rem, 1.25rem + 2.92vw, 3.75rem); /* 60 · Next Steps */
+  --fs-h3:      1.5rem;      /* 24 · card & event titles */
+  --fs-body:    0.875rem;    /* 14 · Sinkin body */
+  --fs-btn:     0.9375rem;   /* 15 · Arimo Bold */
+  --fs-nav:     0.75rem;     /* 12 · Sinkin nav */
+
+  --lh-display: 0.96;   /* h1, eyebrow */
+  --lh-heading: 1.04;   /* h2 */
+  --lh-body:    1.6;    /* Sinkin body */
+  --lh-footer:  1.7;    /* footer links */
+
+  /* ---- Space ---- */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;   /* 20 */
+  --space-lg: 1.5rem;    /* 24 · container safety padding */
+  --space-xl: 2.5rem;    /* 40 · heading → content */
+  --space-2xl: 5rem;     /* 80 · column gaps */
+  --section-pad: clamp(6rem, 10.42vw, 9.375rem); /* 150 desktop → 96 phone */
+
+  /* ---- Shape ---- */
+  --radius: 0.5rem;      /* 8 · cards, lg buttons, nav pill */
+  --radius-sm: 0.375rem; /* 6 · md buttons */
+
+  /* ---- Layout ---- */
+  --container: 71.25rem; /* 1140 */
+  --header-h: 4.5rem;    /* 72 */
+
+  /* ---- Elevation ---- */
+  --shadow-card: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.25); /* fig card hover */
+  --shadow-soft: 0 0.75rem 1.75rem rgba(38, 35, 28, 0.12);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 150ms;
+  --t-med: 220ms;
+  --t-slow: 450ms;
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Über uns — Jesus Punkt · Neubrandenburg</title>
+  <meta name="description" content="Wer hinter Jesus Punkt steht: unser Team, unser Glaube, unsere Werte und die Geschichte der Gemeinde.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23C9A227'/%3E%3C/svg%3E">
+  <link rel="preload" href="/fonts/raveo-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/sinkinsans-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/pages.css">
+</head>
+<body>
+
+<!-- ================= HEADER (fixed) ================= -->
+<header class="header">
+  <div class="container header__container">
+    <a class="header__logo" href="/" aria-label="Jesus Punkt — Startseite">
+      <img src="/img/logo.png" alt="Jesus Punkt" width="70" height="40">
+    </a>
+    <nav class="nav-pill" aria-label="Hauptnavigation">
+      <a class="nav-pill__link is-active" href="/ueber-uns/">Über uns</a>
+      <a class="nav-pill__link" href="/events/">Events</a>
+      <a class="nav-pill__link" href="/gemeindeleben/">Gemeindeleben</a>
+      <a class="nav-pill__link" href="/angebote/">Angebote</a>
+      <a class="nav-pill__link" href="/spenden/">Spenden</a>
+      <a class="nav-pill__link" href="/kontakt/">Kontakt</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-controls="nav-panel" aria-expanded="false">
+      <span class="burger__bar"></span>
+      <span class="burger__bar"></span>
+      <span class="burger__bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- fullscreen slide-down menu -->
+<nav class="nav-panel" id="nav-panel" aria-label="Hauptnavigation mobil">
+  <div class="nav-panel__links">
+    <a class="nav-panel__link is-active" href="/ueber-uns/">Über uns</a>
+    <a class="nav-panel__link" href="/events/">Events</a>
+    <a class="nav-panel__link" href="/gemeindeleben/">Gemeindeleben</a>
+    <a class="nav-panel__link" href="/angebote/">Angebote</a>
+    <a class="nav-panel__link" href="/spenden/">Spenden</a>
+    <a class="nav-panel__link" href="/kontakt/">Kontakt</a>
+  </div>
+  <div class="nav-panel__cta">
+    <a class="btn btn--primary btn--lg" href="https://www.youtube.com/@jesuspunkt/streams" target="_blank" rel="noopener">Livestream</a>
+  </div>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <img class="page-hero__bg" src="/img/hero-ueber-uns.jpg" alt="" fetchpriority="high">
+    <div class="page-hero__wash" aria-hidden="true"></div>
+    <div class="container page-hero__inner">
+      <div><h1 class="page-hero__title h2--dot">Wir sind Jesus Punkt</h1></div>
+      <div class="page-hero__desc"><p>Jesus Punkt ist eine evangelische Freikirche. Kraftvoll, zeitgemäß und begeistert vom Leben mit Jesus — mitten in Neubrandenburg.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= TEAM ================= -->
+  <section class="section" id="team" aria-labelledby="team-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-head__title"><h2 class="h2" id="team-h">Unser Team</h2></div>
+        <div class="section-head__desc"><p>Viele Hände, ein Zuhause. Diese Menschen tragen Verantwortung im Jesus Punkt — und freuen sich, dich kennenzulernen.</p></div>
+      </div>
+      <div class="section-cta" data-ct="team-lead">
+        <div class="lead-card">
+          <div class="team-photo team-photo--lead"><span class="team-photo__initials">PS</span></div>
+          <div class="lead-card__body">
+            <div><span class="lead-card__name">Philipp Strauch</span></div>
+            <div class="role-chips"><span class="role-chip">Pastor</span><span class="role-chip">Gottesdienst</span><span class="role-chip">Jugendbereich</span></div>
+            <div class="lead-card__note"><p>Leitet die Gemeinde seit Oktober 2025. Philipp brennt dafür, das Wort Gottes zu predigen und zu sehen, wie Menschen in ihrer Berufung und ihrem Glauben wachsen.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery gallery--team" data-gallery aria-label="Unser Team">
+        <div class="gallery__nav">
+          <button class="icon-btn" data-gallery-prev aria-label="Vorherige Teammitglieder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <button class="icon-btn" data-gallery-next aria-label="Weitere Teammitglieder">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </div>
+        <ul class="gallery__track" data-ct="team">
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">TS</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Tymur Sheikh</span></div>
+              <div class="role-chips"><span class="role-chip">Lobpreis</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">AB</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Arne Brockmann</span></div>
+              <div class="role-chips"><span class="role-chip">Website</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">LW</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Lydia Wegner</span></div>
+              <div class="role-chips"><span class="role-chip">Kindergottesdienst</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">AM</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Anja Maas</span></div>
+              <div class="role-chips"><span class="role-chip">Kindergottesdienst</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">CW</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Claus Wittnebel</span></div>
+              <div class="role-chips"><span class="role-chip">Jugendbereich</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">UH</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Ulrike Huhn</span></div>
+              <div class="role-chips"><span class="role-chip">Hauswirtschaft</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">GS</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Günther Seidt</span></div>
+              <div class="role-chips"><span class="role-chip">Finanzen</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">SL</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Saskia Lobert</span></div>
+              <div class="role-chips"><span class="role-chip">Technik</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">YU</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Yurii Uglov</span></div>
+              <div class="role-chips"><span class="role-chip">Hausmeister</span></div>
+            </div>
+          </div>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GLAUBE ================= -->
+  <div class="zig zig--top" aria-hidden="true"></div>
+  <section class="section section--tint" id="glaube" aria-labelledby="glaube-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-head__title"><h2 class="h2" id="glaube-h">Was wir glauben</h2></div>
+      </div>
+      <div class="prose" style="margin-top: var(--space-xl)">
+        <p>Wir glauben an den dreieinigen Gott, der sich als Vater, Sohn und Heiliger Geist offenbart hat und dem jeder einzelne Mensch für sein Leben rechenschaftspflichtig ist. Keinem Menschen gelingt es, ein Leben nach den Ansprüchen des gerechten Gottes zu führen, was ihn vor Gott schuldig macht.</p>
+        <p>Aus bedingungsloser Liebe zu uns Menschen wurde Gott selbst Mensch in Jesus Christus und starb stellvertretend für uns am Kreuz, um diese Schuld zu begleichen. Nur so ist ein versöhntes Leben in der Gemeinschaft mit Gott möglich. Dadurch erhält jeder Mensch die Möglichkeit, Teil seiner weltweiten Kirche zu werden, die in der Ortsgemeinde ihren Ausdruck findet.</p>
+        <p>Der Heilige Geist erneuert und verändert das Leben der Glaubenden. Gott erfüllt Menschen mit seinem Geist und schenkt Vollmacht und Gaben zum Dienst. Jesus Christus ist auferstanden und kommt wieder. Deshalb haben Christen die sichere Hoffnung auf ein ewiges Leben bei ihm.</p>
+        <p><strong>Unser Glaube gründet sich auf Gottes Wort, der Bibel.</strong> Mit Christen auf der ganzen Welt verbindet uns das apostolische Glaubensbekenntnis.</p>
+      </div>
+      <div class="section-cta">
+        <a class="textlink" href="/#werte">Unsere sieben Werte entdecken <span class="textlink__arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+  <div class="zig zig--bottom" aria-hidden="true"></div>
+
+  <!-- ================= CHRONIK ================= -->
+  <section class="section" id="chronik" aria-labelledby="chronik-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-head__title"><h2 class="h2" id="chronik-h">Unsere Chronik</h2></div>
+        <div class="section-head__desc"><p>Wie aus einem Anfang im Wohnzimmer ein Zuhause für viele wurde.</p></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline__item">
+          <div><span class="timeline__year">Seit 2011</span></div>
+          <div><h3 class="timeline__title">Annette &amp; Rainer Dwornik</h3></div>
+          <div class="timeline__text"><p>Seit 2011 sind Annette und Rainer Dwornik ein wichtiger Teil des Jesus Punkts und von Anfang an mit Herz und Seele dabei. Von März 2014 bis März 2025 unterstützten sie das Leitungsteam. Rainer kennt Land und Leute in Mecklenburg-Vorpommern wie kaum ein anderer; Annette hat hier eine neue Heimat gefunden. Nach wie vor sind sie tragende Säulen unserer Gemeinde.</p></div>
+        </div>
+        <div class="timeline__item">
+          <div><span class="timeline__year">2019 – 2021</span></div>
+          <div><h3 class="timeline__title">Ruth &amp; Stephan Fuhrer</h3></div>
+          <div class="timeline__text"><p>Im Januar 2019 kamen Ruth und Stephan Fuhrer aus der Schweiz zum Leitungsteam dazu. Sie unterstützten die Gemeindeleitung bei der Renovierung des Gebäudes und der Entwicklung des Jesus Punkts — mit Schwerpunkten in praktischen Tätigkeiten, Housekeeping und Gästebetreuung. Im April 2021 kehrten sie in ihre Heimat nach Rheinfelden zurück.</p></div>
+        </div>
+        <div class="timeline__item">
+          <div><span class="timeline__year">2020 – 2022</span></div>
+          <div><h3 class="timeline__title">Simeon Schütz</h3></div>
+          <div class="timeline__text"><p>Ab Juni 2020 war Simeon Schütz Teil der Gemeindeleitung. Ihn begeistert „der gute Ton“ — Ton-, Video- und Übertragungstechnik waren sein Steckenpferd, und als jüngstem Leitungsmitglied lag ihm die junge Generation am Herzen. Im Januar 2022 verließ Simeon Neubrandenburg.</p></div>
+        </div>
+        <div class="timeline__item">
+          <div><span class="timeline__year">Seit 2023</span></div>
+          <div><h3 class="timeline__title">Friederike &amp; Claus</h3></div>
+          <div class="timeline__text"><p>Friederike und Claus sind seit 2023 in der Gemeindeleitung tätig und haben zwei Kinder. Schon sehr lange ist der Jesus Punkt ihr geistliches Zuhause. Mit ihrem Einsatz fördern sie die junge Generation in der Jugendarbeit und im Lobpreisteam.</p></div>
+        </div>
+        <div class="timeline__item">
+          <div><span class="timeline__year">2023 – 2025</span></div>
+          <div><h3 class="timeline__title">Philipp Strauch kommt nach Neubrandenburg</h3></div>
+          <div class="timeline__text"><p>Nach seinem Theologiestudium am Theologischen Seminar Erzhausen absolvierte Philipp Strauch 2023 sein Hauptpraktikum im Jesus Punkt und gehört seitdem zur Gemeindeleitung. Von Oktober 2023 bis Oktober 2025 folgte sein zweijähriges Vikariat in der Gemeinde.</p></div>
+        </div>
+        <div class="timeline__item">
+          <div><span class="timeline__year">Oktober 2025</span></div>
+          <div><h3 class="timeline__title">Staffelübergabe</h3></div>
+          <div class="timeline__text"><p>Im Oktober 2025 hat Günther Seidt die Leitung der Gemeinde an Philipp Strauch abgegeben, der seitdem der neue Pastor der Gemeinde ist — mit dem Ziel, die Vision von Günther und Loni fortzuführen. Günther und Loni dienen weiterhin in Mecklenburg-Vorpommern und sind nach wie vor engagierte Gemeindemitglieder im Jesus Punkt.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer on-dark">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="/img/logo-dark.png" alt="Jesus Punkt" width="70" height="40" loading="lazy">
+        <div class="footer__tagline">
+          <p>Eine evangelische Freikirche in Neubrandenburg. Welcome Home.</p>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Gottesdienst</h2></div>
+        <div class="footer__list">
+          <div><span class="footer__item">Sonntags 10:00 Uhr</span></div>
+          <div><span class="footer__item">Kruseshofer Str. 20</span></div>
+          <div><span class="footer__item">17036 Neubrandenburg</span></div>
+          <div><span class="footer__item">vor Ort und auf YouTube</span></div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Kontakt</h2></div>
+        <div class="footer__list">
+          <div><a class="footer__item" href="tel:+4915679133367">+49 156 79133367</a></div>
+          <div><a class="footer__item" href="mailto:info@jesus-punkt.de">info@jesus-punkt.de</a></div>
+          <div>
+            <span class="footer__item">
+              <a class="footer__item" href="https://www.youtube.com/@jesuspunkt" target="_blank" rel="noopener">YouTube</a> ·
+              <a class="footer__item" href="https://www.facebook.com/jesuspunkt" target="_blank" rel="noopener">Facebook</a> ·
+              <a class="footer__item" href="https://www.instagram.com/jesuspunkt" target="_blank" rel="noopener">Instagram</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__head-wrap"><h2 class="footer__head">Entdecken</h2></div>
+        <div class="footer__list">
+          <div><a class="footer__item" href="/ueber-uns/">Über uns</a></div>
+          <div><a class="footer__item" href="/events/">Events</a></div>
+          <div><a class="footer__item" href="/gemeindeleben/">Gemeindeleben</a></div>
+          <div><a class="footer__item" href="/angebote/">Angebote</a></div>
+          <div><a class="footer__item" href="/spenden/">Spenden</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <div><span>© 2026 Jesus Punkt</span></div>
+      <div>
+        <span>
+          <a href="/impressum/">Impressum</a> ·
+          <a href="https://jesus-punkt.de/datenschutzerklaerung/" target="_blank" rel="noopener">Datenschutz</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js" defer></script>
+<script src="/js/data.js" defer></script>
+</body>
+</html>

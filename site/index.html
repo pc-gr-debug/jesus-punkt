@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jesus Punkt · Kirche neu erleben — Neubrandenburg</title>
+<meta name="description" content="Jesus Punkt ist eine evangelische Freikirche in Neubrandenburg. Gottesdienst sonntags um 10:00 Uhr, vor Ort und im Livestream." />
+<style>
+/* ============================================================
+   JESUS PUNKT — distilled, Swiss/Helvetica direction
+   Local Helvetica · no italics · color as a scarce resource
+   Heritage Gold palette: gold = brand accent only; ink buttons, sand hover
+   ============================================================ */
+:root{
+  --ink:#26231C;        /* text, headings, buttons */
+  --ink-2:#5C544A;      /* secondary text (6.96:1 on creme) */
+  --muted:#675E4C;      /* meta / labels (5.98:1 creme · 5.25:1 sand) */
+  --gold:#C9A227;       /* the one accent — logo + a few marks */
+  --gold-text:#7A5F12;  /* small gold-ish text where used (AA) */
+  --sand:#F1E8D4;       /* surfaces, hovers, fills */
+  --creme:#FBF7EE;      /* canvas */
+  --line:rgba(38,35,28,.13);
+  --line-strong:rgba(38,35,28,.30);
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --maxw:1140px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--creme);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+::selection{background:var(--ink);color:var(--creme)}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.06}
+h1{font-size:clamp(42px,7vw,82px);letter-spacing:-.035em;line-height:1.02}
+h2{font-size:clamp(27px,3.6vw,42px);letter-spacing:-.025em}
+h3{font-size:20px;letter-spacing:-.01em}
+p{max-width:62ch}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:clamp(16px,1.5vw,18.5px);color:var(--ink-2);line-height:1.62}
+.muted{color:var(--muted)}
+
+/* focus */
+:where(a,button,.btn,[tabindex]):focus-visible{outline:2.5px solid var(--ink);outline-offset:3px;border-radius:3px}
+.on-ink :focus-visible{outline-color:var(--creme)}
+
+/* buttons — ink fill, sand hover; crisp (no pills) */
+.btn{display:inline-flex;align-items:center;gap:9px;font:600 15px/1 var(--sans);letter-spacing:.01em;
+  padding:14px 22px;border-radius:6px;border:1.5px solid var(--ink);cursor:pointer;
+  transition:background .18s var(--ease),color .18s var(--ease),transform .1s,border-color .18s}
+.btn-primary{background:var(--ink);color:var(--creme)}
+.btn-primary:hover{background:var(--sand);color:var(--ink)}
+.btn-secondary{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-secondary:hover{background:var(--sand);border-color:var(--ink)}
+.btn:active{transform:scale(.98)}
+.on-ink .btn-primary{background:var(--sand);color:var(--ink);border-color:var(--sand)}
+.on-ink .btn-primary:hover{background:transparent;color:var(--creme)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.textlink{font-weight:600;font-size:15px;border-bottom:1.5px solid var(--line-strong);padding-bottom:2px;
+  transition:border-color .16s}
+.textlink:hover{border-color:var(--ink)}
+
+/* section rhythm */
+.section{padding:clamp(76px,11vw,138px) 0;border-top:1px solid var(--line)}
+.section-head{max-width:62ch;margin-bottom:clamp(34px,5vw,56px)}
+.section-head h2{margin-top:12px}
+.section-head .lead{margin-top:16px}
+
+/* logo */
+.logo{height:34px;width:auto;display:block}
+.logo .jp-j{font-weight:500;letter-spacing:.5px}
+.logo .jp-p{font-weight:700;letter-spacing:.5px}
+
+/* ============ HEADER ============ */
+header.site{position:sticky;top:0;z-index:60;background:rgba(251,247,238,.9);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:var(--maxw);margin:0 auto;padding:14px clamp(20px,5vw,40px);
+  display:flex;align-items:center;justify-content:space-between;gap:22px}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,1.8vw,26px)}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--ink-2);transition:color .15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav .btn{padding:10px 18px;font-size:14px}
+.burger{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{width:24px;height:2px;background:var(--ink);display:block;transition:.2s}
+.nav-cta-mobile{display:none}
+
+/* ============ HERO ============ */
+.hero{padding:clamp(56px,9vw,104px) 0 clamp(64px,9vw,116px)}
+.hero-grid{display:grid;grid-template-columns:1.35fr .8fr;gap:48px;align-items:center}
+.hero h1{margin:18px 0 26px}
+.hero-sub{font-size:clamp(17px,1.7vw,20px);color:var(--ink-2);max-width:46ch}
+.hero-meta{margin-top:22px;font-size:14.5px;color:var(--muted);max-width:48ch}
+.hero-art{display:flex;justify-content:center}
+.disc{width:clamp(170px,26vw,330px);aspect-ratio:1;border-radius:50%;background:var(--gold)}
+
+/* ============ VERANSTALTUNGEN ============ */
+.evt-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(28px,4vw,60px);align-items:start}
+.flyer{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.flyer img{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--sand)}
+.flyer figcaption{font-size:13px;color:var(--muted);padding:12px 14px;border-top:1px solid var(--line)}
+.evt-list>li{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:baseline;
+  padding:20px 0;border-top:1px solid var(--line)}
+.evt-list>li:first-child{border-top:0;padding-top:0}
+.e-date{font-size:14px;font-weight:600;color:var(--gold-text);white-space:nowrap;min-width:118px;font-variant-numeric:tabular-nums}
+.e-body h3{font-size:19px}
+.e-body p{font-size:14.5px;color:var(--muted);margin-top:3px}
+.evt-foot{margin-top:30px}
+
+/* ============ CLIP ============ */
+.clip-grid{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,4vw,56px);align-items:center}
+.clip-media{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--sand);aspect-ratio:16/10}
+.clip-media img{width:100%;height:100%;object-fit:cover}
+.play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(38,35,28,.18);border:0;width:100%;cursor:pointer;transition:background .2s}
+.play:hover{background:rgba(38,35,28,.28)}
+.play span{width:66px;height:66px;border-radius:50%;background:var(--creme);display:grid;place-items:center;transition:transform .18s var(--ease)}
+.play:hover span{transform:scale(1.06)}
+.play span svg{width:22px;height:22px;margin-left:3px;fill:var(--ink)}
+
+/* ============ THEMEN ============ */
+.themen-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;align-items:stretch}
+.feature{background:var(--sand);border:1px solid var(--line);border-radius:8px;
+  padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:flex-end;min-height:320px}
+.feature .eyebrow{margin-bottom:14px}
+.feature h3{font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin-bottom:12px}
+.feature p{color:var(--ink-2);max-width:36ch;margin-bottom:22px}
+.theme-col{display:flex;flex-direction:column;gap:22px}
+.theme{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px 26px;
+  flex:1;transition:box-shadow .2s var(--ease),transform .2s var(--ease)}
+.theme:hover{transform:translateY(-2px);box-shadow:0 2px 10px rgba(38,35,28,.05)}
+.theme h3{margin-bottom:8px}
+.theme p{font-size:14.5px;color:var(--muted)}
+
+/* ============ PREDIGTEN ============ */
+.sermons>li{display:grid;grid-template-columns:130px 1fr auto;gap:24px;align-items:center;
+  padding:22px 0;border-top:1px solid var(--line)}
+.sermons>li:first-child{border-top:0}
+.s-date{font-size:14px;font-weight:600;color:var(--gold-text);font-variant-numeric:tabular-nums}
+.s-series{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.s-body h3{font-size:20px;margin:3px 0}
+.s-speaker{font-size:14px;color:var(--ink-2)}
+.s-link{font-weight:600;font-size:14.5px;white-space:nowrap;border-bottom:1.5px solid var(--line-strong);padding-bottom:2px;transition:border-color .16s}
+.s-link:hover{border-color:var(--ink)}
+.sermons-foot{margin-top:32px}
+
+/* ============ KLEINGRUPPEN ============ */
+.kg-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:start}
+.kg-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.kg-card{border:1px solid var(--line);border-radius:8px;padding:20px 22px;background:#fff}
+.kg-card h3{font-size:17px;margin-bottom:4px}
+.kg-card p{font-size:14px;color:var(--muted)}
+
+/* ============ WERTE ============ */
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.value{background:var(--creme);padding:26px 24px}
+.vn{font-size:13px;font-weight:700;color:var(--gold-text);font-variant-numeric:tabular-nums}
+.value h3{font-size:18px;margin:10px 0 6px}
+.value p{font-size:14px;color:var(--muted)}
+
+/* ============ NEXT STEPS ============ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.step{padding:0 26px 0 0}
+.step+.step{padding-left:26px;border-left:1px solid var(--line)}
+.sn{font-size:13px;font-weight:700;color:var(--gold-text)}
+.step h3{font-size:19px;margin:12px 0 8px}
+.step p{font-size:14.5px;color:var(--muted)}
+.ns-foot{margin-top:46px}
+
+/* ============ FOOTER ============ */
+footer.site{background:var(--ink);color:var(--creme);padding:clamp(60px,8vw,92px) 0 28px;border-top:2px solid var(--gold)}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:34px;padding-bottom:42px;border-bottom:1px solid rgba(251,247,238,.16)}
+.foot-brand .logo{height:42px;margin-bottom:16px}
+.foot-brand .logo .jp-j,.foot-brand .logo .jp-p{fill:var(--creme)}
+.foot-brand p{font-size:14.5px;color:rgba(251,247,238,.72);max-width:30ch}
+.foot-col h4{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:15px}
+.foot-col a,.foot-col p{font-size:14.5px;color:rgba(251,247,238,.82);line-height:1.95;display:block}
+.foot-col a:hover{color:var(--creme)}
+.socials{display:flex;gap:10px;margin-top:6px}
+.socials a{width:42px;height:42px;border:1px solid rgba(251,247,238,.22);border-radius:6px;display:grid;place-items:center;transition:.16s}
+.socials a:hover{background:rgba(251,247,238,.1);border-color:var(--gold)}
+.socials svg{width:18px;height:18px;fill:var(--creme)}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:22px;
+  font-size:13.5px;color:rgba(251,247,238,.6)}
+.foot-bottom a:hover{color:var(--creme)}
+.foot-bottom .sep{margin:0 8px;opacity:.5}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.06s}.reveal.d2{transition-delay:.12s}.reveal.d3{transition-delay:.18s}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;background:var(--creme);
+    flex-direction:column;align-items:flex-start;padding:8px clamp(20px,5vw,40px) 18px;border-bottom:1px solid var(--line)}
+  .nav-links.open a{display:block;width:100%;padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .nav-links.open .nav-cta-mobile{display:block}
+  .nav-right .btn-primary{display:none}
+  .burger{display:flex}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-art{order:-1;justify-content:flex-start}
+  .disc{width:clamp(120px,30vw,180px)}
+  .evt-grid,.clip-grid,.themen-grid,.kg-grid{grid-template-columns:1fr}
+  .clip-grid .clip-media{order:-1}
+  .values-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .step{background:var(--creme);padding:24px}
+  .step+.step{border-left:0;padding-left:24px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .kg-cards,.values-grid,.steps{grid-template-columns:1fr}
+  .sermons>li{grid-template-columns:1fr;gap:6px}
+  .evt-list>li{grid-template-columns:1fr;gap:4px}
+  .foot-grid{grid-template-columns:1fr}
+  .btn-row{flex-direction:column;align-items:stretch}
+  .btn-row .btn{justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site">
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a href="#top" style="min-width:0">
+      <svg class="logo" viewBox="0 0 500 288" role="img" aria-label="Jesus Punkt — Startseite">
+        <circle cx="150" cy="144" r="144" fill="#C9A227"/>
+        <text class="jp-j" x="46" y="171" font-size="76" fill="#26231C">JESUS</text>
+        <text class="jp-p" x="300" y="171" font-size="76" fill="#26231C">PUNKT</text>
+      </svg>
+    </a>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#top">Startseite</a></li>
+      <li><a href="#ueber">Über uns</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#gemeindeleben">Gemeindeleben</a></li>
+      <li><a href="/angebote/">Angebote</a></li>
+      <li><a href="/spenden/">Spenden</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li class="nav-cta-mobile"><a href="https://www.youtube.com/@jesuspunkt/streams" target="_blank" rel="noopener">Sonntag live ansehen</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="btn btn-primary" href="https://www.youtube.com/@jesuspunkt/streams" target="_blank" rel="noopener">Sonntag live</a>
+      <button class="burger" id="burger" aria-label="Menü" aria-controls="navlinks" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Gottesdienst · Sonntags 10:00 Uhr</p>
+      <h1 class="reveal d1">Kirche neu erleben</h1>
+      <p class="hero-sub reveal d1">Jesus Punkt ist eine evangelische Freikirche – kraftvoll, zeitgemäß und begeistert vom Leben mit Jesus. Komm vorbei, ganz wie du bist.</p>
+      <p class="hero-meta reveal d2">Sonntags 10:00 · Kruseshofer Str. 20, 17036 Neubrandenburg · vor Ort und auf YouTube</p>
+      <div class="btn-row reveal d2">
+        <a class="btn btn-primary" href="https://www.youtube.com/@jesuspunkt/streams" target="_blank" rel="noopener">Sonntag live ansehen</a>
+        <a class="btn btn-secondary" href="#events">Veranstaltungen</a>
+      </div>
+    </div>
+    <div class="hero-art reveal d1"><div class="disc" aria-hidden="true"></div></div>
+  </div>
+</section>
+
+<!-- ===== VERANSTALTUNGEN ===== -->
+<section class="section" id="events" aria-labelledby="events-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal">Veranstaltungen</p>
+      <h2 id="events-h" class="reveal d1">Was als Nächstes ansteht</h2>
+      <p class="lead reveal d1">Der aktuelle Flyer zum Sonntagsgottesdienst und alle weiteren Termine auf einen Blick — für Kinder, Jugend, Familien und alle dazwischen.</p>
+    </div>
+    <div class="evt-grid">
+      <figure class="flyer reveal d1">
+        <img src="img/flyer.jpg" alt="Flyer zum Sonntagsgottesdienst" loading="lazy">
+        <figcaption>Aktueller Flyer · automatisch aus ChurchTools</figcaption>
+      </figure>
+      <div class="reveal d2">
+        <ul class="evt-list">
+          <li><span class="e-date">So 29. Jun · 10:00</span><div class="e-body"><h3>Gottesdienst</h3><p>Kruseshofer Str. 20 · vor Ort und im Livestream</p></div></li>
+          <li><span class="e-date">Fr 04. Jul · 18:30</span><div class="e-body"><h3>ELEVATE Jugend</h3><p>Für alle zwischen 13 und 29 · Essen, Action, echte Gespräche</p></div></li>
+          <li><span class="e-date">Mi 09. Jul · 19:30</span><div class="e-body"><h3>Hauskreis-Abend</h3><p>In Wohnzimmern in ganz Neubrandenburg</p></div></li>
+          <li><span class="e-date">So 13. Jul · 10:00</span><div class="e-body"><h3>Gottesdienst mit Taufe</h3><p>Ein besonderer Sonntag — bring gern jemanden mit</p></div></li>
+        </ul>
+        <div class="evt-foot"><a class="textlink" href="https://jesus-punkt.de/kalender/" target="_blank" rel="noopener">Alle Termine im Kalender →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLIP ===== -->
+<section class="section" id="clip" aria-labelledby="clip-h">
+  <div class="container clip-grid">
+    <div class="reveal">
+      <p class="eyebrow">Clip</p>
+      <h2 id="clip-h" style="margin:12px 0 16px">Ein kurzer Einblick</h2>
+      <p class="lead">Du willst wissen, wie sich ein Sonntag bei uns anfühlt? In einer Minute siehst du mehr, als tausend Worte sagen können.</p>
+    </div>
+    <figure class="clip-media reveal d1">
+      <img src="img/clip-poster.jpg" alt="Einblick in einen Sonntag bei Jesus Punkt" loading="lazy">
+      <button class="play" type="button" aria-label="Clip abspielen"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== THEMEN ===== -->
+<section class="section" id="themen" aria-labelledby="themen-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal">Themen</p>
+      <h2 id="themen-h" class="reveal d1">Worüber wir gerade reden</h2>
+      <p class="lead reveal d1">In unseren aktuellen Reihen greifen wir Fragen auf, die mitten ins Leben treffen — ehrlich, alltagsnah und nah dran an dem, was Jesus uns zu sagen hat.</p>
+    </div>
+    <div class="themen-grid">
+      <article class="feature reveal d1">
+        <p class="eyebrow">Aktuelle Reihe</p>
+        <h3>Neuanfang</h3>
+        <p>Was, wenn es nie zu spät ist, noch einmal neu zu beginnen? Sechs Sonntage über Hoffnung, Vergebung und den Mut, weiterzugehen.</p>
+        <a class="textlink" href="https://jesus-punkt.de/media/" target="_blank" rel="noopener">Zur Reihe →</a>
+      </article>
+      <div class="theme-col">
+        <article class="theme reveal d2"><h3>Psalmen für den Alltag</h3><p>Alte Worte, die heute noch tragen — durch laute und durch leise Tage.</p></article>
+        <article class="theme reveal d3"><h3>Fragen, die bleiben</h3><p>Zweifel ist kein Tabu. Wir reden über das, was sich nicht leicht beantworten lässt.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREDIGTEN ===== -->
+<section class="section" id="predigten" aria-labelledby="predigten-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal">Predigten</p>
+      <h2 id="predigten-h" class="reveal d1">Verpasst? Hör in Ruhe nach</h2>
+      <p class="lead reveal d1">Die letzten Predigten zum Nachhören und Weiterdenken — wann und wo du willst.</p>
+    </div>
+    <ul class="sermons">
+      <li class="reveal d1">
+        <span class="s-date">15. Jun 2026</span>
+        <div class="s-body"><p class="s-series">Reihe Neuanfang</p><h3>Kirche neu erleben</h3><p class="s-speaker">Philipp Strauch · Pastor</p></div>
+        <a class="s-link" href="https://jesus-punkt.de/media/" target="_blank" rel="noopener">Anhören →</a>
+      </li>
+      <li class="reveal d1">
+        <span class="s-date">08. Jun 2026</span>
+        <div class="s-body"><p class="s-series">Reihe Neuanfang</p><h3>Mehr als Sonntag</h3><p class="s-speaker">Claus Wittnebel</p></div>
+        <a class="s-link" href="https://jesus-punkt.de/media/" target="_blank" rel="noopener">Anhören →</a>
+      </li>
+      <li class="reveal d2">
+        <span class="s-date">01. Jun 2026</span>
+        <div class="s-body"><p class="s-series">Reihe Psalmen</p><h3>Der Herr ist mein Hirte</h3><p class="s-speaker">Philipp Strauch · Pastor</p></div>
+        <a class="s-link" href="https://jesus-punkt.de/media/" target="_blank" rel="noopener">Anhören →</a>
+      </li>
+    </ul>
+    <div class="sermons-foot reveal d2"><a class="btn btn-secondary" href="https://jesus-punkt.de/media/" target="_blank" rel="noopener">Zum Predigtarchiv</a></div>
+  </div>
+</section>
+
+<!-- ===== KLEINGRUPPEN ===== -->
+<section class="section" id="gemeindeleben" aria-labelledby="kg-h">
+  <div class="container kg-grid">
+    <div class="reveal">
+      <p class="eyebrow">Kleingruppen</p>
+      <h2 id="kg-h" style="margin:12px 0 16px">Dein Leben, deine Kleingruppe</h2>
+      <p class="lead">Glaube wächst im Miteinander. In unseren Hauskreisen findest du Menschen, die mit dir durchs Leben gehen — beim Essen, beim Reden, beim Beten. Über ganz Neubrandenburg verteilt.</p>
+      <div class="btn-row"><a class="btn btn-primary" href="https://jesus-punkt.de/kleingruppen/" target="_blank" rel="noopener">Finde deine Kleingruppe</a></div>
+    </div>
+    <div class="kg-cards reveal d1">
+      <div class="kg-card"><h3>Oststadt</h3><p>dienstags · 19:30</p></div>
+      <div class="kg-card"><h3>Innenstadt</h3><p>mittwochs · 19:30</p></div>
+      <div class="kg-card"><h3>Broda</h3><p>donnerstags · 19:30</p></div>
+      <div class="kg-card"><h3>Süd</h3><p>montags · 19:00</p></div>
+      <div class="kg-card"><h3>Junge Erwachsene</h3><p>freitags · 20:00</p></div>
+      <div class="kg-card"><h3>Noch unsicher?</h3><p>Schreib uns — wir finden die passende.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WERTE ===== -->
+<section class="section" id="ueber" aria-labelledby="values-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal">Über uns</p>
+      <h2 id="values-h" class="reveal d1">Sieben Werte, die uns tragen</h2>
+    </div>
+    <div class="values-grid reveal d1">
+      <div class="value"><span class="vn">01</span><h3>Authentisch</h3><p>Wir leben, was wir sagen.</p></div>
+      <div class="value"><span class="vn">02</span><h3>Relevant</h3><p>Wir sind am Puls der Zeit.</p></div>
+      <div class="value"><span class="vn">03</span><h3>Hingegeben</h3><p>Wir geben Gott unser Bestes.</p></div>
+      <div class="value"><span class="vn">04</span><h3>Gastfreundlich</h3><p>Wir schaffen eine „Welcome Home“-Atmosphäre.</p></div>
+      <div class="value"><span class="vn">05</span><h3>Begeistert</h3><p>Die Freude an Gott ist unsere Stärke.</p></div>
+      <div class="value"><span class="vn">06</span><h3>Großzügig</h3><p>Wir segnen, weil wir gesegnet sind.</p></div>
+      <div class="value"><span class="vn">07</span><h3>Wertschätzend</h3><p>Wir lieben Menschen.</p></div>
+      <div class="value"><span class="vn">→</span><h3>Mehr über uns</h3><p>Team, Glaube und unsere Geschichte.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT STEPS ===== -->
+<section class="section" id="nextsteps" aria-labelledby="ns-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal">Next Steps</p>
+      <h2 id="ns-h" class="reveal d1">Lust auf den nächsten Schritt?</h2>
+      <p class="lead reveal d1">Vier Fragen, mit denen du Jesus Punkt in deinem Tempo kennenlernst.</p>
+    </div>
+    <div class="steps reveal d1">
+      <div class="step"><span class="sn">01</span><h3>Wer sind wir?</h3><p>Lern die Menschen hinter Jesus Punkt kennen.</p></div>
+      <div class="step"><span class="sn">02</span><h3>Was glauben wir?</h3><p>Worauf unser Glaube gegründet ist.</p></div>
+      <div class="step"><span class="sn">03</span><h3>Wo gehen wir hin?</h3><p>Unsere Vision für Neubrandenburg.</p></div>
+      <div class="step"><span class="sn">04</span><h3>Bist du dabei?</h3><p>Mach den ersten Schritt — wir freuen uns auf dich.</p></div>
+    </div>
+    <div class="ns-foot reveal d2"><a class="btn btn-primary" href="https://jesus-punkt.de/home-2/next-steps/" target="_blank" rel="noopener">Schritte gehen</a></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site" id="kontakt">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg class="logo" viewBox="0 0 500 288" role="img" aria-label="Jesus Punkt">
+          <circle cx="150" cy="144" r="144" fill="#C9A227"/>
+          <text class="jp-j" x="46" y="171" font-size="76" fill="#26231C">JESUS</text>
+          <text class="jp-p" x="300" y="171" font-size="76" fill="#26231C">PUNKT</text>
+        </svg>
+        <p>Eine evangelische Freikirche in Neubrandenburg. Welcome Home.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Gottesdienst</h4>
+        <p>Sonntags 10:00 Uhr<br>Kruseshofer Str. 20<br>17036 Neubrandenburg<br>vor Ort und auf YouTube</p>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <a href="tel:+4915679133367">+49 156 79133367</a>
+        <a href="mailto:info@jesus-punkt.de">info@jesus-punkt.de</a>
+        <div class="socials">
+          <a href="https://www.youtube.com/@jesuspunkt" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.7-.46-5.5a2.8 2.8 0 0 0-2-2C18.7 4 12 4 12 4s-6.7 0-8.54.5a2.8 2.8 0 0 0-2 2C1 8.3 1 12 1 12s0 3.7.46 5.5a2.8 2.8 0 0 0 2 2C5.3 20 12 20 12 20s6.7 0 8.54-.5a2.8 2.8 0 0 0 2-2C23 15.7 23 12 23 12zM10 15.5v-7l6 3.5z"/></svg></a>
+          <a href="https://www.facebook.com/jesuspunkt" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+          <a href="https://www.instagram.com/jesuspunkt" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm0 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM17 3H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4V7a4 4 0 0 0-4-4zm2 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Entdecken</h4>
+        <a href="#ueber">Über uns</a>
+        <a href="#events">Events</a>
+        <a href="#gemeindeleben">Gemeindeleben</a>
+        <a href="/angebote/">Angebote</a>
+        <a href="/spenden/">Spenden</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Jesus Punkt</span>
+      <span><a href="/impressum/">Impressum</a><span class="sep">·</span><a href="https://jesus-punkt.de/datenschutzerklaerung/" target="_blank" rel="noopener">Datenschutz</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var burger = document.getElementById('burger'), links = document.getElementById('navlinks');
+  function setNav(open){ links.classList.toggle('open', open); burger.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  burger && burger.addEventListener('click', function(){ setNav(!links.classList.contains('open')); });
+  links && links.addEventListener('click', function(e){ if(e.target.tagName==='A'){ setNav(false); }});
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && links && links.classList.contains('open')){ setNav(false); burger.focus(); }});
+
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }});
+    }, {threshold:.1, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>

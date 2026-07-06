@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jesus Punkt — Design System · Heritage Gold</title>
+  <meta name="description" content="Living styleguide des Jesus-Punkt-Webauftritts: Tokens, Typografie und Komponenten aus dem Heritage-Gold-Design.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23C9A227'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/home.css">
+  <link rel="stylesheet" href="/styles/pages.css">
+  <link rel="stylesheet" href="/styles/design-system.css">
+</head>
+<body>
+
+<header class="ds-header">
+  <div class="container">
+    <div class="ds-header__logo"><img src="/img/logo.png" alt="Jesus Punkt" width="70" height="40"></div>
+    <div class="ds-header__title"><h1 class="h2">Design System <span aria-hidden="true">·</span> Heritage Gold</h1></div>
+    <div class="ds-header__desc">
+      <p>Alle Farben, Schriften und Komponenten des Jesus-Punkt-Webauftritts, abgeleitet aus dem Startseiten-Design. Neue Unterseiten komponieren ausschließlich diese Bausteine — Werte kommen immer aus <code>styles/tokens.css</code>.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= FARBEN ================= -->
+  <section class="ds-section container" aria-labelledby="ds-colors">
+    <h2 class="ds-section__title" id="ds-colors">Farben</h2>
+    <div class="ds-section__note">
+      <p>Heritage-Palette aus dem Figma-File. Regel: Gold ist dekorativ oder auf Dunkel — nie als Fließtextfarbe auf hellem Grund unter AA. Kleine goldene Texte nutzen die abgedunkelten Stufen.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-block">
+        <span class="ds-label">Marke &amp; Text</span>
+        <div class="ds-swatches">
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#26231C"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Ink</div><div class="ds-swatch__value">#26231C · --ink</div><div class="ds-swatch__use">Überschriften, Buttons</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#5C544A"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Ink Secondary</div><div class="ds-swatch__value">#5C544A · --ink-2</div><div class="ds-swatch__use">Beschreibungstexte</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#675E4C"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Muted</div><div class="ds-swatch__value">#675E4C · --muted</div><div class="ds-swatch__use">Labels, Fact-Keys</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#C9A227"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Gold</div><div class="ds-swatch__value">#C9A227 · --gold</div><div class="ds-swatch__use">Logo, Footer-Header (auf Dunkel)</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#7A5F12"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Gold Text</div><div class="ds-swatch__value">#7A5F12 · --gold-text</div><div class="ds-swatch__use">Daten, Nummern (AA)</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#AC7A06"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Gold Meta</div><div class="ds-swatch__value">#AC7A06 · --gold-meta</div><div class="ds-swatch__use">Termin-Metazeilen</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#F9C855"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Accent</div><div class="ds-swatch__value">#F9C855 · --accent</div><div class="ds-swatch__use">Highlight, Nav-Glider &amp; -Punkt, nächster Termin</div></div></div>
+        </div>
+      </div>
+      <div class="ds-block">
+        <span class="ds-label">Flächen &amp; Linien</span>
+        <div class="ds-swatches">
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Paper</div><div class="ds-swatch__value">#FFFFFF · --paper</div><div class="ds-swatch__use">Seitenhintergrund</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#FBF7EE"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Creme</div><div class="ds-swatch__value">#FBF7EE · --creme</div><div class="ds-swatch__use">Text auf Ink/Night</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#F1E8D4"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Sand</div><div class="ds-swatch__value">#F1E8D4 · --sand</div><div class="ds-swatch__use">Button-Hover</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#1A1201"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Night</div><div class="ds-swatch__value">#1A1201 · --night</div><div class="ds-swatch__use">Footer</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#EFEEEE"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Surface 2</div><div class="ds-swatch__value">#EFEEEE · --surface-2</div><div class="ds-swatch__use">Neutrale Terminzeilen</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#F9F9F9"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Surface</div><div class="ds-swatch__value">#F9F9F9 · --surface</div><div class="ds-swatch__use">Zeilen-Hover</div></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__chip" style="background:#D9D9D9"></div><div class="ds-swatch__meta"><div class="ds-swatch__name">Line</div><div class="ds-swatch__value">#D9D9D9 · --line</div><div class="ds-swatch__use">Card-Rahmen, Platzhalter</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TYPOGRAFIE ================= -->
+  <section class="ds-section container" aria-labelledby="ds-type">
+    <h2 class="ds-section__title" id="ds-type">Typografie</h2>
+    <div class="ds-section__note">
+      <p>Drei Schriften mit klaren Rollen: <strong>Raveo</strong> für Display &amp; Marke, <strong>Sinkin Sans</strong> für Fließtext und Navigation, <strong>Arimo</strong> für UI-Elemente. Zeilenhöhen und Laufweiten stammen 1:1 aus dem Figma-File.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>H1 · Hero</strong>Raveo Bold · 4.875rem · LH 0.96</div>
+        <div><span class="h1" style="font-size:clamp(2rem,5vw,3.5rem)">Gemeinde, die <span class="hl" style="position:relative;z-index:0">lebt</span></span></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>H2 · Sektion</strong>Raveo Bold · 2.5rem · LH 1.04 · LS −2.5%</div>
+        <div><span class="h2 h2--dot">Was als Nächstes ansteht</span></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>H2 XL · zentriert</strong>Raveo Bold · 3.75rem</div>
+        <div><span class="h2" style="font-size:clamp(1.75rem,4vw,3rem)">Sieben Werte, die uns tragen</span></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>H3 · Card-Titel</strong>Raveo Bold · 1.5rem</div>
+        <div><span class="h3">Kirche neu erleben</span></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>Eyebrow · Hero</strong>Raveo Bold · 1rem · LH 0.96</div>
+        <div><span style="font:700 1rem/0.96 var(--font-display)">Sonntags 10:00 Uhr <span style="color:var(--gold-text)">·</span> Kruseshofer Str. 20</span></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>Body</strong>Sinkin Sans 300 · 0.875rem · LH 1.6</div>
+        <div style="max-width:43.75rem;color:var(--ink-2)"><p>Der aktuelle Flyer zum Sonntagsgottesdienst und alle weiteren Termine auf einen Blick — für Kinder, Jugend, Familien und alle dazwischen.</p></div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>Meta · Gold</strong>Raveo · 0.75–0.875rem</div>
+        <div>
+          <div><span style="font:700 0.875rem/1.2 var(--font-display);color:var(--gold-text)">28. Jun 2026</span></div>
+          <div><span style="font:400 0.75rem/1.6 var(--font-display);color:var(--gold-meta)">Kruseshofer Str. 20 · vor Ort und im Livestream</span></div>
+        </div>
+      </div>
+      <div class="ds-specimen">
+        <div class="ds-specimen__meta"><strong>UI / Button-Label</strong>Arimo Bold · 0.9375rem</div>
+        <div><span style="font:700 0.9375rem/1 var(--font-ui)">Finde deine Kleingruppe</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BUTTONS & LINKS ================= -->
+  <section class="ds-section container" aria-labelledby="ds-buttons">
+    <h2 class="ds-section__title" id="ds-buttons">Buttons &amp; Links</h2>
+    <div class="ds-section__note">
+      <p>Primär = Ink-Fläche mit Creme-Text (Kontrast 14.7 · AAA), Hover = Accent mit Ink-Text. Outline mit 1.5px Ink-30%-Rahmen, Hover = Ink-Fläche mit Creme-Text. Zwei Größen: Large (1rem/2rem, Radius 8) für Haupt-CTAs, Medium (0.875rem/1.375rem, Radius 6) für Sektions-CTAs. Alle Interaktionen mit sanftem Lift (−2px).</p>
+    </div>
+    <div class="ds-section__body ds-stack">
+      <div>
+        <span class="ds-label">Primär · Large / Medium</span>
+        <div class="ds-row">
+          <a class="btn btn--primary btn--lg" href="#0">Livestream</a>
+          <a class="btn btn--primary" href="#0">Schritte gehen</a>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Outline · Medium</span>
+        <div class="ds-row">
+          <a class="btn btn--outline" href="#0">Zum Predigtarchiv</a>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Textlink</span>
+        <div class="ds-row">
+          <a class="textlink" href="#0">Alle Termine im Kalender →</a>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Carousel-Steuerung (rechts: deaktiviert)</span>
+        <div class="ds-row">
+          <button class="icon-btn" type="button" aria-label="Weiter">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Zurück" disabled>
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NAVIGATION ================= -->
+  <section class="ds-section container" aria-labelledby="ds-nav">
+    <h2 class="ds-section__title" id="ds-nav">Navigation</h2>
+    <div class="ds-section__note">
+      <p>Fixierter Header: immer transparent — ab 8px Scroll tragen Pill und Burger eigene weiße Flächen (88%) mit Hairline und Schatten, es gibt keine durchgehende Leiste; das Logo bleibt frei. Hover = ein einzelner Accent-Glider, der per JS von Link zu Link gleitet; aktuelle Seite = Ink-Text mit kleinem Gold-Punkt (kein Hintergrund). Ab ≤64rem ersetzt der Burger die Pill; das Menü fährt als Fullscreen-Panel von oben ein (gestaffelte Links, ohne Ziffern).</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-canvas ds-canvas--hero">
+        <nav class="nav-pill" aria-label="Demo-Navigation" style="width:max-content">
+          <a class="nav-pill__link is-active" href="#0">Über uns</a>
+          <a class="nav-pill__link" href="#0">Events</a>
+          <a class="nav-pill__link" href="#0">Gemeindeleben</a>
+          <a class="nav-pill__link" href="#0">Angebote</a>
+          <a class="nav-pill__link" href="#0">Spenden</a>
+          <a class="nav-pill__link" href="#0">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TERMIN-ZEILEN ================= -->
+  <section class="ds-section container" aria-labelledby="ds-events">
+    <h2 class="ds-section__title" id="ds-events">Termin-Zeilen</h2>
+    <div class="ds-section__note">
+      <p>Der nächste Termin trägt Accent, alle weiteren Surface-2. Zeitspalte fix 4.5rem; Titel Raveo Bold 1.5rem; Metazeilen Gold-Meta. Hover: sanfter Lift mit weichem Schatten. Wird über ChurchTools befüllt (<code>data-ct="events"</code>).</p>
+    </div>
+    <div class="ds-section__body" style="max-width:33.4375rem">
+      <ul class="events__list">
+        <li>
+          <article class="event-row event-row--highlight">
+            <div class="event-row__when">
+              <div><span class="event-row__time">10:00</span></div>
+              <div><span class="event-row__date">So 12. Jul</span></div>
+            </div>
+            <div class="event-row__body">
+              <div><h3 class="event-row__title">Gottesdienst</h3></div>
+              <div><p class="event-row__meta">Kruseshofer Str. 20 · vor Ort und im Livestream</p></div>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="event-row">
+            <div class="event-row__when">
+              <div><span class="event-row__time">18:30</span></div>
+              <div><span class="event-row__date">Fr 17. Jul</span></div>
+            </div>
+            <div class="event-row__body">
+              <div><h3 class="event-row__title">Elevate Jugend</h3></div>
+              <div><p class="event-row__meta">Für Jugendliche zwischen 13 und 29 Jahren</p></div>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CARDS ================= -->
+  <section class="ds-section container" aria-labelledby="ds-cards">
+    <h2 class="ds-section__title" id="ds-cards">Cards</h2>
+    <div class="ds-section__note">
+      <p>Predigt-Card: Medienfläche 367:214 (Platzhalter <code>--line</code>, später YouTube-Thumbnail), Body 1.25rem/1rem, Schatten nur im Hover. Flyer-Card: Rahmen Ink-13%, Radius 8 — der Inhalt kommt als Anhang aus ChurchTools.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-row" style="align-items:flex-start">
+        <div style="flex:0 1 22.9rem">
+          <span class="ds-label">Predigt-Card (Hover zeigt Schatten)</span>
+          <a class="card" href="#0" style="display:block">
+            <div class="card__media" aria-hidden="true"></div>
+            <div class="card__body">
+              <div><span class="card__date">28. Jun 2026</span></div>
+              <div class="card__group">
+                <div><h3 class="card__title">Kirche neu erleben</h3></div>
+                <div><p class="card__meta">Philipp Strauch · Pastor</p></div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div style="flex:0 1 22.9rem">
+          <span class="ds-label">Flyer-Card</span>
+          <figure class="flyer-card">
+            <img src="/img/flyer-aktuell.jpg" alt="Beispiel-Flyer" loading="lazy" style="aspect-ratio:525/297">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTEN-ZEILEN ================= -->
+  <section class="ds-section container" aria-labelledby="ds-rows">
+    <h2 class="ds-section__title" id="ds-rows">Listen-Zeilen (Kleingruppen)</h2>
+    <div class="ds-section__note">
+      <p>Zeilen nur mit horizontalen Hairlines (keine Seitenlinien), die sich überlagern. Hover: Surface-Fläche, leichter Einzug, der Pfeil verlängert sich von 1.9375rem auf 3.875rem und färbt sich Ink.</p>
+    </div>
+    <div class="ds-section__body" style="max-width:38rem">
+      <ul class="kg-list">
+        <li>
+          <a class="kg-row" href="#0">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Oststadt</h3></div>
+              <div><p class="kg-row__meta">dienstags · 19:30</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="kg-row" href="#0">
+            <div class="kg-row__info">
+              <div><h3 class="kg-row__name">Innenstadt</h3></div>
+              <div><p class="kg-row__meta">mittwochs · 19:30</p></div>
+            </div>
+            <div class="kg-row__arrow" aria-hidden="true">
+              <svg width="62" height="12" viewBox="0 0 62 12" fill="none"><path d="M0 6h59.5M55 1.5 60.5 6 55 10.5" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ================= WERTE-RAD ================= -->
+  <section class="ds-section container" aria-labelledby="ds-bubbles">
+    <h2 class="ds-section__title" id="ds-bubbles">Werte-Rad</h2>
+    <div class="ds-section__note">
+      <p>Die sieben Werte sitzen als Kreise (das „Punkt“-Motiv) auf einem Rad, das auf der Startseite per Scroll-Position durch alle Werte dreht (gepinnte Sektion, 7 Stopps; der obere Kreis ist aktiv, die Beschreibung wechselt rechts). Alle Kreise sind Sand — nur der aktive trägt Accent. Bei <code>prefers-reduced-motion</code> wird daraus eine statische Liste.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-row">
+        <div style="position:relative;width:11rem;height:11rem">
+          <div class="bubble" style="position:absolute;inset:0;background:var(--accent);box-shadow:var(--shadow-soft)">
+            <div><span class="bubble__num">01</span></div>
+            <div><h3 class="bubble__name">Authentisch</h3></div>
+          </div>
+        </div>
+        <div style="position:relative;width:11rem;height:11rem;opacity:0.55">
+          <div class="bubble" style="position:absolute;inset:0">
+            <div><span class="bubble__num">02</span></div>
+            <div><h3 class="bubble__name">Relevant</h3></div>
+          </div>
+        </div>
+        <div style="position:relative;width:11rem;height:11rem;opacity:0.55">
+          <div class="bubble" style="position:absolute;inset:0">
+            <div><span class="bubble__num">04</span></div>
+            <div><h3 class="bubble__name">Gastfreundlich</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEAM-CARDS ================= -->
+  <section class="ds-section container" aria-labelledby="ds-team">
+    <h2 class="ds-section__title" id="ds-team">Team-Cards</h2>
+    <div class="ds-section__note">
+      <p>Foto-Card (3:4, Initialen-Platzhalter bis echte Fotos vorliegen) mit Namen und <em>allen</em> Rollen als Sand-Chips — eine Card pro Person in einem Scroll-Snap-Slider, gespeist aus <code>data-ct="team"</code> (ChurchTools-Personen/Rollen). Die Pastoren-Card nutzt dasselbe rechteckige 3:4-Foto.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-row" style="align-items:flex-start">
+        <div style="flex:0 1 14rem">
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">PS</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Philipp Strauch</span></div>
+              <div class="role-chips"><span class="role-chip">Pastor</span><span class="role-chip">Gottesdienst</span><span class="role-chip">Jugendbereich</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 1 14rem">
+          <div class="team-card">
+            <div class="team-photo"><span class="team-photo__initials">SL</span></div>
+            <div class="team-card__body">
+              <div><span class="team-card__name">Saskia Lobert</span></div>
+              <div class="role-chips"><span class="role-chip">Technik</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KALENDER & FAKTEN & GALERIE ================= -->
+  <section class="ds-section container" aria-labelledby="ds-calendar">
+    <h2 class="ds-section__title" id="ds-calendar">Kalender-Leiste, Fact-Strip &amp; Galerie</h2>
+    <div class="ds-section__note">
+      <p>Kalender (Events-Seite): ‹ Monat › über einer Agenda-Liste aus Termin-Zeilen. Fact-Strip (Gemeindeleben): kompakte Schlüsselfakten statt Karten-Wildwuchs. Galerie: nativer Scroll-Snap-Slider im Full-Bleed (Items laufen bis zur Bildschirmkante), Pfeile ab Tablet, Swipe auf Touch. Zickzack-Streifen rahmen jede getönte Sektion.</p>
+    </div>
+    <div class="ds-section__body ds-stack">
+      <div style="max-width:33.4375rem">
+        <span class="ds-label">Kalender-Leiste</span>
+        <div class="calendar__bar">
+          <button class="icon-btn" type="button" aria-label="Vorheriger Monat" disabled>
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div><h3 class="calendar__label">Juli 2026</h3></div>
+          <button class="icon-btn" type="button" aria-label="Nächster Monat">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Fact-Strip</span>
+        <div class="fact-strip" style="margin-top:0.75rem">
+          <div class="fact">
+            <div><span class="fact__key">Wann?</span></div>
+            <div><span class="fact__val">Jeden Freitag · 18:30 – 21:30 Uhr</span></div>
+          </div>
+          <div class="fact">
+            <div><span class="fact__key">Für wen?</span></div>
+            <div><span class="fact__val">13 bis 29 Jahre</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Zickzack-Übergang (Farbwechsel zwischen Sektionen — nie als gerade Linie)</span>
+        <div style="margin-top:0.75rem;max-width:33rem">
+          <div class="zig zig--top" aria-hidden="true"></div>
+          <div style="background:var(--creme);padding:1.5rem;text-align:center"><span style="font:700 0.8125rem/1.2 var(--font-display);letter-spacing:0.14em;color:var(--gold-text)">SECTION--TINT</span></div>
+          <div class="zig zig--bottom" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div>
+        <span class="ds-label">Galerie (2 Platzhalter-Kacheln)</span>
+        <div class="gallery" style="margin-top:0.75rem;max-width:33rem">
+          <div class="gallery__track">
+            <div class="gallery__item" aria-hidden="true"></div>
+            <div class="gallery__item gallery__item--tint" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER-MUSTER ================= -->
+  <section class="ds-section container" aria-labelledby="ds-footer">
+    <h2 class="ds-section__title" id="ds-footer">Footer-Muster</h2>
+    <div class="ds-section__note">
+      <p>Night-Fläche, Spaltenköpfe in Gold (Raveo Bold, LS +14%), Einträge Creme 82% mit LH 1.7, Spalten rechtsbündig ab Desktop. Legal-Zeile mit Creme-16%-Hairline.</p>
+    </div>
+    <div class="ds-section__body">
+      <div class="ds-canvas ds-canvas--dark on-dark">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:2rem">
+          <div>
+            <img src="/img/logo-dark.png" alt="Jesus Punkt" width="70" height="40" loading="lazy">
+            <div class="footer__tagline"><p>Eine evangelische Freikirche in Neubrandenburg. Welcome Home.</p></div>
+          </div>
+          <div class="footer__col" style="text-align:left">
+            <div><h3 class="footer__head">Gottesdienst</h3></div>
+            <div class="footer__list">
+              <div><span class="footer__item">Sonntags 10:00 Uhr</span></div>
+              <div><span class="footer__item">Kruseshofer Str. 20</span></div>
+              <div><a class="footer__item" href="#0">vor Ort und auf YouTube</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAYOUT & BREAKPOINTS ================= -->
+  <section class="ds-section container" aria-labelledby="ds-layout">
+    <h2 class="ds-section__title" id="ds-layout">Layout, Abstände &amp; Breakpoints</h2>
+    <div class="ds-section__body">
+      <div class="ds-block">
+        <span class="ds-label">Layout-Konstanten</span>
+        <table class="ds-table">
+          <tr><th>Container</th><td><code>71.25rem</code> (1140) + <code>1.5rem</code> Safety-Padding</td></tr>
+          <tr><th>Sektions-Padding</th><td><code>9.375rem</code> Block (fluid ab <code>6rem</code> auf Phone)</td></tr>
+          <tr><th>Überschrift → Inhalt</th><td><code>2.5rem</code></td></tr>
+          <tr><th>Spalten-Gaps</th><td>Events/Kleingruppen <code>5rem</code> · Cards/Steps <code>1.25–1.5rem</code></td></tr>
+          <tr><th>Radien</th><td>Cards &amp; Large-Buttons <code>0.5rem</code> · Medium-Buttons <code>0.375rem</code></td></tr>
+        </table>
+      </div>
+      <div class="ds-block">
+        <span class="ds-label">Breakpoints (progressiv, nie in einem Sprung)</span>
+        <table class="ds-table">
+          <tr><th>Desktop</th><td><code>&gt; 64rem</code></td><td>Volles Layout, 3 Cards je Ansicht</td></tr>
+          <tr><th>Tablet quer</th><td><code>≤ 64rem</code></td><td>Burger-Navigation, zweispaltige Sektionen stapeln, 2 Cards je Ansicht</td></tr>
+          <tr><th>Tablet hoch</th><td><code>≤ 48rem</code></td><td>Restliche Spalten stapeln, Carousel wird Swipe</td></tr>
+          <tr><th>Phone</th><td><code>≤ 37.5rem</code></td><td>Typo-Stufen sinken, Hero-CTA volle Breite</td></tr>
+          <tr><th>Small Phone</th><td><code>≤ 30rem</code></td><td>Footer einspaltig</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ds-section container">
+  <div class="ds-section__note">
+    <p>Quelle: <em>Jesus Punkt — Website (Heritage Gold).fig</em> · Spezifikation in <code>docs/superpowers/specs/</code> · Dynamische Inhalte (Termine, Flyer, Predigten, Hauskreise, Team) rendert <code>js/data.js</code> in die <code>data-ct</code>-Slots.</p>
+  </div>
+</footer>
+
+</body>
+</html>
