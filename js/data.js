@@ -3,12 +3,16 @@
 (function () {
   'use strict';
 
+  /* Site root derived from this script's own URL — works at a domain root,
+     under a project-page prefix (…github.io/<repo>/), and locally. */
+  var BASE = new URL('..', document.currentScript.src).pathname;
+
   var URLS = {
-    events: '/data/mock/events.json',
-    flyer: '/data/mock/flyer.json',
-    sermons: '/data/mock/sermons.json',
-    groups: '/data/mock/groups.json',
-    team: '/data/mock/team.json'
+    events: BASE + 'data/mock/events.json',
+    flyer: BASE + 'data/mock/flyer.json',
+    sermons: BASE + 'data/mock/sermons.json',
+    groups: BASE + 'data/mock/groups.json',
+    team: BASE + 'data/mock/team.json'
   };
 
   /* "now" for mock data — keeps the demo deterministic while the JSON is static.
@@ -69,8 +73,8 @@
     var others = upcoming.filter(function (e) { return e !== service && e.type !== 'gottesdienst'; }).slice(0, 2);
     if (!service && !others.length) return;
     var rows = [];
-    if (service) rows.push(eventRowHTML(service, true, '/events/'));
-    others.forEach(function (e) { rows.push(eventRowHTML(e, false, '/events/')); });
+    if (service) rows.push(eventRowHTML(service, true, BASE + 'events/'));
+    others.forEach(function (e) { rows.push(eventRowHTML(e, false, BASE + 'events/')); });
     slot.innerHTML = rows.join('');
   }
 
@@ -142,7 +146,7 @@
   /* ---------- flyer ---------- */
   function renderFlyer(data) {
     document.querySelectorAll('[data-ct="flyer"] img').forEach(function (img) {
-      img.src = '/' + String(data.url).replace(/^\//, '');
+      img.src = BASE + String(data.url).replace(/^\//, '');
       img.alt = data.alt;
     });
   }
@@ -150,7 +154,7 @@
   /* ---------- groups ---------- */
   function renderGroups(data) {
     document.querySelectorAll('[data-ct="groups"]').forEach(function (list) {
-      var href = list.closest('#hauskreise') ? '#hauskreise' : '/gemeindeleben/#hauskreise';
+      var href = list.closest('#hauskreise') ? '#hauskreise' : BASE + 'gemeindeleben/#hauskreise';
       list.innerHTML = data.groups.map(function (g) {
         return (
           '<li><a class="kg-row" href="' + href + '">' +
