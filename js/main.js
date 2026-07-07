@@ -53,7 +53,40 @@
       link.addEventListener('focus', function () { show(link); });
       link.addEventListener('blur', hide);
     });
+    /* the language button glides like any other pill item — the glider targets
+       its wrapper (a direct pill child), so offsetLeft is pill-relative */
+    var langGlide = pill.querySelector('.nav-pill__lang');
+    if (langGlide) {
+      var langGlideBtn = langGlide.querySelector('.nav-pill__lang-btn');
+      langGlideBtn.addEventListener('mouseenter', function () { show(langGlide); });
+      langGlideBtn.addEventListener('focus', function () { show(langGlide); });
+      langGlideBtn.addEventListener('blur', hide);
+    }
     pill.addEventListener('mouseleave', hide);
+  }
+
+  /* ---------- Language dropdown in the nav pill ---------- */
+  var langWrap = document.querySelector('.nav-pill__lang');
+  if (langWrap) {
+    var langBtn = langWrap.querySelector('.nav-pill__lang-btn');
+    var langCode = langWrap.querySelector('.nav-pill__lang-code');
+    if (langCode) langCode.textContent = LANG.toUpperCase();
+
+    var setLangOpen = function (open) {
+      langWrap.classList.toggle('is-open', open);
+      langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    langBtn.addEventListener('click', function () {
+      setLangOpen(!langWrap.classList.contains('is-open'));
+    });
+    langWrap.addEventListener('mouseenter', function () { setLangOpen(true); });
+    langWrap.addEventListener('mouseleave', function () { setLangOpen(false); });
+    document.addEventListener('click', function (e) {
+      if (!langWrap.contains(e.target)) setLangOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setLangOpen(false);
+    });
   }
 
   /* ---------- Werte wheel (pinned scroll section) ---------- */
@@ -104,12 +137,42 @@
         nameEl.textContent = items[idx].querySelector('.bubble__name').textContent;
         lineEl.textContent = LINES[idx];
       };
+
+      /* phone close-ranks: the active bubble sits in the centre, the other six
+         re-space to 60° so the ring stays complete (next value straight above).
+         Angles are tracked unwrapped so every morph takes the shortest path. */
+      var mqPhone = window.matchMedia('(max-width: 48rem)');
+      var curAngles = items.map(function (_, i) { return i * 51.4286; });
+      var applyAngles = function (idx) {
+        items.forEach(function (it, i) {
+          if (!mqPhone.matches) {
+            it.style.removeProperty('--angle'); /* back to the CSS calc(--i * 51.4286deg) */
+            curAngles[i] = i * 51.4286;
+            return;
+          }
+          var k = (i - idx + 7) % 7;
+          if (k === 0) return; /* active: centred via translateY(0), angle irrelevant */
+          /* target = visual slot (k-1)·60° compensated for the current ring turn */
+          var delta = ((k - 1) * 60 + idx * 51.4286 - curAngles[i]) % 360;
+          if (delta > 180) delta -= 360;
+          if (delta < -180) delta += 360;
+          curAngles[i] += delta;
+          it.style.setProperty('--angle', curAngles[i] + 'deg');
+        });
+      };
+      mqPhone.addEventListener('change', function () { if (active >= 0) applyAngles(active); });
+
       var setActive = function (idx) {
         if (idx === active) return;
         var isInit = active === -1;
         active = idx;
         wheel.style.setProperty('--wheel-turn', (-idx * 51.4286) + 'deg');
-        items.forEach(function (it, i) { it.classList.toggle('is-active', i === idx); });
+        items.forEach(function (it, i) {
+          var dist = Math.min(Math.abs(i - idx), 7 - Math.abs(i - idx));
+          it.style.setProperty('--d', dist); /* ring distance drives the ripple + falloff */
+          it.classList.toggle('is-active', i === idx);
+        });
+        applyAngles(idx);
         if (isInit) { applyPanel(idx); return; } /* no crossfade dip on page load */
         panel.classList.add('is-switching');
         clearTimeout(switchTimer);

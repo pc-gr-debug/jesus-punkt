@@ -28,11 +28,17 @@
       <a class="nav-pill__link" href="/angebote/">Angebote</a>
       <a class="nav-pill__link" href="/spenden/">Spenden</a>
       <a class="nav-pill__link" href="/kontakt/">Kontakt</a>
-    </nav>
-    <nav class="lang-switch" aria-label="Sprache">
-      <a class="lang-switch__link is-active" href="/gemeindeleben/" hreflang="de" lang="de" data-lang-link>DE</a>
-      <a class="lang-switch__link" href="/en/gemeindeleben/" hreflang="en" lang="en" data-lang-link>EN</a>
-      <a class="lang-switch__link" href="/uk/gemeindeleben/" hreflang="uk" lang="uk" data-lang-link>UK</a>
+      <span class="nav-pill__divider" aria-hidden="true"></span>
+      <div class="nav-pill__lang">
+        <button class="nav-pill__lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sprache">
+          <span class="nav-pill__lang-code">DE</span><span class="nav-pill__lang-caret" aria-hidden="true"></span>
+        </button>
+        <div class="nav-pill__lang-menu">
+          <a class="nav-pill__lang-link is-active" href="/gemeindeleben/" hreflang="de" lang="de" data-lang-link>Deutsch</a>
+          <a class="nav-pill__lang-link" href="/en/gemeindeleben/" hreflang="en" lang="en" data-lang-link>English</a>
+          <a class="nav-pill__lang-link" href="/uk/gemeindeleben/" hreflang="uk" lang="uk" data-lang-link>Українська</a>
+        </div>
+      </div>
     </nav>
     <button class="burger" id="burger" aria-label="Menü öffnen" aria-controls="nav-panel" aria-expanded="false">
       <span class="burger__bar"></span>

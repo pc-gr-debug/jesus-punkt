@@ -128,7 +128,7 @@ def process_tag(tag: str, loc: str, page: str, table: dict, report: dict) -> str
         tag = tag.replace(" is-active", "").replace('is-active ', '')
         tag = re.sub(r'class="([^"]*)"', lambda m: f'class="{m.group(1)}"', tag)
         if f'hreflang="{loc}"' in tag:
-            tag = re.sub(r'class="((?:nav-panel__lang-link|lang-switch__link)[^"]*)"',
+            tag = re.sub(r'class="((?:nav-panel__lang-link|lang-switch__link|nav-pill__lang-link)[^"]*)"',
                          r'class="\1 is-active"', tag)
         return tag
 

@@ -134,6 +134,8 @@
 
 /* ================= WERTE (scroll wheel) ================= */
 .werte {
+  --wheel-t: 800ms;                                    /* one shared clock for ring, items and face */
+  --wheel-ease: cubic-bezier(0.34, 1.25, 0.64, 1);     /* gentle overshoot — the wheel settles with a spring */
   padding-block: 0 9.375rem;  /* 150px air below the wheel before the footer */
   height: 420vh;              /* scroll runway: 7 stops, unhurried */
 }
@@ -169,6 +171,12 @@
   text-align: center;
   padding: 10%;
   background: var(--sand);
+  /* depth falloff by ring distance (--d, set by JS); scale lives here, NOT on the
+     item — a delayed item transform would fight the counter-rotation and tilt */
+  transform: scale(calc(1.03 - var(--d, 1) * 0.03));
+  transition: transform var(--wheel-t) var(--wheel-ease) calc(var(--d, 0) * 45ms),
+              background var(--t-med) var(--ease) calc(var(--d, 0) * 45ms),
+              box-shadow var(--t-med) var(--ease) calc(var(--d, 0) * 45ms);
 }
 .bubble__num { font: 700 0.6875rem / 1 var(--font-ui); color: var(--gold-text); }
 .bubble__name {
@@ -188,7 +196,27 @@
   height: var(--wheel-size);
   margin-inline: auto;
   transform: rotate(var(--wheel-turn));
-  transition: transform var(--t-slow) var(--ease);
+  transition: transform var(--wheel-t) var(--wheel-ease);
+}
+/* ring guide through the bubble centres — a circle needs no counter-rotation */
+.wheel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(38, 35, 28, 0.12);
+  pointer-events: none;
+}
+/* clock face: 7 gold ticks at the midpoints between slots (at-slot ticks would sit
+   under the bubbles at rest); counter-rotated so it stays static while the ring turns */
+.wheel::after {
+  content: "";
+  position: absolute;
+  inset: -2.1%; /* radius-48 tick coords land exactly on the ring guide */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23C9A227'%3E%3Ccircle cx='70.83' cy='6.76' r='1'/%3E%3Ccircle cx='96.79' cy='39.32' r='1'/%3E%3Ccircle cx='87.53' cy='79.93' r='1'/%3E%3Ccircle cx='50' cy='98' r='1'/%3E%3Ccircle cx='12.47' cy='79.93' r='1'/%3E%3Ccircle cx='3.21' cy='39.32' r='1'/%3E%3Ccircle cx='29.17' cy='6.76' r='1'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  transform: rotate(calc(-1 * var(--wheel-turn)));
+  transition: transform var(--wheel-t) var(--wheel-ease);
+  pointer-events: none;
 }
 .wheel__item {
   --angle: calc(var(--i) * 51.4286deg);
@@ -202,18 +230,20 @@
   transform: rotate(var(--angle))
              translateY(calc(var(--wheel-size) / -2))
              rotate(calc(-1 * var(--angle) - var(--wheel-turn)));
-  transition: transform var(--t-slow) var(--ease), opacity var(--t-slow) var(--ease);
-  opacity: 0.55;
+  /* transform stays in lockstep with the ring (no delay!); only opacity ripples */
+  transition: transform var(--wheel-t) var(--wheel-ease),
+              opacity var(--t-slow) var(--ease) calc(var(--d, 0) * 45ms);
+  opacity: calc(1 - var(--d, 0) * 0.18); /* 1 / 0.82 / 0.64 / 0.46 by ring distance */
 }
 .wheel__item.is-active {
   opacity: 1;
-  transform: rotate(var(--angle))
-             translateY(calc(var(--wheel-size) / -2))
-             rotate(calc(-1 * var(--angle) - var(--wheel-turn)))
-             scale(1.18);
   z-index: 1;
 }
-.wheel__item.is-active .bubble { background: var(--accent); box-shadow: var(--shadow-soft); }
+.wheel__item.is-active .bubble {
+  background: var(--accent);
+  box-shadow: var(--shadow-soft);
+  transform: scale(1.18);
+}
 
 /* description panel */
 .werte__panel { display: flex; flex-direction: column; gap: 0.625rem; }
@@ -242,13 +272,14 @@
   /* wheel intentionally wider than the screen — side bubbles bleed off for breathing room */
   .wheel__item { width: 7rem; height: 7rem; margin: -3.5rem 0 0 -3.5rem; }
   .wheel__item .bubble__name { font-size: 0.75rem; }
-  /* the active value sits in the middle of the ring, not at 12 o'clock */
+  /* the active value sits in the middle of the ring, not at 12 o'clock;
+     the other six close ranks to 60° (JS re-assigns --angle) so the ring stays complete */
   .wheel__item.is-active {
     transform: rotate(var(--angle))
                translateY(0)
-               rotate(calc(-1 * var(--angle) - var(--wheel-turn)))
-               scale(1.3);
+               rotate(calc(-1 * var(--angle) - var(--wheel-turn)));
   }
+  .wheel__item.is-active .bubble { transform: scale(1.3); }
   .werte__panel { align-items: center; min-height: 8rem; }
 }
 
@@ -258,8 +289,9 @@
   .werte__sticky { position: static; height: auto; overflow: visible; display: block; }
   .werte__stage { display: flex; flex-direction: column; align-items: center; gap: var(--space-lg); }
   .wheel { width: auto; height: auto; transform: none; display: flex; flex-direction: column; gap: var(--space-md); margin: 0; }
+  .wheel::before, .wheel::after { content: none; } /* no ring guide / ticks in the list */
   .wheel__item { position: static; margin: 0; transform: none !important; opacity: 1; width: auto; height: auto; cursor: default; }
-  .wheel__item .bubble { width: 12rem; height: 12rem; }
+  .wheel__item .bubble { width: 12rem; height: 12rem; transform: none; }
   .werte__panel { display: none; }
 }
 
