@@ -36,7 +36,8 @@ Ground rule (unchanged): **one editing surface per content type, no duplication.
 | Predigten | weekly | YouTube-Upload (Beschreibungs­konvention) | proxy `/sermons` | Technik-Team |
 | Hauskreise | monthly | ChurchTools Gruppen | proxy `/groups` | Hauskreis-Koordination |
 | **Team-Seite** (Namen, Rollen, Fotos) | few ×/year | **CMS** (`data/team.json` + Foto-Upload) | commit → deploy | Gemeindeleitung |
-| **Statische Texte** (Hero, Werte, Glaube, Angebote, Spenden-IBAN, Kontakt) | few ×/year | **CMS** (`data/content/*.json`) | commit → bake → deploy | Website-Team |
+| **Statische Texte** (Hero, Werte, Glaube, Angebote, Spenden-IBAN, Kontakt) | few ×/year | **CMS** (`data/content/*.json`, DE·EN·UK side by side) | commit → bake → deploy | Website-Team |
+| **Übersetzungen** (site-wide UI-Strings für `/en/` + `/uk/`) | when copy changes | **CMS** („Übersetzungen"-Collection) | commit → locale build → deploy | Website-Team / Übersetzer |
 | Layout / Design / neue Seiten | rare | Repo (Entwickler) | PR → deploy | Entwickler |
 
 **Deliberate change vs. the earlier sketch:** the team page moves to the **CMS permanently**, not
@@ -63,7 +64,11 @@ image upload for team/gallery photos.
 service to depend on — and its GitHub-OAuth helper is a ~40-line Cloudflare Worker that can live
 in the **same Worker** we already need as the ChurchTools proxy (one deployment, two routes).
 Fallback if OAuth setup annoys: Pages CMS works with this exact repo layout unchanged — the
-`config.yml` content model below transfers 1:1.
+`config.yml` content model below transfers 1:1 (minus the i18n columns).
+
+The i18n decision below makes Sveltia's **first-class i18n support** load-bearing: with
+`i18n: {locales: [de, en, uk], default_locale: de}` the editor shows the three languages side
+by side per field — the maintainer translates in the same form he edits.
 
 ## 3 · Content model (what becomes editable)
 
@@ -86,6 +91,24 @@ Editor rules encoded in the config: max lengths where layout is tight (value lin
 `pattern` for IBAN, required alt-texts for uploads, no rich text anywhere (plain strings only —
 the design system owns all formatting).
 
+**Every user-visible text field is localized.** Sveltia's i18n mode stores `{de, en, uk}` per
+field (single-file structure); German is required, `en`/`uk` may stay empty — empty means the
+locale trees fall back to German, exactly the i18n build's existing behavior. Deliberately not
+localized: IBAN, phone, addresses, photos, and the German-only legal pages.
+
+**Site-wide UI strings become a CMS collection too.** `data/i18n/en.json` + `uk.json`
+(German string → translation maps) are migrated into one CMS-friendly
+`data/i18n/translations.json` — a list of `{de, en, uk}` entries. `tools/i18n-build.py` reads
+the list instead of the two maps (~15-line change; a one-off script migrates the existing
+173×2 entries). The maintainer edits translations in the same admin UI („Übersetzungen",
+searchable by the German string).
+
+**The translation to-do loop closes itself.** The i18n build already reports untranslated
+German strings at deploy; that report now auto-appends the missing strings as entries with
+empty `en`/`uk` to `translations.json` (workflow commit with `[skip ci]`). New or changed copy
+therefore shows up in the CMS as visibly empty fields the maintainer fills when he gets to it —
+no developer in the loop, German fallback until then.
+
 ## 4 · How CMS content reaches the pages: bake at deploy, not fetch at runtime
 
 Static copy must not become JS-rendered (SEO, no-JS fallback, no flash). Instead the **existing
@@ -98,12 +121,40 @@ Pages workflow** gets one more step — the same pattern as the path-prefixer al
    `data/content/*.json` during deploy. Wrong path → build fails loudly, site never half-renders.
 3. `js/main.js` reads the Werte lines from a `<script type="application/json">` block the bake
    step injects — removing today's duplication of the 7 value lines (HTML + `LINES` array).
+4. **Locale trees:** the bake writes the German values into the source markup *before*
+   `tools/i18n-build.py` runs, and merges the fields' `{en, uk}` values into that run's
+   translation table. CMS-managed strings can therefore never produce fallback warnings — the
+   warning report stays meaningful for markup-only strings.
 
 Local dev keeps working with the checked-in fallback copy; the bake only runs in CI. Flow:
 **CMS save → commit on `main` → Actions bake + deploy → live in ≈ 1 minute.** Every change is a
 commit: who/what/when, one-click revert.
 
-## 5 · ChurchTools side (delta to churchtools-integration.md)
+## 5 · Visual editing: the same content, on the real page
+
+Decision (2026-07-08): forms alone are too abstract — the CMS gets a second, **visual** surface.
+Both surfaces edit the same `data/content/*.json`; nothing is duplicated.
+
+- **Sveltia stays the base** — structured fields, validation, photo uploads, and the
+  side-by-side translation columns. Its preview pane gets the site's real CSS
+  (`tokens/base/components` via preview styles), so entries already *look* like the site.
+  True live preview of the real page is explicitly out of Sveltia's scope — hence:
+- **In-context edit mode** (own overlay, ~300–500 lines, dependency-free). The bake markers
+  (`data-content="werte.0.name"`) are exact content addresses in the real DOM — precisely what
+  visual editing needs. `/admin/` gains an „Auf der Seite bearbeiten" mode: the live site loads
+  in an iframe with an edit flag, every marked element becomes editable in place (the same
+  field config enforces max-lengths live; plain text by construction). „Speichern" writes the
+  diff to `data/content/*.json` and commits through the Worker's GitHub route → bake → deploy →
+  live in ≈ 1 minute. Editing feels like the website; publishing stays git.
+- **Visual translating (overlay v2):** the markers survive into the generated `/en/` + `/uk/`
+  trees, so the same overlay on the English page edits the `en` values — translating by
+  clicking text on the actual English site. Ships after the German overlay proves itself; the
+  form columns cover translations from day one.
+- Commercial visual CMSes were checked (2026-07-08) and rejected: CloudCannon does in-context
+  editing natively but has no free tier ($45+/site/month); Tina's contextual editing wants a
+  React app, which this hand-coded static site is not.
+
+## 6 · ChurchTools side (delta to churchtools-integration.md)
 
 Everything in that doc stands, with two updates:
 
@@ -118,30 +169,31 @@ Everything in that doc stands, with two updates:
   schema), not the pre-formatted strings from the older doc — date formatting stays client-side
   in `data.js` where it already works (calendar needs real dates anyway).
 
-## 6 · Rollout phases
+## 7 · Rollout phases
 
 | Phase | Scope | Effort | Blockers |
 |---|---|---|---|
 | **0 — done** | mock data layer, `data-ct` slots incl. calendar + team, Pages auto-deploy | — | — |
-| **1 — CT live** | Worker proxy: `/events` `/flyer` `/flyer/file` `/groups`; CT read-only user + token; team conventions (Flyer-Anhang, Kalender öffentlich, Feld „Treffzeit"); switch `data.js` URL map | 1–2 days | CT instance URL, API user (§7) |
+| **1 — CT live** | Worker proxy: `/events` `/flyer` `/flyer/file` `/groups`; CT read-only user + token; team conventions (Flyer-Anhang, Kalender öffentlich, Feld „Treffzeit"); switch `data.js` URL map | 1–2 days | API user (§8) — instance is jp.church.tools |
 | **2 — Predigten** | `/sermons` via YouTube Data API (uploads playlist → title/date/speaker/thumbnail); description convention "Name · Rolle" | 0.5–1 day | YT API key |
-| **3 — CMS** | Sveltia `/admin/` + OAuth route on the Worker; `data/content/*.json` + `config.yml`; bake step in workflow; move team.json under CMS with photo upload + consent field; 1-page German editor guide with screenshots | 2–3 days | GitHub OAuth app |
+| **3 — CMS** | Sveltia `/admin/` + OAuth route on the Worker; localized `data/content/*.json` (DE·EN·UK) + `config.yml`; „Übersetzungen"-Collection (migrate `data/i18n/*` → `translations.json`, adapt `i18n-build.py`, auto-append missing strings); bake step incl. locale merge; move team.json under CMS with photo upload + consent field; 1-page German editor guide with screenshots | 3–4 days | GitHub OAuth app |
+| **3.5 — Edit mode** | in-context overlay on the `data-content` markers (edit on the real page, commit via Worker); v2: same overlay on `/en/`+`/uk/` for visual translating | 1–2 days | Phase 3 (markers + OAuth live) |
 | **4 — Domain** | jesus-punkt.de → Pages custom domain; prefix step auto-skips (root); Worker on `api.jesus-punkt.de`; repo → church GitHub org, editors invited with write access | 0.5 day | DNS access |
 
 Sequencing note: **Phase 1 delivers the most visible value** (the docx goal: „einmal in
 ChurchTools pflegen") and needs no CMS. Phase 3 is independent and can run in parallel once the
 Worker exists.
 
-## 7 · Open decisions (carried + new)
+## 8 · Open decisions (carried + new)
 
-1. CT instance URL + who creates the read-only API user (info@ access is still via Günther).
+1. ~~CT instance URL~~ **jp.church.tools** (confirmed 2026-07-08). Still open: who creates the read-only API user (info@ access is still via Günther).
 2. Which calendars are public: Gottesdienst, Elevate/Opendoor, Gebet, Hauskreise?
 3. YouTube: who owns the Google Cloud project for the API key?
 4. GitHub org for the Gemeinde (repo currently under the personal account) — needed before
    editors get CMS access; also decides who approves the OAuth app.
 5. Photo consent process for the team page: form or verbal + checkbox in the CMS entry?
 
-## 8 · Risks & mitigations
+## 9 · Risks & mitigations
 
 - **Drift between CMS copy and checked-in fallback** → bake step fails the build on unknown
   markers; quarterly `diff` check is one command.
@@ -149,5 +201,9 @@ Worker exists.
 - **Worker down** → client keeps pre-rendered fallback content (existing behavior, already tested).
 - **Editor breaks layout with long text** → field max-lengths in `config.yml`; no rich text.
 - **Token leakage** → token only in Worker env; read-only CT user; rotate on personnel change.
+- **Custom overlay bit-rots** → it is an enhancement layer only; Sveltia edits 100% of the
+  content without it, so it can be switched off at any time.
+- **Auto-appended translation entries retrigger the deploy** → the append commit uses
+  `[skip ci]`; it carries no content change.
 - **Bus factor** → everything is in the repo (incl. this plan); any web developer can take over
   with `git clone` + one page of docs.

@@ -2,7 +2,14 @@
 
 Goal from the docx: the team updates content **once in ChurchTools** (flyer, Termine, Gruppen) and the website reflects it automatically. This plan maps every dynamic element of the Heritage Gold pages to a ChurchTools (CT) source, defines the auth/caching architecture, and stages the rollout.
 
-Assumed instance: `https://<gemeinde>.church.tools` (CT hosted) with the standard REST API (`/api/*`, OpenAPI at `/api/docs`).
+Instance (confirmed): **`https://jp.church.tools`** with the standard REST API (`/api/*`).
+
+**Verified against the live spec 2026-07-08** (`docs/churchtools-openapi.json`, gitignored — re-download command in `.gitignore`; OpenAPI 3.1, 487 paths). Corrections from that pass:
+
+- Auth is exactly as planned: `Authorization: Login <token>` header (scheme `Login-Token-Header`); a query variant `?login_token=` exists but the header stays our choice. Token for the website user comes from `GET /persons/{personId}/logintoken` (admin, once).
+- Events need **one call, not one per calendar**: `GET /api/calendars/appointments?calendar_ids[]=…&from=&to=` returns all public calendars' appointments together.
+- There is **no `GET /publicgroups` list endpoint** in this version. Group signup data is per-group: `/publicgroups/{groupId}/form` (public registration form) or the group's homepage link via `GET /groups/{groupId}/grouphomepage`. So: list via `GET /groups?group_type_ids[]=…&visibility=…`, then resolve each group's signup URL.
+- `GET /whoami` is the proxy's token health check.
 
 ## 1. Architecture
 
@@ -69,7 +76,7 @@ Dates are pre-formatted German strings server-side (`Intl.DateTimeFormat('de-DE'
 
 ## 6. Open questions for the team
 
-- CT-Instanz-URL + wer legt den API-User an? (Zugriff auf info@jesus-punkt.de läuft laut docx noch über Günther.)
+- ~~CT-Instanz-URL~~ **jp.church.tools** (bestätigt 2026-07-08). Offen: wer legt den API-User an? (Zugriff auf info@jesus-punkt.de läuft laut docx noch über Günther.)
 - Welche Kalender sind öffentlich freigegeben (Gottesdienst, Elevate/Opendoor, Gebet, Hauskreise)?
 - Wird das CT-Predigt-/Beiträge-Modul gepflegt, oder bleibt YouTube die Predigtquelle?
 

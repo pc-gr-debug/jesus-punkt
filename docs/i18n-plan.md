@@ -4,6 +4,13 @@
 > `data/i18n/{en,uk}.json` (173 strings each), switcher in header/menu/footer, hreflang,
 > locale-aware `js/data.js`/`js/main.js`, Arimo-Cyrillic subset for uk. Open: native review
 > of the uk/en copy (§7) and the Gottesdienst-translation question (§9.1).
+>
+> **Update 2026-07-08:** translation *editing* moves to the CMS (decided in
+> `cms-integration-plan.md` §3–5): `data/i18n/{en,uk}.json` will be migrated to a single
+> `translations.json` entry list (`{de, en, uk}` per entry) edited in Sveltia, the build's
+> missing-string report auto-appends empty entries as to-dos, and CMS content fields carry
+> their own `en`/`uk` columns that merge into the locale build. The maintainer translates
+> himself — no developer in the loop.
 
 Companion to `cms-integration-plan.md` (editing architecture) and `churchtools-integration.md`
 (dynamic data). Goal: the site speaks **German (source of truth), English, and Ukrainian** —

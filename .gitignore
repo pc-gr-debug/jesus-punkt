@@ -5,3 +5,6 @@ docs/superpowers/plans/shots/
 # generated locale trees (built at deploy time by tools/i18n-build.py)
 /en/
 /uk/
+# 23MB OpenAPI dump from jp.church.tools — local API reference, re-download:
+# curl -sL https://jp.church.tools/system/runtime/swagger/openapi.json -o docs/churchtools-openapi.json
+docs/churchtools-openapi.json
