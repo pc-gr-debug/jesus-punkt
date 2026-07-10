@@ -80,6 +80,22 @@ def main() -> int:
 
         text = MARKER_RE.sub(sub, text)
 
+        # section flags: data/content/<flag>.json with {"enabled": false} hides every
+        # element carrying data-section-flag="<flag>" (works without JS, SEO-clean)
+        for flag_m in set(re.findall(r'data-section-flag="([^"]+)"', text)):
+            flag_file = ROOT / "data" / "content" / f"{flag_m}.json"
+            if not flag_file.exists():
+                errors.append(f"{page}: section flag {flag_m} has no data/content/{flag_m}.json")
+                continue
+            if json.loads(flag_file.read_text(encoding="utf-8")).get("enabled", True):
+                continue
+            text = re.sub(
+                r'(<[a-z0-9]+\b[^>]*\bdata-section-flag="' + re.escape(flag_m) + r'"[^>]*?)(\s*/?>)',
+                lambda m: m.group(1) + (m.group(2) if " hidden" in m.group(1) else " hidden" + m.group(2)),
+                text,
+            )
+            replaced += 1
+
         if "<!-- bake:werte-lines -->" in text:
             werte = content.get("werte", {})
             lines = {loc: [v["line"] for v in werte.get(loc, {}).get("values", [])]

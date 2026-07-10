@@ -140,9 +140,11 @@
   .events__grid .events__list > li:first-child .event-row__time { font-size: 1.75rem; }
 }
 @media (max-width: 31.25rem) {
-  /* narrow phones: the 2-up card grid gets cramped — back to one column */
+  /* narrow phones: the 2-up card grid gets cramped — back to one column,
+     and the featured card loses its bigger type: all cards read the same */
   .events__grid .events__list { grid-template-columns: 1fr; grid-auto-rows: auto; }
   .events__grid .events__list > li:first-child { grid-row: auto; }
+  .events__grid .events__list > li:first-child .event-row__time { font-size: 1.25rem; }
 }
 
 /* ================= KLEINGRUPPEN ================= */

@@ -15,7 +15,7 @@
     flyer: BASE + 'data/ct/flyer.json',
     flyerFallback: BASE + 'data/mock/flyer.json',
     sermons: BASE + 'data/mock/sermons.json',
-    groups: BASE + 'data/mock/groups.json',
+    groups: BASE + 'data/content/hauskreise.json', /* CMS-managed incl. enabled-toggle */
     team: BASE + 'data/content/team.json' /* CMS-managed (photos need explicit consent — never from CT) */
   };
 
@@ -206,6 +206,14 @@
 
   /* ---------- groups ---------- */
   function renderGroups(data) {
+    if (data.enabled === false) {
+      /* no Hauskreise right now: hide the flagged sections (deploy bake does the
+         same server-side; this covers local dev and stale deploys) */
+      document.querySelectorAll('[data-section-flag="hauskreise"]').forEach(function (el) {
+        el.hidden = true;
+      });
+      return;
+    }
     document.querySelectorAll('[data-ct="groups"]').forEach(function (list) {
       var href = list.closest('#hauskreise') ? '#hauskreise' : PAGE_BASE + 'gemeindeleben/#hauskreise';
       list.innerHTML = data.groups.map(function (g) {

@@ -53,7 +53,9 @@ collections:
         i18n: true
         fields:
           - { name: kontoinhaber, label: Kontoinhaber, widget: string, i18n: false }
-          - { name: iban, label: IBAN, widget: string, i18n: false, pattern: ['^(DE[0-9 ]{20,27}|DE[·. ]+)$', 'Deutsche IBAN (DE + 20 Ziffern)'] }
+          - { name: bank, label: Bank, widget: string, i18n: false }
+          - { name: iban, label: IBAN, widget: string, i18n: false, pattern: ['^DE[0-9 ]{20,27}$', 'Deutsche IBAN (DE + 20 Ziffern)'] }
+          - { name: bic, label: BIC, widget: string, i18n: false }
           - { name: verwendungszweck, label: Verwendungszweck, widget: string, i18n: false }
       - name: kontakt
         label: Kontaktdaten
@@ -62,6 +64,17 @@ collections:
         fields:
           - { name: phone, label: Telefon, widget: string, i18n: false, hint: "Format: +49 …" }
           - { name: email, label: E-Mail, widget: string, i18n: false, pattern: ['^\S+@\S+\.\S+$', 'gültige E-Mail-Adresse'] }
+      - name: hauskreise
+        label: Hauskreise
+        file: data/content/hauskreise.json
+        fields:
+          - { name: enabled, label: "Auf der Website anzeigen", widget: boolean, hint: "Aus = die Hauskreis-Bereiche verschwinden von Start- und Gemeindeleben-Seite" }
+          - name: groups
+            label: Hauskreise
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: meeting, label: "Treffzeit (z. B. dienstags · 19:30)", widget: string }
       - name: team
         label: Team
         file: data/content/team.json

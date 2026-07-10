@@ -181,5 +181,16 @@
   "Senden fehlgeschlagen. Bitte versuche es später erneut oder schreib uns direkt an": "Не вдалося надіслати. Спробуйте пізніше або напишіть нам напряму:",
   "Nachricht gesendet": "Повідомлення надіслано",
   "Danke! Deine Nachricht ist bei uns angekommen — wir melden uns zeitnah.": "Дякуємо! Ваше повідомлення дійшло до нас — ми відповімо найближчим часом.",
-  "Schließen": "Закрити"
+  "Schließen": "Закрити",
+  "Spendenbescheinigung": "Довідка про пожертву",
+  "Selbstverständlich erhältst du am Anfang des Jahres eine Spendenbescheinigung, wenn du auch deine Adresse angibst.": "Звісно, на початку року ви отримаєте довідку про пожертву — просто вкажіть свою адресу.",
+  "Straße *": "Вулиця *",
+  "Hausnummer *": "Номер будинку *",
+  "PLZ *": "Поштовий індекс *",
+  "Wohnort *": "Місто *",
+  "Land": "Країна",
+  "Nachricht": "Повідомлення",
+  "Anfrage senden": "Надіслати запит",
+  "Bank": "Банк",
+  "BIC": "BIC"
 }

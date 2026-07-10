@@ -47,6 +47,7 @@ IGNORE = {
     "Annette &amp; Rainer Dwornik", "Ruth &amp; Stephan Fuhrer", "Simeon Schütz",
     "Friederike &amp; Claus", "Oststadt", "Innenstadt", "Broda", "Süd",
     "Welcome Home", "Spende Jesus Punkt", "Weißes Kreuz Beratungsstelle",
+    "Sparkasse Neubrandenburg-Demmin", "NOLADE21NBS",
     "© 2026 Jesus Punkt", "© 2026 Jesus Punkt ·", "Elevate Youth",
     # sermon fallback cards — German recordings keep German titles
     "Kirche neu erleben", "Mehr als Sonntag", "Der Herr ist mein Hirte", "Neuanfang",

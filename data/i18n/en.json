@@ -181,5 +181,16 @@
   "Senden fehlgeschlagen. Bitte versuche es später erneut oder schreib uns direkt an": "Sending failed. Please try again later or email us directly at",
   "Nachricht gesendet": "Message sent",
   "Danke! Deine Nachricht ist bei uns angekommen — wir melden uns zeitnah.": "Thank you! Your message has reached us — we'll get back to you soon.",
-  "Schließen": "Close"
+  "Schließen": "Close",
+  "Spendenbescheinigung": "Donation receipt",
+  "Selbstverständlich erhältst du am Anfang des Jahres eine Spendenbescheinigung, wenn du auch deine Adresse angibst.": "Of course you'll receive a donation receipt at the beginning of the year — just include your address.",
+  "Straße *": "Street *",
+  "Hausnummer *": "House number *",
+  "PLZ *": "Postal code *",
+  "Wohnort *": "City *",
+  "Land": "Country",
+  "Nachricht": "Message",
+  "Anfrage senden": "Send request",
+  "Bank": "Bank",
+  "BIC": "BIC"
 }

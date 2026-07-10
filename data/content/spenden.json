@@ -1,7 +1,9 @@
 {
   "de": {
     "kontoinhaber": "VIA Movement e.V.",
-    "iban": "DE·· ···· ···· ···· ···· ··",
+    "bank": "Sparkasse Neubrandenburg-Demmin",
+    "iban": "DE77 1505 0200 3200 0172 00",
+    "bic": "NOLADE21NBS",
     "verwendungszweck": "Spende Jesus Punkt"
   }
 }

@@ -89,9 +89,16 @@
               <div><span class="kv__val" data-content="spenden.kontoinhaber">VIA Movement e.V.</span></div>
             </div>
             <div class="kv__row">
+              <div><span class="kv__key">Bank</span></div>
+              <div><span class="kv__val" data-content="spenden.bank">Sparkasse Neubrandenburg-Demmin</span></div>
+            </div>
+            <div class="kv__row">
               <div><span class="kv__key">IBAN</span></div>
-              <!-- TODO: IBAN vor Launch eintragen (von der Gemeindeleitung bestätigen lassen) -->
-              <div><span class="kv__val" data-content="spenden.iban">DE·· ···· ···· ···· ···· ··</span></div>
+              <div><span class="kv__val" data-content="spenden.iban">DE77 1505 0200 3200 0172 00</span></div>
+            </div>
+            <div class="kv__row">
+              <div><span class="kv__key">BIC</span></div>
+              <div><span class="kv__val" data-content="spenden.bic">NOLADE21NBS</span></div>
             </div>
             <div class="kv__row">
               <div><span class="kv__key">Verwendungszweck</span></div>
@@ -122,6 +129,106 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= SPENDENBESCHEINIGUNG (form → same Brizy endpoint as the current site) ================= -->
+  <section class="section" id="spendenbescheinigung" aria-labelledby="bescheinigung-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-head__title">
+          <h2 class="h2 h2--dot" id="bescheinigung-h">Spendenbescheinigung</h2>
+        </div>
+        <div class="section-head__desc">
+          <p>Selbstverständlich erhältst du am Anfang des Jahres eine Spendenbescheinigung, wenn du auch deine Adresse angibst.</p>
+        </div>
+      </div>
+      <form class="contact-form" id="bescheinigung-form" data-brz-form="xfutwawjbspglbauonoinafqweyiovtanobn" novalidate>
+        <input type="hidden" value="Spendenbescheinigung" data-brz-name="spepfwgoznsdfonuhfclfkawbtternvxeggb" data-brz-label="Spendenbescheinigung" data-brz-type="Hidden">
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <div class="form-group__label-cover"><label for="sb-email">E-Mail *</label></div>
+            <div class="form-group__input-cover">
+              <input type="email" id="sb-email" autocomplete="email" required data-brz-name="mipypoyljkibbhbdlcdubmfqzcalnmbvvshr" data-brz-label="Email" data-brz-type="Email">
+              <div><span class="form-error">Bitte gib eine gültige E-Mail-Adresse an.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-vorname">Vorname *</label></div>
+            <div class="form-group__input-cover">
+              <input type="text" id="sb-vorname" autocomplete="given-name" required data-brz-name="guysntwfngmxzzqycgremeiwizymcgljclat" data-brz-label="Vorname" data-brz-type="Text">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-nachname">Nachname *</label></div>
+            <div class="form-group__input-cover">
+              <input type="text" id="sb-nachname" autocomplete="family-name" required data-brz-name="zzmrpxwtucdghgkvkiygfdwqennzkjaxqrjt" data-brz-label="Nachname" data-brz-type="Text">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-strasse">Straße *</label></div>
+            <div class="form-group__input-cover">
+              <input type="text" id="sb-strasse" autocomplete="address-line1" required data-brz-name="zrrokscsfgctuhmnxxaskypywnyeajeyrosn" data-brz-label="Straße" data-brz-type="Text">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-hausnummer">Hausnummer *</label></div>
+            <div class="form-group__input-cover">
+              <input type="number" id="sb-hausnummer" required data-brz-name="ocuadnlopwpypnzplmhwxxfrctkpxvpojwds" data-brz-label="Hausnummer" data-brz-type="Number">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-plz">PLZ *</label></div>
+            <div class="form-group__input-cover">
+              <input type="number" id="sb-plz" autocomplete="postal-code" required data-brz-name="skmqrurnmjclurcbcepmoodijhksxropzswb" data-brz-label="PLZ" data-brz-type="Number">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-wohnort">Wohnort *</label></div>
+            <div class="form-group__input-cover">
+              <input type="text" id="sb-wohnort" autocomplete="address-level2" required data-brz-name="epivjrkmzeomjszbfifzfzupoiwpievckjko" data-brz-label="Wohnort" data-brz-type="Text">
+              <div><span class="form-error">Bitte fülle dieses Feld aus.</span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group__label-cover"><label for="sb-land">Land</label></div>
+            <div class="form-group__input-cover">
+              <input type="text" id="sb-land" autocomplete="country-name" data-brz-name="gbyeraprgyvtaghcnrfrnqddlsvzemlpnmpr" data-brz-label="Land" data-brz-type="Text">
+            </div>
+          </div>
+          <div class="form-group form-group--full">
+            <div class="form-group__label-cover"><label for="sb-nachricht">Nachricht</label></div>
+            <div class="form-group__input-cover">
+              <textarea id="sb-nachricht" data-brz-name="xahobcsaiaxsllbpyczrdgfwglglsvftgywx" data-brz-label="Nachricht" data-brz-type="Paragraph"></textarea>
+            </div>
+          </div>
+          <div class="form-group form-group--hp" aria-hidden="true">
+            <div class="form-group__label-cover"><label for="sb-website">Website</label></div>
+            <div class="form-group__input-cover"><input type="text" id="sb-website" tabindex="-1" autocomplete="off"></div>
+          </div>
+        </div>
+        <div class="form-foot">
+          <button class="btn btn--primary btn--lg" type="submit">Anfrage senden</button>
+          <div><span class="form-hint">* Pflichtfeld</span></div>
+        </div>
+        <div class="form-fail"><p>Senden fehlgeschlagen. Bitte versuche es später erneut oder schreib uns direkt an <a href="mailto:info@jesus-punkt.de">info@jesus-punkt.de</a>.</p></div>
+      </form>
+    </div>
+  </section>
+
+  <div class="fm-overlay" id="fm-success" role="dialog" aria-modal="true" aria-labelledby="fm-success-title">
+    <div class="fm-modal">
+      <div class="fm-modal__icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11.5l5 5L18 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div><h3 class="fm-modal__title" id="fm-success-title">Nachricht gesendet</h3></div>
+      <div class="fm-modal__text"><p>Danke! Deine Nachricht ist bei uns angekommen — wir melden uns zeitnah.</p></div>
+      <div class="fm-modal__close"><button class="btn btn--outline" type="button" data-fm-close>Schließen</button></div>
+    </div>
+  </div>
 </main>
 
 <!-- ================= FOOTER ================= -->
@@ -184,5 +291,6 @@
 
 <script src="/js/main.js" defer></script>
 <script src="/js/consent.js" defer></script>
+<script src="/js/contact.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+{
+  "_comment": "Hauskreise/Kleingruppen — enabled=false blendet die Sektionen auf Start- und Gemeindeleben-Seite aus (Bake + JS). Pflege im CMS (/admin/).",
+  "enabled": false,
+  "groups": [
+    {
+      "name": "Oststadt",
+      "meeting": "dienstags · 19:30"
+    },
+    {
+      "name": "Innenstadt",
+      "meeting": "mittwochs · 19:30"
+    },
+    {
+      "name": "Broda",
+      "meeting": "donnerstags · 19:30"
+    },
+    {
+      "name": "Süd",
+      "meeting": "montags · 19:00"
+    },
+    {
+      "name": "Junge Erwachsene",
+      "meeting": "freitags · 20:00"
+    }
+  ]
+}
