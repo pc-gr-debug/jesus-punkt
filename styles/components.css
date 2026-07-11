@@ -348,7 +348,7 @@
 
 .event-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* tops align → date + meta share the second line */
   gap: var(--space-md);
   padding: 1.25rem 1rem;
   border-radius: var(--radius);
@@ -367,8 +367,10 @@
   flex-direction: column;
   gap: 0.1875rem;
 }
-.event-row__time { font: 700 1.5rem / 1.2 var(--font-display); color: var(--ink); }
-.event-row__date { font: 700 0.75rem / 1.25 var(--font-display); color: var(--gold-meta); }
+/* block spans: keep the cover divs at exact text height (the inherited body-font
+   strut otherwise inflates them and pushes the date off the meta's line) */
+.event-row__time { display: block; font: 700 1.5rem / 1.2 var(--font-display); color: var(--ink); }
+.event-row__date { display: block; font: 700 0.75rem / 1.25 var(--font-display); color: var(--gold-meta); }
 .event-row__body {
   flex: 1;
   min-width: 0;
