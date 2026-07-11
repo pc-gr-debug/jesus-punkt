@@ -92,6 +92,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---- Section rhythm ---- */
 .section { padding-block: var(--section-pad); }
+@media (max-width: 37.5rem) {
+  .section { padding-block: calc(var(--section-pad) / 2); }
+}
 
 /* ---- Appearance reveals (JS adds .reveal, then .is-in on enter; classes
         are stripped after the transition so component hovers stay intact) ---- */
