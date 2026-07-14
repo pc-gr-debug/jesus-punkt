@@ -435,21 +435,21 @@
   .form-foot .btn { width: 100%; }
 }
 
-/* ================= KONTAKT LAYOUT (cards left · form right) ================= */
-.kontakt-grid {
+/* ================= SPLIT LAYOUT (cards/content left · form right) — Kontakt, Spenden ================= */
+.split-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
   gap: var(--space-2xl);
   align-items: start;
 }
-.kontakt-grid .info-grid--2 { grid-template-columns: 1fr; } /* cards stack in their column */
-.kontakt-grid__form .contact-form { margin-top: var(--space-lg); max-width: none; }
+.split-grid .info-grid--2 { grid-template-columns: 1fr; } /* cards stack in their column */
+.split-grid__form .contact-form { margin-top: var(--space-lg); max-width: none; }
 @media (max-width: 64rem) {
-  .kontakt-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .kontakt-grid__form { order: -1; } /* one column: the form comes BEFORE the cards */
-  .kontakt-grid .info-grid--2 { grid-template-columns: repeat(2, 1fr); } /* full width again — back to 2-up */
+  .split-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .split-grid__form { order: -1; } /* one column: the form comes BEFORE the cards */
+  .split-grid .info-grid--2 { grid-template-columns: repeat(2, 1fr); } /* full width again — back to 2-up */
 }
 @media (max-width: 37.5rem) {
-  .kontakt-grid .info-grid--2 { grid-template-columns: 1fr; }
+  .split-grid .info-grid--2 { grid-template-columns: 1fr; }
 }
-.kontakt-grid .info-grid { margin-top: 0; } /* no section-head above the cards column anymore */
+.split-grid .info-grid { margin-top: 0; } /* no section-head above the cards column anymore */
