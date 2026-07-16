@@ -1,16 +1,16 @@
 {
-  "_comment": "Reference shape for GET /api/team (ChurchTools persons + group roles) — one entry per person, all roles aggregated.",
+  "_comment": "Reference shape for GET /api/team (ChurchTools persons + group roles) — one entry per person, all roles aggregated. group: leitung | personal (CMS-assignable).",
   "people": [
-    { "id": "philipp-strauch", "name": "Philipp Strauch", "roles": ["Pastor", "Gottesdienst", "Jugendbereich"], "photo": null, "featured": true,
-      "note": "Leitet die Gemeinde seit Oktober 2025. Philipp brennt dafür, das Wort Gottes zu predigen und zu sehen, wie Menschen in ihrer Berufung und ihrem Glauben wachsen." },
-    { "id": "tymur-sheikh", "name": "Tymur Sheikh", "roles": ["Lobpreis"], "photo": null },
-    { "id": "arne-brockmann", "name": "Arne Brockmann", "roles": ["Website"], "photo": null },
-    { "id": "lydia-wegner", "name": "Lydia Wegner", "roles": ["Kindergottesdienst"], "photo": null },
-    { "id": "anja-maas", "name": "Anja Maas", "roles": ["Kindergottesdienst"], "photo": null },
-    { "id": "claus-wittnebel", "name": "Claus Wittnebel", "roles": ["Jugendbereich"], "photo": null },
-    { "id": "ulrike-huhn", "name": "Ulrike Huhn", "roles": ["Hauswirtschaft"], "photo": null },
-    { "id": "guenther-seidt", "name": "Günther Seidt", "roles": ["Finanzen"], "photo": null },
-    { "id": "saskia-lobert", "name": "Saskia Lobert", "roles": ["Technik"], "photo": null },
-    { "id": "yurii-uglov", "name": "Yurii Uglov", "roles": ["Hausmeister"], "photo": null }
+    { "id": "philipp-strauch", "name": "Philipp Strauch", "group": "leitung", "roles": ["Pastor", "Gottesdienst", "Jugendbereich"], "photo": null },
+    { "id": "friederike-wittnebel", "name": "Friederike Wittnebel", "group": "leitung", "roles": ["Jugendbereich", "Lobpreis"], "photo": null },
+    { "id": "claus-wittnebel", "name": "Claus Wittnebel", "group": "leitung", "roles": ["Jugendbereich"], "photo": null },
+    { "id": "tymur-sheikh", "name": "Tymur Sheikh", "group": "personal", "roles": ["Lobpreis"], "photo": null },
+    { "id": "mykhailo-sibahatov", "name": "Mykhailo Sibahatov", "group": "personal", "roles": ["Website"], "photo": null },
+    { "id": "lydia-wegner", "name": "Lydia Wegner", "group": "personal", "roles": ["Kindergottesdienst"], "photo": null },
+    { "id": "anja-maas", "name": "Anja Maas", "group": "personal", "roles": ["Kindergottesdienst"], "photo": null },
+    { "id": "ulrike-huhn", "name": "Ulrike Huhn", "group": "personal", "roles": ["Hauswirtschaft"], "photo": null },
+    { "id": "guenther-seidt", "name": "Günther Seidt", "group": "personal", "roles": ["Finanzen"], "photo": null },
+    { "id": "saskia-lobert", "name": "Saskia Lobert", "group": "personal", "roles": ["Technik"], "photo": null },
+    { "id": "yurii-uglov", "name": "Yurii Uglov", "group": "personal", "roles": ["Hausmeister"], "photo": null }
   ]
 }

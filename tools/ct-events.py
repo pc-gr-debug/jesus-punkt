@@ -20,7 +20,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 BASE = "https://jp.church.tools/api"
-CALENDAR_IDS = [2, 3]          # public calendars (verified anonymous-readable 2026-07-09)
+FALLBACK_CALENDAR_IDS = [2, 3]  # public calendars as of 2026-07 — used if discovery fails
 DAYS_AHEAD = 90
 BERLIN = ZoneInfo("Europe/Berlin")
 
@@ -88,9 +88,26 @@ def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
     print(f"ct-events: flyer updated from appointment image ({len(data) // 1024} KB)")
 
 
+def discover_public_calendars() -> list[int]:
+    """All calendars the instance exposes anonymously — a calendar made public in
+    ChurchTools appears on the site automatically, no code change needed."""
+    req = urllib.request.Request(f"{BASE}/calendars", headers={"Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            payload = json.load(resp)
+        ids = [c["id"] for c in payload.get("data", []) if c.get("isPublic") and not c.get("isPrivate")]
+        if ids:
+            return sorted(ids)
+        print("ct-events: calendar discovery returned none — using fallback list", file=sys.stderr)
+    except Exception as exc:
+        print(f"ct-events: calendar discovery failed ({exc}) — using fallback list", file=sys.stderr)
+    return FALLBACK_CALENDAR_IDS
+
+
 def main() -> int:
     now = datetime.now(timezone.utc)
-    params = [("calendar_ids[]", str(i)) for i in CALENDAR_IDS] + [
+    calendar_ids = discover_public_calendars()
+    params = [("calendar_ids[]", str(i)) for i in calendar_ids] + [
         ("from", now.date().isoformat()),
         ("to", (now + timedelta(days=DAYS_AHEAD)).date().isoformat()),
     ]
@@ -134,7 +151,7 @@ def main() -> int:
     out.write_text(
         json.dumps(
             {
-                "_source": f"jp.church.tools calendars {CALENDAR_IDS}, fetched {now:%Y-%m-%dT%H:%MZ}",
+                "_source": f"jp.church.tools calendars {calendar_ids}, fetched {now:%Y-%m-%dT%H:%MZ}",
                 "events": events,
             },
             ensure_ascii=False,

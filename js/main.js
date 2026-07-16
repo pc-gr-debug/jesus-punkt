@@ -379,5 +379,12 @@
     }
     prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: behavior }); });
     next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: behavior }); });
+    /* arrows only when there is something to scroll to (re-check on resize + data.js re-render) */
+    function updateNav() {
+      gallery.classList.toggle('gallery--no-scroll', track.scrollWidth - track.clientWidth <= 1);
+    }
+    updateNav();
+    window.addEventListener('resize', updateNav);
+    new MutationObserver(updateNav).observe(track, { childList: true });
   });
 })();

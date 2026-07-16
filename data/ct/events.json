@@ -1,20 +1,6 @@
 {
-  "_source": "jp.church.tools calendars [2, 3], fetched 2026-07-09T20:48Z",
+  "_source": "jp.church.tools calendars [2, 3], fetched 2026-07-14T21:19Z",
   "events": [
-    {
-      "id": "ct-1573-20260710",
-      "start": "2026-07-10T18:30:00",
-      "type": "jugend",
-      "title": "Elevate Jugend",
-      "meta": "Für Jugendliche zwischen 13 und 29 Jahren"
-    },
-    {
-      "id": "ct-1562-20260712",
-      "start": "2026-07-12T10:00:00",
-      "type": "gottesdienst",
-      "title": "Gottesdienst",
-      "meta": "Kruseshofer Str. 20 · vor Ort und im Livestream"
-    },
     {
       "id": "ct-1573-20260717",
       "start": "2026-07-17T18:30:00",

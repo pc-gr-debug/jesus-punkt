@@ -77,7 +77,10 @@
 
   <!-- ================= HERO ================= -->
   <section class="hero" aria-label="Gottesdienst">
-    <img class="hero__bg" src="/img/hero-dome.jpg" srcset="/img/hero-dome-sm.jpg 900w, /img/hero-dome.jpg 1800w" sizes="100vw" alt="" fetchpriority="high">
+    <picture>
+      <source type="image/webp" srcset="/img/hero-dome-sm.webp 900w, /img/hero-dome.webp 1800w" sizes="100vw">
+      <img class="hero__bg" src="/img/hero-dome.jpg" srcset="/img/hero-dome-sm.jpg 900w, /img/hero-dome.jpg 1800w" sizes="100vw" alt="" fetchpriority="high">
+    </picture>
     <div class="hero__wash" aria-hidden="true"></div>
     <div class="container hero__container">
       <div class="hero__copy">
@@ -256,14 +259,14 @@
         </ul>
       </div>
       <div class="sermons__foot">
-        <a class="btn btn--outline" href="/events/#predigten">Zum Predigtarchiv</a>
+        <a class="btn btn--outline" href="https://www.youtube.com/playlist?list=PLpKJbwiIBF1URgf6Rmq7zlsEHMLJ2shFt" target="_blank" rel="noopener">Zum Predigtarchiv</a>
       </div>
     </div>
   </section>
 
   <!-- ================= KLEINGRUPPEN ================= -->
-  <div class="zig zig--top" aria-hidden="true" data-section-flag="hauskreise"></div>
-  <section class="section section--tint" id="kleingruppen" aria-labelledby="kleingruppen-h" data-section-flag="hauskreise">
+  <div class="zig zig--top" aria-hidden="true" data-section-flag="hauskreise" hidden></div>
+  <section class="section section--tint" id="kleingruppen" aria-labelledby="kleingruppen-h" data-section-flag="hauskreise" hidden>
     <div class="container groups__grid">
       <ul class="kg-list groups__list" data-ct="groups">
         <li>
@@ -335,7 +338,7 @@
       </div>
     </div>
   </section>
-  <div class="zig zig--bottom" aria-hidden="true" data-section-flag="hauskreise"></div>
+  <div class="zig zig--bottom" aria-hidden="true" data-section-flag="hauskreise" hidden></div>
 
   <!-- ================= WERTE (scroll wheel) ================= -->
   <section class="section werte" id="werte" aria-labelledby="werte-h">
@@ -432,7 +435,7 @@
   </div>
 </footer>
 
-<!-- bake:werte-lines -->
+<script type="application/json" id="werte-lines">{"de": ["Wir leben, was wir sagen.", "Wir sind am Puls der Zeit.", "Wir geben Gott unser Bestes, nachdem er sein Bestes für uns gegeben hat.", "Wir schaffen eine liebevolle „Welcome Home“-Atmosphäre.", "Die Freude an Gott ist unsere Stärke.", "Wir segnen, weil wir gesegnet sind.", "Wir lieben Menschen."], "en": ["We live what we say.", "We keep our finger on the pulse of the times.", "We give God our best — after he gave his best for us.", "We create a loving “Welcome Home” atmosphere.", "The joy of the Lord is our strength.", "We bless because we are blessed.", "We love people."], "uk": ["Ми живемо тим, що говоримо.", "Ми тримаємо руку на пульсі часу.", "Ми віддаємо Богові найкраще — адже Він віддав найкраще за нас.", "Ми створюємо атмосферу любові «Welcome Home».", "Радість у Господі — наша сила.", "Ми благословляємо, бо самі благословенні.", "Ми любимо людей."]}</script>
 <script src="/js/main.js" defer></script>
 <script src="/js/consent.js" defer></script>
 <script src="/js/data.js" defer></script>

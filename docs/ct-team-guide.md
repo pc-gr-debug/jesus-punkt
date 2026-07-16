@@ -5,8 +5,9 @@ Die Website liest ChurchTools 1× täglich (gegen 06:00) und bei jeder Website-�
 
 ## Termine (Startseite „Was als Nächstes ansteht" + Events-Kalender)
 
-- Sichtbar sind **nur** Termine aus diesen Kalendern: **„Öffentlicher Kalender"** und **„Kinder & Jugend"**.
-  Ein Termin in jedem anderen Kalender erscheint **nie** auf der Website — das ist der Schalter.
+- Sichtbar sind Termine aus **allen öffentlich geschalteten Kalendern** (aktuell: **„Öffentlicher
+  Kalender"** und **„Kinder & Jugend"**). Wird ein weiterer Kalender in ChurchTools auf „öffentlich"
+  gestellt, erscheint er automatisch mit auf der Website — ein privater Kalender **nie**. Das ist der Schalter.
 - Titel-Konventionen (steuern Darstellung + Übersetzung EN/UK):
   | Titel enthält… | erscheint als |
   |---|---|

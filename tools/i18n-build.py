@@ -41,8 +41,8 @@ IGNORE = {
     "DE", "EN", "UK", "Deutsch", "English", "Українська", "Made by viasmedia",
     "Website",  # honeypot label (visually hidden)
     "Impressum", "Datenschutz",  # legal links point at German pages — labels stay German
-    "Philipp Strauch", "Tymur Sheikh", "Arne Brockmann", "Lydia Wegner", "Anja Maas",
-    "Claus Wittnebel", "Ulrike Huhn", "Günther Seidt", "Saskia Lobert", "Yurii Uglov",
+    "Philipp Strauch", "Tymur Sheikh", "Mykhailo Sibahatov", "Lydia Wegner", "Anja Maas",
+    "Friederike Wittnebel", "Claus Wittnebel", "Ulrike Huhn", "Günther Seidt", "Saskia Lobert", "Yurii Uglov",
     "Lydia Wegner &amp; Anja Maas", "Claus, Philipp, Mykhailo &amp; Natan",
     "Annette &amp; Rainer Dwornik", "Ruth &amp; Stephan Fuhrer", "Simeon Schütz",
     "Friederike &amp; Claus", "Oststadt", "Innenstadt", "Broda", "Süd",

@@ -75,7 +75,10 @@
 
 <main>
   <section class="page-hero">
-    <img class="page-hero__bg" src="/img/hero-ueber-uns.jpg" alt="" fetchpriority="high">
+    <picture>
+      <source type="image/webp" srcset="/img/hero-ueber-uns.webp">
+      <img class="page-hero__bg" src="/img/hero-ueber-uns.jpg" alt="" fetchpriority="high">
+    </picture>
     <div class="page-hero__wash" aria-hidden="true"></div>
     <div class="container page-hero__inner">
       <div><h1 class="page-hero__title h2--dot">Wir sind Jesus Punkt</h1></div>
@@ -90,26 +93,64 @@
         <div class="section-head__title"><h2 class="h2" id="team-h">Unser Team</h2></div>
         <div class="section-head__desc"><p>Viele Hände, ein Zuhause. Diese Menschen tragen Verantwortung im Jesus Punkt — und freuen sich, dich kennenzulernen.</p></div>
       </div>
-      <div class="section-cta" data-ct="team-lead">
-        <div class="lead-card">
-          <div class="team-photo team-photo--lead"><span class="team-photo__initials">PS</span></div>
-          <div class="lead-card__body">
-            <div><span class="lead-card__name">Philipp Strauch</span></div>
-            <div class="role-chips"><span class="role-chip">Pastor</span><span class="role-chip">Gottesdienst</span><span class="role-chip">Jugendbereich</span></div>
-            <div class="lead-card__note"><p>Leitet die Gemeinde seit Oktober 2025. Philipp brennt dafür, das Wort Gottes zu predigen und zu sehen, wie Menschen in ihrer Berufung und ihrem Glauben wachsen.</p></div>
+      <div class="team-group" data-gallery aria-label="Gemeindeleitung">
+        <div class="team-group__head">
+          <h3 class="h3">Gemeindeleitung</h3>
+          <div class="gallery__nav">
+            <button class="icon-btn" data-gallery-prev aria-label="Vorherige Teammitglieder">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+            <button class="icon-btn" data-gallery-next aria-label="Weitere Teammitglieder">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
           </div>
         </div>
-      </div>
-      <div class="gallery gallery--team" data-gallery aria-label="Unser Team">
-        <div class="gallery__nav">
-          <button class="icon-btn" data-gallery-prev aria-label="Vorherige Teammitglieder">
-            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
-          </button>
-          <button class="icon-btn" data-gallery-next aria-label="Weitere Teammitglieder">
-            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
-          </button>
+        <div class="gallery gallery--team">
+          <ul class="gallery__track" data-ct="team-leitung">
+          <li>
+            <div class="team-card">
+              <div class="team-photo"><span class="team-photo__initials">PS</span></div>
+              <div class="team-card__body">
+                <div><span class="team-card__name">Philipp Strauch</span></div>
+                <div class="role-chips"><span class="role-chip">Pastor</span><span class="role-chip">Gottesdienst</span><span class="role-chip">Jugendbereich</span></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="team-card">
+              <div class="team-photo"><span class="team-photo__initials">FW</span></div>
+              <div class="team-card__body">
+                <div><span class="team-card__name">Friederike Wittnebel</span></div>
+                <div class="role-chips"><span class="role-chip">Jugendbereich</span><span class="role-chip">Lobpreis</span></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="team-card">
+              <div class="team-photo"><span class="team-photo__initials">CW</span></div>
+              <div class="team-card__body">
+                <div><span class="team-card__name">Claus Wittnebel</span></div>
+                <div class="role-chips"><span class="role-chip">Jugendbereich</span></div>
+              </div>
+            </div>
+          </li>
+          </ul>
         </div>
-        <ul class="gallery__track" data-ct="team">
+      </div>
+      <div class="team-group" data-gallery aria-label="Personal">
+        <div class="team-group__head">
+          <h3 class="h3">Personal</h3>
+          <div class="gallery__nav">
+            <button class="icon-btn" data-gallery-prev aria-label="Vorherige Teammitglieder">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+            <button class="icon-btn" data-gallery-next aria-label="Weitere Teammitglieder">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="gallery gallery--team">
+          <ul class="gallery__track" data-ct="team-personal">
         <li>
           <div class="team-card">
             <div class="team-photo"><span class="team-photo__initials">TS</span></div>
@@ -121,9 +162,9 @@
         </li>
         <li>
           <div class="team-card">
-            <div class="team-photo"><span class="team-photo__initials">AB</span></div>
+            <div class="team-photo"><span class="team-photo__initials">MS</span></div>
             <div class="team-card__body">
-              <div><span class="team-card__name">Arne Brockmann</span></div>
+              <div><span class="team-card__name">Mykhailo Sibahatov</span></div>
               <div class="role-chips"><span class="role-chip">Website</span></div>
             </div>
           </div>
@@ -143,15 +184,6 @@
             <div class="team-card__body">
               <div><span class="team-card__name">Anja Maas</span></div>
               <div class="role-chips"><span class="role-chip">Kindergottesdienst</span></div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="team-card">
-            <div class="team-photo"><span class="team-photo__initials">CW</span></div>
-            <div class="team-card__body">
-              <div><span class="team-card__name">Claus Wittnebel</span></div>
-              <div class="role-chips"><span class="role-chip">Jugendbereich</span></div>
             </div>
           </div>
         </li>
@@ -191,7 +223,8 @@
             </div>
           </div>
         </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

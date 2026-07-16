@@ -39,30 +39,20 @@
 .avatar--ink { background: var(--ink); color: var(--creme); }
 .avatar--lg { width: 7rem; height: 7rem; font-size: 1.75rem; }
 
-.lead-card {
-  display: flex;
-  align-items: stretch;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--paper);
-  overflow: hidden; /* photo sits flush against the card borders */
-  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
-}
-.lead-card:hover { transform: translateY(-0.1875rem); box-shadow: var(--shadow-soft); }
-.lead-card__body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.625rem;
-  padding: 2rem;
-}
-.lead-card__name { font: 700 1.5rem / 1.2 var(--font-display); color: var(--ink); }
-.lead-card__role { font: 700 0.875rem / 1.2 var(--font-display); color: var(--gold-meta); text-transform: capitalize; }
-.lead-card__note { font-weight: 300; color: var(--ink-2); max-width: 34rem; }
-
 /* team slider — reuses the gallery snap track; one card per person */
 .gallery--team .gallery__track > li { flex: 0 0 15rem; scroll-snap-align: start; }
-.gallery--team .gallery__nav { margin: 0 0 var(--space-md); } /* arrows above the track, top right */
+
+/* team groups (Gemeindeleitung / Personal) — equal cards, the heading is the category;
+   heading and arrows share one row, arrows flush right */
+.team-group { margin-top: var(--space-xl); }
+.team-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.team-group__head .gallery__nav { margin-top: 0; }
+.team-group .gallery { margin-top: var(--space-md); }
 
 /* photo-first team cards (rendered from team.json) */
 .team-photo {
@@ -74,10 +64,6 @@
 }
 .team-photo img { width: 100%; height: 100%; object-fit: cover; }
 .team-photo__initials { font: 700 2.25rem / 1 var(--font-display); color: var(--gold-text); }
-.team-photo--lead {
-  flex: none;
-  width: 15rem; /* same footprint as the team-card photos */
-}
 .team-card {
   height: 100%;
   display: flex;
@@ -291,6 +277,8 @@
   gap: 1rem;
   justify-content: flex-end;
 }
+/* JS sets this when the track has no overflow — keep the row height, drop the arrows */
+.gallery--no-scroll .gallery__nav { visibility: hidden; }
 @media (max-width: 37.5rem) {
   .fact-strip { gap: var(--space-md) var(--space-xl); }
   .gallery__nav { display: none; } /* touch: swipe */
@@ -313,9 +301,6 @@
 }
 @media (max-width: 37.5rem) {
   .info-grid, .info-grid--2 { grid-template-columns: 1fr; }
-  .lead-card { flex-direction: column; align-items: stretch; }
-  .team-photo--lead { width: 100%; aspect-ratio: 3 / 2; }
-  .lead-card__body { padding: 1.5rem; }
   .media-strip { grid-template-columns: 1fr 1fr; }
   .section-cta .btn { width: 100%; }
 }

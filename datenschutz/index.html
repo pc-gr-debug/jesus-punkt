@@ -75,7 +75,10 @@
 
 <main>
   <section class="page-hero">
-    <img class="page-hero__bg" src="/img/hero-dome.jpg" alt="" fetchpriority="high">
+    <picture>
+      <source type="image/webp" srcset="/img/hero-dome-sm.webp 900w, /img/hero-dome.webp 1800w" sizes="100vw">
+      <img class="page-hero__bg" src="/img/hero-dome.jpg" srcset="/img/hero-dome-sm.jpg 900w, /img/hero-dome.jpg 1800w" sizes="100vw" alt="" fetchpriority="high">
+    </picture>
     <div class="page-hero__wash" aria-hidden="true"></div>
     <div class="container page-hero__inner">
       <div><h1 class="page-hero__title h2--dot">Datenschutzerklärung</h1></div>

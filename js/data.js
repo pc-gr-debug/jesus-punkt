@@ -249,38 +249,30 @@
     );
   }
   function chipsHTML(roles) {
+    if (!roles || !roles.length) return '';
     return '<div class="role-chips">' + roles.map(function (r) {
       return '<span class="role-chip">' + esc(r) + '</span>';
     }).join('') + '</div>';
   }
+  /* two groups, equal cards — a person's group (leitung | personal) is CMS-assigned */
   function renderTeam(data) {
-    var lead = document.querySelector('[data-ct="team-lead"]');
-    var grid = document.querySelector('[data-ct="team"]');
-    if (!grid) return;
-    var featured = data.people.filter(function (p) { return p.featured; })[0];
-    var rest = data.people.filter(function (p) { return p !== featured; });
-    if (lead && featured) {
-      lead.innerHTML =
-        '<div class="lead-card">' +
-          photoHTML(featured, 'team-photo--lead') +
-          '<div class="lead-card__body">' +
-            '<div><span class="lead-card__name">' + esc(featured.name) + '</span></div>' +
-            chipsHTML(featured.roles) +
-            (featured.note ? '<div class="lead-card__note"><p>' + esc(featured.note) + '</p></div>' : '') +
-          '</div>' +
-        '</div>';
-    }
-    grid.innerHTML = rest.map(function (p) {
-      return (
-        '<li><div class="team-card">' +
-          photoHTML(p, null) +
-          '<div class="team-card__body">' +
-            '<div><span class="team-card__name">' + esc(p.name) + '</span></div>' +
-            chipsHTML(p.roles) +
-          '</div>' +
-        '</div></li>'
-      );
-    }).join('');
+    ['leitung', 'personal'].forEach(function (group) {
+      var track = document.querySelector('[data-ct="team-' + group + '"]');
+      if (!track) return;
+      var people = data.people.filter(function (p) { return (p.group || 'personal') === group; });
+      if (!people.length) return; /* keep the static fallback cards */
+      track.innerHTML = people.map(function (p) {
+        return (
+          '<li><div class="team-card">' +
+            photoHTML(p, null) +
+            '<div class="team-card__body">' +
+              '<div><span class="team-card__name">' + esc(p.name) + '</span></div>' +
+              chipsHTML(p.roles) +
+            '</div>' +
+          '</div></li>'
+        );
+      }).join('');
+    });
   }
 
   /* ---------- boot: fetch only what the page needs ---------- */
@@ -307,7 +299,7 @@
     if (document.querySelector('[data-ct="groups"]')) {
       getJSON(URLS.groups).then(renderGroups).catch(function (e) { console.warn('[data] groups:', e.message); });
     }
-    if (document.querySelector('[data-ct="team"]')) {
+    if (document.querySelector('[data-ct="team-leitung"], [data-ct="team-personal"]')) {
       getJSON(URLS.team).then(renderTeam).catch(function (e) { console.warn('[data] team:', e.message); });
     }
   }
