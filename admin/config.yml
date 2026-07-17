@@ -9,7 +9,9 @@ backend:
   name: github
   repo: pc-gr-debug/jesus-punkt
   branch: main
-  base_url: https://jesus-punkt.vercel.app
+  # NOTE: login works only after the domain cutover — the OAuth callback is
+  # https://jesus-punkt.de/api/callback, so the domain must serve the Vercel project.
+  base_url: https://jesus-punkt.de
   auth_endpoint: api/auth
 
 media_folder: img/team

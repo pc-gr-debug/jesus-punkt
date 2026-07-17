@@ -11,3 +11,11 @@ docs/churchtools-openapi.json
 # vercel project link (local only)
 .vercel/
 .vercel
+# local-only source material & tooling (not part of the deployed site or its history)
+/assets/
+/site/
+/.agents/
+/docs/superpowers/
+/skills-lock.json
+*.fig
+*.docx

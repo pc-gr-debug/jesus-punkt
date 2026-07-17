@@ -125,8 +125,8 @@ data/i18n/            en.json + uk.json (German string → translation); de mark
 tools/i18n-build.py   generates /en/ + /uk/ trees at deploy (never edit those by hand; gitignored)
 img/  fonts/  data/   assets; data/ holds mock JSON mirroring ChurchTools responses
 docs/  tools/         design spec, site structure, CT plan · fig parser + screenshot CDP tool
-site/                 ARCHIVED v3 prototype (pre-Heritage-Gold) — do not extend
-assets/               source material (fig exports, current-site photos, renders)
+site/                 ARCHIVED v3 prototype (pre-Heritage-Gold) — local-only, untracked
+assets/               source material (fig exports, photos, renders) — local-only, untracked
 ```
 
 All asset/link paths are **root-absolute** (`/styles/…`, `/img/…`) — serve over HTTP (`python3 -m http.server`), not `file://`. Open TODOs before launch: Vereinsregister on /impressum/, Raveo webfont license, real team/gallery/hero photos (current ones are placeholders), GitHub OAuth app + auth Worker for /admin/ login, domain cutover (see docs/domain-migration.md — WordPress stays as form backend and needs its new hostname + one ENDPOINT swap in js/contact.js before the switch).
