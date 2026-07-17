@@ -433,6 +433,7 @@
 @media (max-width: 64rem) {
   .split-grid { grid-template-columns: 1fr; gap: 3rem; }
   .split-grid__form { order: -1; } /* one column: the form comes BEFORE the cards */
+  .split-grid--form-below .split-grid__form { order: 0; } /* Spenden: form stacks BELOW the info */
   .split-grid .info-grid--2 { grid-template-columns: repeat(2, 1fr); } /* full width again — back to 2-up */
 }
 @media (max-width: 37.5rem) {

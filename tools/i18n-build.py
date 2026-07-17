@@ -133,6 +133,8 @@ def translate_page(html: str, loc: str, page: str, table: dict, origin: str, rep
     html = "".join(out)
 
     html = html.replace('<html lang="de">', f'<html lang="{loc}">', 1)
+    html = html.replace('rel="canonical" href="https://jesus-punkt.de/',
+                        f'rel="canonical" href="https://jesus-punkt.de/{loc}/', 1)
     html = inject_hreflang(html, page, origin)
     return html
 

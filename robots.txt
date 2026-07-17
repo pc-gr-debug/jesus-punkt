@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /design-system.html
+
+Sitemap: https://jesus-punkt.de/sitemap.xml
