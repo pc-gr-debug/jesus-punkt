@@ -567,9 +567,18 @@ a.card:hover .card__media img { transform: scale(1.04); }
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-md);
+  /* head↔carousel gap lives HERE: the carousel's shadow padding is cancelled by
+     its own negative margin-block — overriding margin-top there breaks that
+     pairing and inflates the gap by the 1.75rem padding */
+  margin-bottom: 2rem;
 }
 .sermons__nav { display: flex; gap: 1rem; flex: none; }
-.sermons__carousel { margin-top: var(--space-xl); }
+@media (max-width: 48rem) {
+  .sermons__head { margin-bottom: 1.5rem; }
+}
+@media (max-width: 37.5rem) {
+  .sermons__head { margin-bottom: 1.25rem; }
+}
 .sermons__foot {
   margin-top: var(--space-xl);
   display: flex;
