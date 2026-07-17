@@ -42,15 +42,18 @@ def classify(raw_title: str, subtitle: str | None) -> tuple[str, str, str]:
     return "sonstiges", raw_title.strip(), (subtitle or "").strip()
 
 
-SPECIAL_MAX = 3  # long-notice flyers shown at once (events page + home strip)
+SPECIAL_MAX = 3         # long-notice flyers shown at once (events page + home strip)
+FLYER_DAYS_AHEAD = 366  # specials may promote far beyond the events window
 
 
 def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
     """Flyer convention: the team sets an IMAGE on an appointment in a public calendar.
     · "Flyer" (bare title) or the next Gottesdienst → the current weekly flyer.
-    · "Flyer <Eventname>" → a long-notice special event; it shows for the whole
-      duration of its carrier appointment (start–end = the promotion window) in the
-      "Besondere Events" section, max SPECIAL_MAX, soonest first.
+    · "Flyer <Eventname>" → a long-notice special event. Only the actual event name
+      is propagated (the "Flyer" prefix is stripped) and the appointment's date is
+      the END of the promotion: the flyer shows in "Besondere Events" from the moment
+      the appointment exists until that date — so the team simply puts the carrier
+      appointment on the event day itself. Max SPECIAL_MAX, soonest-ending first.
     (data/mock/flyer.json stays the fallback when nothing is found)."""
     def img_url(base):
         img = base.get("image")
@@ -79,10 +82,13 @@ def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
             continue
         raw_title = (base.get("title") or "").strip()
         low = raw_title.lower()
-        if low.startswith("flyer") and low.removeprefix("flyer").strip(" -–·:"):
-            # "Flyer Sommerfest" → special event "Sommerfest"
-            name = raw_title[len("flyer"):].strip(" -–·:")
-            specials.append((calc.get("startDate") or "", url, name))
+        if low.startswith("flyer") and low.removeprefix("flyer").strip(" -–—·:"):
+            # "Flyer Sommerfest" → event "Sommerfest"; promotion ends with the appointment
+            name = raw_title[len("flyer"):].strip(" -–—·:")
+            until = (calc.get("endDate") or calc.get("startDate") or "")[:10]
+            if until and until < f"{now:%Y-%m-%d}":
+                continue  # promotion window is over
+            specials.append((until, url, name))
         else:
             rank = 0 if "flyer" in low else (1 if "gottesdienst" in low else 2)
             candidates.append((rank, calc.get("startDate") or "", url, raw_title or "Flyer"))
@@ -98,13 +104,16 @@ def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
         out["alt"] = f"Aktueller Flyer: {title}"
 
     seen = {out.get("url")}
-    specials.sort()  # soonest promotion window first
-    for i, (_, url, name) in enumerate(specials[:SPECIAL_MAX], start=1):
+    specials.sort()  # soonest promotion end first
+    for i, (until, url, name) in enumerate(specials[:SPECIAL_MAX], start=1):
         path = download(url, f"flyer-special-{i}")
         if path in seen:
             continue
         seen.add(path)
-        out["special"].append({"url": path, "title": name, "alt": f"Flyer: {name}"})
+        entry = {"url": path, "title": name, "alt": f"Flyer: {name}"}
+        if until:
+            entry["until"] = until
+        out["special"].append(entry)
 
     (out_dir / "flyer.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8",
@@ -147,6 +156,8 @@ def main() -> int:
         start_utc = calc.get("startDate") or base.get("startDate")
         if not start_utc:
             continue
+        if (base.get("title") or "").strip().lower().startswith("flyer"):
+            continue  # flyer carrier appointments feed extract_flyer — they are not calendar events
         start = (
             datetime.fromisoformat(start_utc.replace("Z", "+00:00"))
             .astimezone(BERLIN)
@@ -169,7 +180,16 @@ def main() -> int:
     out = Path(__file__).resolve().parent.parent / "data" / "ct" / "events.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     try:
-        extract_flyer(payload, out.parent, now)
+        # flyers promote up to a year out — own query, wider than the events window
+        fparams = [("calendar_ids[]", str(i)) for i in calendar_ids] + [
+            ("from", now.date().isoformat()),
+            ("to", (now + timedelta(days=FLYER_DAYS_AHEAD)).date().isoformat()),
+        ]
+        furl = f"{BASE}/calendars/appointments?{urllib.parse.urlencode(fparams)}"
+        freq = urllib.request.Request(furl, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(freq, timeout=20) as fresp:
+            fpayload = json.load(fresp)
+        extract_flyer(fpayload, out.parent, now)
     except Exception as exc:  # flyer is best-effort — never fail the events fetch over it
         print(f"ct-events: flyer extraction failed ({exc}) — fallback stays", file=sys.stderr)
     out.write_text(

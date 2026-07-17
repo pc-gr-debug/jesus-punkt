@@ -32,13 +32,16 @@ Kein Bild gesetzt → die Website zeigt den zuletzt hinterlegten Stand.
 
 Für Events, auf die man sich früh vorbereiten soll (Sommerfest, Konferenz, …):
 
-1. Im Öffentlichen Kalender einen Termin **„Flyer *Eventname*"** anlegen — z.&nbsp;B. „Flyer Sommerfest".
-2. **Von–Bis des Termins = Zeitraum, in dem der Flyer auf der Website wirbt** (nicht das
-   Event-Datum!). Beispiel: Termin 15.07.–15.08. → der Flyer hängt den ganzen Monat auf der Website.
-3. Das Flyer-Bild als Termin-Bild setzen — fertig.
+1. Im Öffentlichen Kalender einen Termin **„Flyer *Eventname*"** anlegen — z.&nbsp;B. „Flyer Sommerfest",
+   **am Event-Tag selbst** (bis zu 12 Monate im Voraus).
+2. Das Flyer-Bild als Termin-Bild setzen — fertig.
+
+Die Website zeigt nur den Eventnamen (das Wort „Flyer" wird entfernt) und wirbt **ab sofort
+bis zum Datum des Termins** — der Flyer verschwindet also automatisch, wenn das Event vorbei
+ist. Werbestart steuern = den Termin einfach erst dann anlegen, wenn die Werbung losgehen soll.
 
 Diese Flyer erscheinen mit „Vormerken"-Badge im Bereich **Besondere Events** auf der
-Startseite und der Events-Seite (max. 3 gleichzeitig, das nächste zuerst). Der normale
+Startseite und der Events-Seite (max. 3 gleichzeitig, das nächstliegende zuerst). Der normale
 Wochen-Flyer (Punkt oben) läuft unabhängig davon weiter — nur der nackte Titel „Flyer"
 zählt als Wochen-Flyer, alles mit Namenszusatz als Besonderes Event.
 
