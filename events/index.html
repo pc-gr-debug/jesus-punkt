@@ -109,13 +109,26 @@
         </div>
         <div class="feature-aside">
           <div><span class="eyebrow">Aktueller Flyer</span></div>
-          <div class="flyer-card flyer-card--tall" data-ct="flyer">
+          <div class="flyer-card flyer-card--adaptive" data-ct="flyer">
             <img src="/img/flyer-aktuell.jpg" alt="Aktueller Flyer zum Sonntagsgottesdienst" loading="lazy">
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ================= BESONDERE EVENTS (long-notice flyers — JS unhides when ChurchTools delivers any) ================= -->
+  <div class="zig zig--top" aria-hidden="true" data-ct-section="special-flyers" hidden></div>
+  <section class="section section--tint" id="besondere-events" aria-labelledby="besondere-h" data-ct-section="special-flyers" hidden>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-head__title"><h2 class="h2" id="besondere-h">Besondere Events</h2></div>
+        <div class="section-head__desc"><p>Diese Termine wollen geplant sein — merk sie dir am besten gleich vor.</p></div>
+      </div>
+      <div class="special-grid" data-ct="special-flyers"></div>
+    </div>
+  </section>
+  <div class="zig zig--bottom" aria-hidden="true" data-ct-section="special-flyers" hidden></div>
 
   <!-- ================= PREDIGTEN ================= -->
   <section class="section" id="predigten" aria-labelledby="predigten-h">

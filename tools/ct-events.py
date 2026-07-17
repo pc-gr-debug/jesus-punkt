@@ -42,10 +42,15 @@ def classify(raw_title: str, subtitle: str | None) -> tuple[str, str, str]:
     return "sonstiges", raw_title.strip(), (subtitle or "").strip()
 
 
+SPECIAL_MAX = 3  # long-notice flyers shown at once (events page + home strip)
+
+
 def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
-    """Flyer convention: the team sets an IMAGE on an appointment in a public calendar —
-    either one titled "Flyer" (dedicated carrier) or the next Gottesdienst. If such an
-    image is exposed in the anonymous payload, download it and write flyer.json
+    """Flyer convention: the team sets an IMAGE on an appointment in a public calendar.
+    · "Flyer" (bare title) or the next Gottesdienst → the current weekly flyer.
+    · "Flyer <Eventname>" → a long-notice special event; it shows for the whole
+      duration of its carrier appointment (start–end = the promotion window) in the
+      "Besondere Events" section, max SPECIAL_MAX, soonest first.
     (data/mock/flyer.json stays the fallback when nothing is found)."""
     def img_url(base):
         img = base.get("image")
@@ -55,37 +60,56 @@ def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
             return img
         return None
 
-    candidates = []
+    def download(url: str, stem: str) -> str | None:
+        req = urllib.request.Request(url, headers={"Accept": "image/*"})
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = resp.read()
+            ctype = resp.headers.get("Content-Type", "")
+        ext = {"image/png": ".png", "image/webp": ".webp"}.get(ctype.split(";")[0], ".jpg")
+        (out_dir / f"{stem}{ext}").write_bytes(data)
+        print(f"ct-events: {stem}{ext} downloaded ({len(data) // 1024} KB)")
+        return f"data/ct/{stem}{ext}"
+
+    candidates, specials = [], []
     for item in payload.get("data", []):
         base = item.get("appointment", {}).get("base", {})
         calc = item.get("calculated", {})
         url = img_url(base)
         if not url:
             continue
-        title = (base.get("title") or "").lower()
-        rank = 0 if "flyer" in title else (1 if "gottesdienst" in title else 2)
-        candidates.append((rank, calc.get("startDate") or "", url, base.get("title", "Flyer")))
-    if not candidates:
+        raw_title = (base.get("title") or "").strip()
+        low = raw_title.lower()
+        if low.startswith("flyer") and low.removeprefix("flyer").strip(" -–·:"):
+            # "Flyer Sommerfest" → special event "Sommerfest"
+            name = raw_title[len("flyer"):].strip(" -–·:")
+            specials.append((calc.get("startDate") or "", url, name))
+        else:
+            rank = 0 if "flyer" in low else (1 if "gottesdienst" in low else 2)
+            candidates.append((rank, calc.get("startDate") or "", url, raw_title or "Flyer"))
+    if not candidates and not specials:
         print("ct-events: no appointment image found — flyer keeps its fallback")
         return
 
-    candidates.sort()
-    _, _, url, title = candidates[0]
-    req = urllib.request.Request(url, headers={"Accept": "image/*"})
-    with urllib.request.urlopen(req, timeout=20) as resp:
-        data = resp.read()
-        ctype = resp.headers.get("Content-Type", "")
-    ext = {"image/png": ".png", "image/webp": ".webp"}.get(ctype.split(";")[0], ".jpg")
-    (out_dir / f"flyer-aktuell{ext}").write_bytes(data)
+    out: dict = {"updated": f"{now:%Y-%m-%dT%H:%M:%SZ}", "special": []}
+    if candidates:
+        candidates.sort()
+        _, _, url, title = candidates[0]
+        out["url"] = download(url, "flyer-aktuell")
+        out["alt"] = f"Aktueller Flyer: {title}"
+
+    seen = {out.get("url")}
+    specials.sort()  # soonest promotion window first
+    for i, (_, url, name) in enumerate(specials[:SPECIAL_MAX], start=1):
+        path = download(url, f"flyer-special-{i}")
+        if path in seen:
+            continue
+        seen.add(path)
+        out["special"].append({"url": path, "title": name, "alt": f"Flyer: {name}"})
+
     (out_dir / "flyer.json").write_text(
-        json.dumps({
-            "url": f"data/ct/flyer-aktuell{ext}",
-            "alt": f"Aktueller Flyer: {title}",
-            "updated": f"{now:%Y-%m-%dT%H:%M:%SZ}",
-        }, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8",
     )
-    print(f"ct-events: flyer updated from appointment image ({len(data) // 1024} KB)")
+    print(f"ct-events: flyer.json written ({len(out['special'])} special)")
 
 
 def discover_public_calendars() -> list[int]:

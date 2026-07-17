@@ -1,6 +1,7 @@
 {
-  "_comment": "Reference shape for GET /api/flyer (attachment of the next Sunday service appointment in ChurchTools)",
+  "_comment": "Reference shape for the flyer feed (tools/ct-events.py). url/alt = the current weekly flyer (image on the 'Flyer' appointment or next Gottesdienst). special[] = long-notice events from 'Flyer <Eventname>' appointments — shown in the Besondere-Events sections while their carrier appointment runs (max 3).",
   "url": "img/flyer-aktuell.jpg",
   "alt": "Aktueller Flyer zum Sonntagsgottesdienst",
-  "updated": "2026-07-01T09:12:00Z"
+  "updated": "2026-07-01T09:12:00Z",
+  "special": []
 }

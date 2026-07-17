@@ -28,6 +28,20 @@ Dem Termin ein **Bild** geben — zwei Wege, beide im Öffentlichen Kalender:
 
 Kein Bild gesetzt → die Website zeigt den zuletzt hinterlegten Stand.
 
+## Besondere Events (Flyer mit langem Vorlauf)
+
+Für Events, auf die man sich früh vorbereiten soll (Sommerfest, Konferenz, …):
+
+1. Im Öffentlichen Kalender einen Termin **„Flyer *Eventname*"** anlegen — z.&nbsp;B. „Flyer Sommerfest".
+2. **Von–Bis des Termins = Zeitraum, in dem der Flyer auf der Website wirbt** (nicht das
+   Event-Datum!). Beispiel: Termin 15.07.–15.08. → der Flyer hängt den ganzen Monat auf der Website.
+3. Das Flyer-Bild als Termin-Bild setzen — fertig.
+
+Diese Flyer erscheinen mit „Vormerken"-Badge im Bereich **Besondere Events** auf der
+Startseite und der Events-Seite (max. 3 gleichzeitig, das nächste zuerst). Der normale
+Wochen-Flyer (Punkt oben) läuft unabhängig davon weiter — nur der nackte Titel „Flyer"
+zählt als Wochen-Flyer, alles mit Namenszusatz als Besonderes Event.
+
 ## Was (noch) NICHT aus ChurchTools kommt
 
 - **Hauskreise-Liste**: folgt mit dem API-User (Phase 1, siehe `churchtools-integration.md`).

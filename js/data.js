@@ -36,6 +36,7 @@
      Custom German titles pass through untranslated — the events happen in German. */
   var I18N = {
     en: {
+      badge: 'Save the date',
       empty: 'No events on the calendar this month — have a look at the next one.',
       titles: { 'Gottesdienst': 'Sunday service', 'Elevate Jugend': 'Elevate youth night', 'Gebet': 'Prayer', 'Hauskreis-Abend': 'Home group night' },
       metas: {
@@ -53,6 +54,7 @@
       }
     },
     uk: {
+      badge: 'Збережи дату',
       empty: 'У цьому місяці подій у календарі немає — загляньте в наступний.',
       titles: { 'Gottesdienst': 'Богослужіння', 'Elevate Jugend': 'Молодіжка Elevate', 'Gebet': 'Молитва', 'Hauskreis-Abend': 'Домашня група' },
       metas: {
@@ -201,9 +203,34 @@
 
   /* ---------- flyer ---------- */
   function renderFlyer(data) {
-    document.querySelectorAll('[data-ct="flyer"] img').forEach(function (img) {
-      img.src = BASE + String(data.url).replace(/^\//, '');
-      img.alt = data.alt;
+    if (data.url) {
+      document.querySelectorAll('[data-ct="flyer"] img').forEach(function (img) {
+        img.src = BASE + String(data.url).replace(/^\//, '');
+        img.alt = data.alt;
+      });
+    }
+    renderSpecialFlyers(data.special || []);
+  }
+
+  /* ---------- special flyers (long-notice events, "Flyer <Eventname>" in CT) ---------- */
+  function renderSpecialFlyers(specials) {
+    var badge = (I18N[LANG] && I18N[LANG].badge) || 'Vormerken';
+    document.querySelectorAll('[data-ct="special-flyers"]').forEach(function (grid) {
+      if (!specials.length) return;
+      var onEventsPage = !!grid.closest('#besondere-events');
+      grid.innerHTML = specials.map(function (s) {
+        var img =
+          '<span class="special-card__badge">' + esc(badge) + '</span>' +
+          '<img src="' + BASE + esc(String(s.url).replace(/^\//, '')) + '" alt="' + esc(s.alt || s.title) + '" loading="lazy">';
+        var label = '<div class="special-card__label-cover"><span class="special-card__label">' + esc(s.title) + '</span></div>';
+        return onEventsPage
+          ? '<article class="special-card"><div class="flyer-card flyer-card--adaptive">' + img + '</div>' + label + '</article>'
+          : '<a class="special-card" href="' + PAGE_BASE + 'events/#besondere-events"><div class="flyer-card flyer-card--adaptive">' + img + '</div>' + label + '</a>';
+      }).join('');
+    });
+    /* the sections (and their zig strips) ship hidden — one toggle for all */
+    document.querySelectorAll('[data-ct-section="special-flyers"]').forEach(function (el) {
+      el.hidden = !specials.length;
     });
   }
 
