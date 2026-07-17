@@ -45,7 +45,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 
 - YT_PLAYLIST_ID — set (UUGJVox4diQQw41RG4NT1hhw).
 - YT_API_KEY — missing; from Google Cloud Console, YouTube Data API v3.
-- GH_OAUTH_ID / GH_OAUTH_SECRET — missing; from the GitHub OAuth app.
+- GH_OAUTH_ID / GH_OAUTH_SECRET — set (OAuth app Ov23livdJg9FhDIjtPhW, owner pc-gr-debug).
 - SMTP_PASS — missing; Google app password for info@jesus-punkt.de, needed for the /api/contact form function.
 
 ## Domains & DNS (all in Vercel, team Jesus Punkt)
@@ -68,6 +68,6 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 
 - git push to pc-gr-debug/jesus-punkt: local GitHub login (sibagatovmihail) has no write access. Fix: invite as collaborator, or `gh auth login` as pc-gr-debug.
 - Vercel-GitHub connection: church Vercel account has no GitHub login connection (Account Settings, Login Connections). Needed for auto-deploys + deploy hook.
-- Env values: YT_API_KEY, GH_OAUTH_ID, GH_OAUTH_SECRET, SMTP_PASS.
+- Env values: YT_API_KEY, SMTP_PASS.
 - /api/contact form function: planned, not built.
 - Before launch: Raveo webfont license, real team/gallery/hero photos, Vereinsregister number on /impressum/.

@@ -50,6 +50,9 @@
 
 /* ---- Reset ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* [hidden] must always win — an author display rule (e.g. display:grid on a
+   component) would otherwise override the attribute's UA display:none */
+[hidden] { display: none !important; }
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
