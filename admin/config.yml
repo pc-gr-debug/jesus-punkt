@@ -2,13 +2,15 @@
 # Editing surface for the rare-change content (docs/cms-integration-plan.md §3).
 # Weekly content (Termine, Flyer, Hauskreise) lives in ChurchTools — NOT here.
 #
-# TODO before first login (plan §7): create the GitHub OAuth app, deploy the
-# sveltia-cms-auth Cloudflare Worker, then set base_url to the Worker URL.
+# Login: GitHub OAuth app (owner: pc-gr-debug) + the /api/auth + /api/callback
+# Vercel functions in this repo (no Cloudflare Worker needed since the Vercel move).
+# The functions read GH_OAUTH_ID / GH_OAUTH_SECRET from the Vercel project env.
 backend:
   name: github
-  repo: sibagatovmihail/jesus-punkt
+  repo: pc-gr-debug/jesus-punkt
   branch: main
-  # base_url: https://<sveltia-cms-auth-worker>  # ← TODO after OAuth setup
+  base_url: https://jesus-punkt.vercel.app
+  auth_endpoint: api/auth
 
 media_folder: img/team
 public_folder: /img/team

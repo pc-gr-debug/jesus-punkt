@@ -8,3 +8,6 @@ docs/superpowers/plans/shots/
 # 23MB OpenAPI dump from jp.church.tools — local API reference, re-download:
 # curl -sL https://jp.church.tools/system/runtime/swagger/openapi.json -o docs/churchtools-openapi.json
 docs/churchtools-openapi.json
+# vercel project link (local only)
+.vercel/
+.vercel

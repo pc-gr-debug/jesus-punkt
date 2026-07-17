@@ -40,14 +40,17 @@ zeigt, ist der Endpoint unter diesem Namen aber nicht mehr erreichbar. Deshalb v
 
 WordPress darf danach gern unsichtbar bleiben — es dient nur noch als Formular-Postfach.
 
-### 3 · Website auf die Domain legen
-1. Repo → Settings → Pages → Custom domain `jesus-punkt.de` (+ *Enforce HTTPS* nach dem Zertifikat).
-2. Vercel-DNS: `@` A-Records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
-   `185.199.111.153` · `www` CNAME `sibagatovmihail.github.io.`
-3. Workflow anpassen (`.github/workflows/pages.yml`):
-   - Prefix-Schritt überspringen (Root-Domain braucht kein `/jesus-punkt/`-Präfix),
-   - `SITE_ORIGIN=https://jesus-punkt.de` für hreflang.
-4. `jesuspunkt.de`: bei Vercel als Redirect → `https://jesus-punkt.de` (301, inkl. www).
+### 3 · Website auf die Domain legen *(Stand 2026-07-17: Hosting = Vercel-Projekt `jesus-punkt`, nicht mehr GitHub Pages)*
+1. Die Seite läuft als Vercel-Projekt `jesus-punkt` (Team Jesus Punkt) auf
+   `https://jesus-punkt.vercel.app` — Build-Pipeline in `tools/vercel-build.sh`
+   (ct-events → yt-sermons → content-bake → i18n-build, Origin bereits `https://jesus-punkt.de`).
+2. Cutover = `jesus-punkt.de` + `www.jesus-punkt.de` dem Projekt zuweisen
+   (`vercel domains add …`) **und** im Vercel-DNS die zwei Alt-Records löschen:
+   `@ A 104.19.154.92` (altes WordPress) und `www CNAME lnszc5ey3e.wpdns.site.` —
+   dann greift der vorhandene ALIAS auf das Vercel-Projekt.
+   ⚠️ Erst NACH Schritt 2 (Formular-Endpoint) — sonst gehen die Formulare kaputt.
+3. `jesuspunkt.de`: erledigt (2026-07-17) — Vercel-Projekt `jesuspunkt-redirect`
+   leitet Apex + www per 308 auf `https://jesus-punkt.de` um (Pfad bleibt erhalten).
 
 ### 4 · Nacharbeiten
 - Google Search Console: neue Property, Sitemap.

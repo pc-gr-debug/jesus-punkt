@@ -1,0 +1,8 @@
+# not part of the deployed site — tools/ and data/ stay in (needed at build + runtime)
+.github
+assets
+docs
+site
+tools/node_modules
+*.fig
+*.docx
