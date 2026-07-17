@@ -290,17 +290,20 @@
 /* ---- responsive ---- */
 @media (max-width: 64rem) {
   .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-card { padding: 1.75rem; } /* card padding steps down toward 1.25rem on phones */
   /* side column gets too cramped below 64rem — stack early */
   .feature-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   /* one-column order: heading + copy before the list (Hauskreise on Gemeindeleben) */
   .feature-grid--headfirst > .section-head { order: -1; }
 }
 @media (max-width: 48rem) {
+  .info-card { padding: 1.5rem; }
   .feature-grid { gap: 2rem; }
   .media-strip { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 37.5rem) {
-  .info-grid, .info-grid--2 { grid-template-columns: 1fr; }
+  .info-grid, .info-grid--2 { grid-template-columns: 1fr; gap: var(--space-lg); } /* stacked rows breathe more */
+  .info-card { padding: var(--space-md); } /* 20px endpoint */
   .media-strip { grid-template-columns: 1fr 1fr; }
   .section-cta .btn { width: 100%; }
 }
@@ -436,6 +439,7 @@
   .split-grid .info-grid--2 { grid-template-columns: repeat(2, 1fr); } /* full width again — back to 2-up */
 }
 @media (max-width: 37.5rem) {
+  .split-grid { gap: 4rem; } /* cards↔form row gap grows on phones */
   .split-grid .info-grid--2 { grid-template-columns: 1fr; }
 }
 .split-grid .info-grid { margin-top: 0; } /* no section-head above the cards column anymore */

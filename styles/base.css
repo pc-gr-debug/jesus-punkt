@@ -98,6 +98,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 37.5rem) {
   /* endpoint: +50% over the previous phone value (was --section-pad / 2) */
   .section { padding-block: calc(var(--section-pad) * 0.75); }
+  /* the page's last section carries the 2.85rem taken off the footer's top
+     padding — total section↔footer rhythm unchanged, more of it on light bg */
+  main > section:last-of-type { padding-bottom: calc(var(--section-pad) * 0.75 + 2.85rem); }
 }
 
 /* ---- Appearance reveals (JS adds .reveal, then .is-in on enter; classes

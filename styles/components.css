@@ -680,10 +680,10 @@ a.footer__item:hover { color: var(--creme); background-size: 100% 1px; }
   .footer__col { text-align: left; }
 }
 @media (max-width: 37.5rem) {
-  /* endpoint: footer↔last-section gap doubled vs. the previous phone value
-     (last section's own bottom padding already grew via .section's +50%; this
-     covers the rest so the combined gap lands at 2× the old 7rem total) */
-  .footer { padding-top: 9.5rem; }
+  /* endpoint: footer top −30% (was 9.5rem); the removed 2.85rem moved into the
+     last main section's bottom padding (base.css) so the total rhythm holds
+     while the dark area above the footer content shrinks */
+  .footer { padding-top: 6.65rem; }
 }
 @media (max-width: 30rem) {
   .footer__grid { grid-template-columns: 1fr; }
