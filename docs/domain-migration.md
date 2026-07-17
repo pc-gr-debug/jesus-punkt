@@ -26,19 +26,18 @@ kommt keine Mail mehr an (Arnes wichtigster Hinweis).
 3. Test: `dig MX jesus-punkt.de` gegen die Vercel-Nameserver, Probemail an info@jesus-punkt.de.
 
 ### 2 · ⚠️ Formular-Endpoint sichern (BEVOR die Domain umzeigt!)
-**Entscheidung (2026-07-10): das WordPress bleibt** — Kontakt- und
-Spendenbescheinigungs-Formular posten weiter an den Brizy-Endpoint
-(`…/wp-admin/admin-ajax.php`). Sobald jesus-punkt.de auf die neue statische Seite
-zeigt, ist der Endpoint unter diesem Namen aber nicht mehr erreichbar. Deshalb vor Cutover:
+**Entscheidung (2026-07-17, ersetzt die vom 2026-07-10): eigene Vercel-Function
+statt WordPress.** `api/contact.js` nimmt beide Formulare (Kontakt,
+Spendenbescheinigung) entgegen und mailt sie per Google-Workspace-SMTP an
+info@jesus-punkt.de; `js/contact.js` postet bereits an `/api/contact`.
+Das WordPress-Rehosting (alt.jesus-punkt.de) entfällt damit. Vor Cutover:
 
-1. Mit Arne/altem Host klären: WordPress bleibt gehostet und bekommt eine neue Adresse,
-   z. B. **`alt.jesus-punkt.de`** (im Vercel-DNS ein A/CNAME-Record auf den alten Server;
-   WordPress-Site-URL + vHost + TLS-Zertifikat müssen dort auf den neuen Namen umgestellt
-   werden — das kann nur der WP-Admin).
-2. In `js/contact.js` die eine `ENDPOINT`-Konstante auf die neue Adresse tauschen.
-3. Kurz beide Formulare testen (je eine Probe-Nachricht).
+1. `SMTP_PASS` in der Vercel-Env setzen (Google-App-Passwort für
+   info@jesus-punkt.de: Google-Konto → Sicherheit → 2FA → App-Passwörter),
+   dann redeployen.
+2. Kurz beide Formulare testen (je eine Probe-Nachricht an info@jesus-punkt.de).
 
-WordPress darf danach gern unsichtbar bleiben — es dient nur noch als Formular-Postfach.
+WordPress wird danach nicht mehr gebraucht und kann nach dem Cutover gekündigt werden.
 
 ### 3 · Website auf die Domain legen *(Stand 2026-07-17: Hosting = Vercel-Projekt `jesus-punkt`, nicht mehr GitHub Pages)*
 1. Die Seite läuft als Vercel-Projekt `jesus-punkt` (Team Jesus Punkt) auf

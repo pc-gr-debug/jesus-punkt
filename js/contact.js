@@ -1,19 +1,17 @@
 /* Jesus Punkt — Formulare (Kontakt, Spendenbescheinigung) · no dependencies
-   Every form[data-brz-form] submits to the SAME Brizy endpoint as the current
-   jesus-punkt.de site (WordPress admin-ajax `brizy_submit_form`; protocol:
-   form_id + data = JSON array of {name, value, label, type, required} — verified
-   against the Brizy plugin source). The form's data-brz-form attribute carries
-   its form_id; field tokens ride data-brz-name on each input.
-   The endpoint sends no CORS headers, so the POST goes out in no-cors mode:
-   delivery is confirmable, the JSON response is not readable — client-side
-   validation must catch every invalid case before sending. */
+   Every form[data-brz-form] submits to our own /api/contact Vercel function
+   (api/contact.js), which mails the payload to info@jesus-punkt.de via Google
+   Workspace SMTP. Protocol kept from the Brizy days: form_id + data = JSON
+   array of {name, value, label, type, required}. The form's data-brz-form
+   attribute carries its form_id; field tokens ride data-brz-name on each input.
+   Same-origin POST — the response IS readable, so !res.ok shows the error
+   state instead of a false success. */
 (function () {
   'use strict';
 
-  /* DECISION 2026-07-10: WordPress stays the form backend. At domain cutover this
-     host changes to the WP's new address (e.g. alt.jesus-punkt.de) — the ONE line
-     to touch; see docs/domain-migration.md §2. */
-  var ENDPOINT = 'https://jesus-punkt.de/wp-admin/admin-ajax.php?nonce=&action=brizy_submit_form';
+  /* DECISION 2026-07-17: own /api/contact replaces the old WordPress/Brizy
+     endpoint (needs SMTP_PASS in the Vercel env — docs/pipeline.md §Cutover). */
+  var ENDPOINT = '/api/contact';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   /* ---------- success modal (one per page) ---------- */
@@ -80,13 +78,14 @@
         });
       });
 
-      var body = new FormData();
+      var body = new URLSearchParams();
       body.append('form_id', formId);
       body.append('data', JSON.stringify(fields));
 
       form.classList.add('is-sending');
-      fetch(ENDPOINT, { method: 'POST', body: body, mode: 'no-cors' })
-        .then(function () {
+      fetch(ENDPOINT, { method: 'POST', body: body })
+        .then(function (res) {
+          if (!res.ok) throw new Error('send failed');
           form.classList.remove('is-sending');
           form.reset();
           showSuccess();
