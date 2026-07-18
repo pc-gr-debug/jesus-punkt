@@ -164,6 +164,21 @@ def extract_speaker(description: str) -> str:
     return first_line if " · " in first_line else ""
 
 
+def dedupe_sermons(pairs: list) -> list:
+    """Drop same-sermon doubles (livestream archive + edited re-upload share the
+    parsed title/date but have different video ids). Input is playlist order —
+    newest upload first — so the survivor is the edited re-upload."""
+    seen: set = set()
+    kept = []
+    for date, entry in pairs:
+        key = (entry["title"].casefold(), entry["date"])
+        if key in seen:
+            continue
+        seen.add(key)
+        kept.append((date, entry))
+    return kept
+
+
 # Real titles from the live playlist (fetched 2026-07) — the parser must keep
 # handling every one of these shapes. Run: python3 tools/yt-sermons.py --selftest
 SELFTEST_CASES = [
@@ -282,6 +297,7 @@ def main() -> int:
         print("yt-sermons: playlist returned 0 videos — refusing to overwrite", file=sys.stderr)
         return 1
 
+    sermons = dedupe_sermons(sermons)
     sermons.sort(key=lambda pair: pair[0], reverse=True)
     sermons = [entry for _, entry in sermons]
     now = datetime.now(timezone.utc)
