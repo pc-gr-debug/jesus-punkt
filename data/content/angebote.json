@@ -1,0 +1,29 @@
+{
+  "de": {
+    "hero_intro": "Wir sind für dich da — auch über den Sonntag hinaus. Persönlich, vertraulich und von Herzen.",
+    "angebot_1_titel": "Weißes Kreuz Beratungsstelle",
+    "angebot_1_text": "Vertrauliche Beratung bei Fragen zu Beziehung, Ehe, Sexualität und Lebenskrisen — professionell und wertschätzend.",
+    "angebot_2_titel": "Hochzeitssprecher",
+    "angebot_2_text": "Wir gestalten eure Trauung mit — persönlich, feierlich und mit einer Botschaft, die trägt.",
+    "angebot_3_titel": "Beerdigungen",
+    "angebot_3_text": "Wir begleiten Familien in Zeiten des Abschieds — würdevoll, tröstend und nah."
+  },
+  "en": {
+    "hero_intro": "We're here for you — beyond Sunday too. Personal, confidential and from the heart.",
+    "angebot_1_titel": "Weißes Kreuz Beratungsstelle",
+    "angebot_1_text": "Confidential counselling on relationships, marriage, sexuality and life crises — professional and respectful.",
+    "angebot_2_titel": "Wedding speakers",
+    "angebot_2_text": "We help shape your wedding ceremony — personal, celebratory and with a message that carries.",
+    "angebot_3_titel": "Funerals",
+    "angebot_3_text": "We walk with families in times of loss — dignified, comforting and close."
+  },
+  "uk": {
+    "hero_intro": "Ми поруч із тобою — і не лише в неділю. Особисто, конфіденційно й від серця.",
+    "angebot_1_titel": "Weißes Kreuz Beratungsstelle",
+    "angebot_1_text": "Конфіденційні консультації з питань стосунків, шлюбу, сексуальності та життєвих криз — професійно й з повагою.",
+    "angebot_2_titel": "Ведучі вінчань",
+    "angebot_2_text": "Ми допоможемо провести ваше вінчання — особисто, урочисто й зі словом, яке підтримує.",
+    "angebot_3_titel": "Похорони",
+    "angebot_3_text": "Ми супроводжуємо родини в час прощання — гідно, з розрадою та поруч."
+  }
+}

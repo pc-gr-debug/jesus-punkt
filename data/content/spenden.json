@@ -1,9 +1,32 @@
 {
   "de": {
+    "hero_intro": "Wir segnen, weil wir gesegnet sind. Mit deiner Spende trägst du die Arbeit von Jesus Punkt in Neubrandenburg mit — danke!",
     "kontoinhaber": "VIA Movement e.V.",
     "bank": "Sparkasse Neubrandenburg-Demmin",
     "iban": "DE77 1505 0200 3200 0172 00",
     "bic": "NOLADE21NBS",
-    "verwendungszweck": "Spende Jesus Punkt"
+    "verwendungszweck": "Spende Jesus Punkt",
+    "hilfe_text": "Schreib uns gern — wir helfen bei Dauerauftrag, Zuwendungsbestätigung und allem Weiteren.",
+    "bescheinigung_intro": "Selbstverständlich erhältst du am Anfang des Jahres eine Spendenbescheinigung, wenn du auch deine Adresse angibst."
+  },
+  "en": {
+    "hero_intro": "We bless because we are blessed. Your gift helps carry the work of Jesus Punkt in Neubrandenburg — thank you!",
+    "kontoinhaber": "VIA Movement e.V.",
+    "bank": "Sparkasse Neubrandenburg-Demmin",
+    "iban": "DE77 1505 0200 3200 0172 00",
+    "bic": "NOLADE21NBS",
+    "verwendungszweck": "Spende Jesus Punkt",
+    "hilfe_text": "Just write to us — we're happy to help with standing orders, donation receipts and anything else.",
+    "bescheinigung_intro": "Of course you'll receive a donation receipt at the beginning of the year — just include your address."
+  },
+  "uk": {
+    "hero_intro": "Ми благословляємо, бо самі благословенні. Твоя пожертва підтримує працю Jesus Punkt у Нойбранденбурзі — дякуємо!",
+    "kontoinhaber": "VIA Movement e.V.",
+    "bank": "Sparkasse Neubrandenburg-Demmin",
+    "iban": "DE77 1505 0200 3200 0172 00",
+    "bic": "NOLADE21NBS",
+    "verwendungszweck": "Spende Jesus Punkt",
+    "hilfe_text": "Напишіть нам — допоможемо з постійним дорученням, довідкою про пожертву та всім іншим.",
+    "bescheinigung_intro": "Звісно, на початку року ви отримаєте довідку про пожертву — просто вкажіть свою адресу."
   }
 }

@@ -1,0 +1,41 @@
+{
+  "de": {
+    "hero_intro": "Gemeinde ist mehr als Sonntag. Hier findest du deinen Platz — egal, wie alt du bist und wo du gerade stehst.",
+    "kigo_intro": "Während des Gottesdienstes erleben die Kinder ihr eigenes Programm — Geschichten, Musik, Basteln und jede Menge Freude.",
+    "kigo_wann": "Sonntags · 10:00 Uhr",
+    "kigo_wo": "Parallel zum Gottesdienst, im selben Haus",
+    "kigo_leitung": "Lydia Wegner & Anja Maas",
+    "jugend_intro": "ELEVATE ist der Treffpunkt am Freitag für Jugendliche zwischen 13 und 29 Jahren. Coole Aktionen, tiefe Gespräche, gutes Essen — wir sind gemeinsam und mit Gott unterwegs.",
+    "jugend_wann": "Jeden Freitag · 18:30 – 21:30 Uhr",
+    "jugend_fuer": "13 bis 29 Jahre",
+    "jugend_team": "Claus, Philipp, Mykhailo & Natan",
+    "hauskreise_text": "Schreib uns — wir finden gemeinsam den Hauskreis, der zu deinem Leben passt.",
+    "hauskreise_cta": "Ich möchte dabei sein"
+  },
+  "en": {
+    "hero_intro": "Church is more than Sunday. There's a place for you here — whatever your age and wherever you are in life.",
+    "kigo_intro": "During the service the kids enjoy their own programme — stories, music, crafts and plenty of fun.",
+    "kigo_wann": "Sundays · 10:00",
+    "kigo_wo": "Parallel to the service, in the same building",
+    "kigo_leitung": "Lydia Wegner & Anja Maas",
+    "jugend_intro": "ELEVATE is the Friday hangout for teens and young adults aged 13–29. Great activities, deep conversations, good food — we journey together, and with God.",
+    "jugend_wann": "Every Friday · 18:30 – 21:30",
+    "jugend_fuer": "Ages 13–29",
+    "jugend_team": "Claus, Philipp, Mykhailo & Natan",
+    "hauskreise_text": "Message us — together we'll find the home group that fits your life.",
+    "hauskreise_cta": "I want to join"
+  },
+  "uk": {
+    "hero_intro": "Церква — це більше, ніж неділя. Тут є місце для тебе — незалежно від віку й того, де ти зараз у житті.",
+    "kigo_intro": "Під час богослужіння діти мають власну програму — історії, музика, творчість і море радості.",
+    "kigo_wann": "Щонеділі · 10:00",
+    "kigo_wo": "Паралельно з богослужінням, у тому ж будинку",
+    "kigo_leitung": "Lydia Wegner & Anja Maas",
+    "jugend_intro": "ELEVATE — це пʼятнична зустріч для молоді від 13 до 29 років. Круті активності, глибокі розмови, смачна їжа — ми в дорозі разом і з Богом.",
+    "jugend_wann": "Щопʼятниці · 18:30 – 21:30",
+    "jugend_fuer": "Від 13 до 29 років",
+    "jugend_team": "Claus, Philipp, Mykhailo & Natan",
+    "hauskreise_text": "Напиши нам — разом знайдемо домашню групу, яка пасує твоєму життю.",
+    "hauskreise_cta": "Хочу приєднатися"
+  }
+}

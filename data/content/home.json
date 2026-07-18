@@ -1,5 +1,9 @@
 {
   "de": {
+    "hero_title": "Jesus Punkt - Kirche, die",
+    "hero_highlight": "lebt",
+    "events_title": "Was als Nächstes ansteht",
+    "sermons_title": "Verpasst? Hör in Ruhe nach",
     "events_intro": "Der aktuelle Flyer zum Sonntagsgottesdienst und alle weiteren Termine auf einen Blick — für Kinder, Jugend, Familien und alle dazwischen.",
     "sermons_intro": "Die letzten Predigten zum Nachhören und Weiterdenken — wann und wo du willst.",
     "groups_title": "Dein Leben, deine Kleingruppe",
@@ -9,6 +13,10 @@
     "werte_intro": "Was uns als Gemeinde prägt — an jedem Sonntag und an allen Tagen dazwischen."
   },
   "en": {
+    "hero_title": "Jesus Punkt — a church that",
+    "hero_highlight": "lives",
+    "events_title": "What's coming up",
+    "sermons_title": "Missed it? Listen back anytime",
     "events_intro": "The current Sunday service flyer and all upcoming dates at a glance — for kids, youth, families and everyone in between.",
     "sermons_intro": "The latest sermons to listen back to and reflect on — whenever and wherever you like.",
     "groups_title": "Your life, your small group",
@@ -18,6 +26,10 @@
     "werte_intro": "What shapes us as a church — every Sunday and all the days in between."
   },
   "uk": {
+    "hero_title": "Jesus Punkt — церква, яка",
+    "hero_highlight": "живе",
+    "events_title": "Найближчі події",
+    "sermons_title": "Пропустили? Послухайте в записі",
     "events_intro": "Актуальний флаєр недільного богослужіння та всі найближчі дати з одного погляду — для дітей, молоді, сімей і всіх між ними.",
     "sermons_intro": "Останні проповіді, щоб переслухати й обміркувати — коли і де зручно.",
     "groups_title": "Твоє життя — твоя мала група",

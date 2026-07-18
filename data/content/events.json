@@ -1,0 +1,17 @@
+{
+  "de": {
+    "hero_intro": "Gottesdienste, Jugendabende, Gebet und mehr — alles, was bei uns als Nächstes ansteht, und die Predigten zum Nachhören.",
+    "kalender_intro": "Alle Termine im Monatskalender. Die Liste und der Flyer werden über ChurchTools gepflegt und aktualisieren sich automatisch.",
+    "besondere_intro": "Diese Termine wollen geplant sein — merk sie dir am besten gleich vor."
+  },
+  "en": {
+    "hero_intro": "Services, youth nights, prayer and more — everything coming up, plus sermons to listen back to.",
+    "kalender_intro": "All dates in the monthly calendar. The list and the flyer are maintained in ChurchTools and update automatically.",
+    "besondere_intro": "These dates take a little planning — best save them right away."
+  },
+  "uk": {
+    "hero_intro": "Богослужіння, молодіжні вечори, молитва та інше — усе, що попереду, і проповіді в записі.",
+    "kalender_intro": "Усі дати в місячному календарі. Список і флаєр ведуться в ChurchTools та оновлюються автоматично.",
+    "besondere_intro": "Ці події варто спланувати заздалегідь — занотуй їх собі вже зараз."
+  }
+}

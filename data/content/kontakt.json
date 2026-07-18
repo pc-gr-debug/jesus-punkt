@@ -1,6 +1,50 @@
 {
   "de": {
+    "hero_intro": "Wir freuen uns von dir zu hören — oder dich am Sonntag persönlich zu begrüßen. Welcome Home.",
     "phone": "+49 156 79133367",
-    "email": "info@jesus-punkt.de"
+    "email": "info@jesus-punkt.de",
+    "antwort_text": "Wir antworten so schnell wie möglich — und rufen gern zurück.",
+    "service_line": "Sonntags · 10:00 Uhr",
+    "service_text": "Vor Ort und im Livestream auf YouTube.",
+    "address_street": "Kruseshofer Str. 20",
+    "address_city": "17036 Neubrandenburg",
+    "address_text": "Parkplätze direkt am Haus.",
+    "social_text": "Bleib auf dem Laufenden — Predigten, Events und Einblicke ins Gemeindeleben.",
+    "form_intro": "Hast du eine Frage oder möchtest jemanden erreichen? Schreib uns — wir melden uns zeitnah.",
+    "service_time": "Sonntags 10:00 Uhr",
+    "footer_tagline": "Eine evangelische Freikirche in Neubrandenburg. Welcome Home.",
+    "footer_live": "vor Ort und auf YouTube"
+  },
+  "en": {
+    "hero_intro": "We'd love to hear from you — or welcome you in person on Sunday. Welcome Home.",
+    "phone": "+49 156 79133367",
+    "email": "info@jesus-punkt.de",
+    "antwort_text": "We reply as quickly as we can — and we're happy to call you back.",
+    "service_line": "Sundays · 10:00",
+    "service_text": "On site and in the livestream on YouTube.",
+    "address_street": "Kruseshofer Str. 20",
+    "address_city": "17036 Neubrandenburg",
+    "address_text": "Parking right by the building.",
+    "social_text": "Stay up to date — sermons, events and glimpses of church life.",
+    "form_intro": "Got a question, or want to reach someone? Write to us — we'll get back to you soon.",
+    "service_time": "Sundays, 10:00",
+    "footer_tagline": "A protestant free church in Neubrandenburg. Welcome Home.",
+    "footer_live": "on site and on YouTube"
+  },
+  "uk": {
+    "hero_intro": "Будемо раді почути тебе — або привітати особисто в неділю. Welcome Home.",
+    "phone": "+49 156 79133367",
+    "email": "info@jesus-punkt.de",
+    "antwort_text": "Відповідаємо якнайшвидше — і радо передзвонимо.",
+    "service_line": "Щонеділі · 10:00",
+    "service_text": "Наживо та в трансляції на YouTube.",
+    "address_street": "Kruseshofer Str. 20",
+    "address_city": "17036 Neubrandenburg",
+    "address_text": "Паркування просто біля будинку.",
+    "social_text": "Будь у курсі — проповіді, події та життя громади.",
+    "form_intro": "Маєте запитання або хочете звʼязатися з кимось? Напишіть нам — ми відповімо найближчим часом.",
+    "service_time": "Щонеділі о 10:00",
+    "footer_tagline": "Євангельська вільна церква в Нойбранденбурзі. Welcome Home.",
+    "footer_live": "наживо та на YouTube"
   }
 }

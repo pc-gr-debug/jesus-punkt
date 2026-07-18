@@ -1,6 +1,15 @@
 # Jesus Punkt — Sveltia CMS content model
 # Editing surface for the rare-change content (docs/cms-integration-plan.md §3).
-# Weekly content (Termine, Flyer, Hauskreis-Termine) lives in ChurchTools — NOT here.
+# Weekly content (Termine, Flyer, Predigten) lives in ChurchTools/YouTube — NOT here.
+#
+# Structure: one entry per page, fields in page order, every hint says where the
+# text appears. i18n MUST be enabled on the collection AND each file (Sveltia
+# requirement — file-level alone silently disables it and the fields come up empty).
+# Non-translatable fields (phone, IBAN, names) are plain i18n: true with identical
+# values in every locale + a "gilt für alle Sprachen" hint. (i18n: duplicate would be
+# the right tool, but it renders a BLANK editor in current Sveltia — verified
+# 2026-07-18 with the local-repo harness in tools/… scratchpad. The bake reads ["de"],
+# so a stray EN/UK edit of these fields can't reach the pages anyway.)
 #
 # Login: GitHub OAuth app (owner: pc-gr-debug) + the /api/auth + /api/callback
 # Vercel functions in this repo (no Cloudflare Worker needed since the Vercel move).
@@ -16,6 +25,11 @@ site_url: https://jesus-punkt.de
 display_url: https://jesus-punkt.de
 logo_url: /img/logo.png
 
+# the preview pane only mirrors field labels (no real page rendering) — hide it,
+# the form gets the full width and the hints carry the "where does this appear" info
+editor:
+  preview: false
+
 # general media library — team photos and gallery photos get their own folders
 # via the field-level overrides below
 media_folder: img/uploads
@@ -29,50 +43,122 @@ i18n:
 collections:
   - name: inhalte
     label: Inhalte
-    description: "Texte und Daten der Website. Änderungen sind nach dem nächsten Deploy online (spätestens am nächsten Morgen — oder direkt nach einem Push)."
+    description: "Alle festen Texte der Website — ein Eintrag pro Seite, die Felder stehen in der Reihenfolge, in der die Texte auf der Seite erscheinen. Unter jedem Feld steht, wo genau der Text zu sehen ist. Sprachen: oben im Editor zwischen Deutsch / English / Українська wechseln — graue Felder werden automatisch aus dem Deutschen übernommen. Nach dem Speichern ist die Änderung mit dem nächsten Deploy online (spätestens am nächsten Morgen)."
+    i18n: true
     files:
       - name: home
         label: Startseite
         file: data/content/home.json
         i18n: true
         fields:
-          - { name: events_intro, label: "Intro: Was als Nächstes ansteht", widget: text, i18n: true }
-          - { name: sermons_intro, label: "Intro: Predigten", widget: text, i18n: true }
-          - { name: groups_title, label: "Titel: Kleingruppen", widget: string, i18n: true, hint: "Kurz halten — große Überschrift" }
-          - { name: groups_intro, label: "Intro: Kleingruppen", widget: text, i18n: true }
-          - { name: groups_cta, label: "Button: Kleingruppen", widget: string, i18n: true, pattern: ['^.{1,40}$', 'max. 40 Zeichen'] }
-          - { name: werte_title, label: "Titel: Werte", widget: string, i18n: true }
-          - { name: werte_intro, label: "Intro: Werte", widget: text, i18n: true }
+          - { name: hero_title, label: "Hero — Überschrift (Teil vor dem gelben Wort)", widget: string, i18n: true, hint: "Ganz oben auf der Startseite: „Jesus Punkt - Kirche, die lebt“ — dieses Feld ist alles vor dem gelb markierten Wort." }
+          - { name: hero_highlight, label: "Hero — gelb markiertes Wort", widget: string, i18n: true, pattern: ['^.{1,15}$', 'max. 15 Zeichen — ein Wort'], hint: "Das gelb hervorgehobene Wort am Ende der Hero-Überschrift." }
+          - { name: events_title, label: "Termine — Überschrift", widget: string, i18n: true, hint: "Überschrift des Termin-Bereichs („Was als Nächstes ansteht“). Die Termine selbst kommen aus ChurchTools." }
+          - { name: events_intro, label: "Termine — Einleitungstext", widget: text, i18n: true, hint: "Der Satz direkt unter der Termin-Überschrift." }
+          - { name: sermons_title, label: "Predigten — Überschrift", widget: string, i18n: true, hint: "Überschrift des Predigt-Bereichs („Verpasst? Hör in Ruhe nach“). Die Predigten selbst kommen von YouTube." }
+          - { name: sermons_intro, label: "Predigten — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Predigt-Überschrift — erscheint auch auf der Events-Seite über den Predigten." }
+          - { name: groups_title, label: "Hauskreise — Überschrift", widget: string, i18n: true, hint: "Überschrift des Hauskreis-Bereichs unten auf der Startseite. Kurz halten — große Schrift." }
+          - { name: groups_intro, label: "Hauskreise — Einleitungstext", widget: text, i18n: true, hint: "Erscheint auf der Startseite UND im Hauskreis-Bereich auf der Gemeindeleben-Seite." }
+          - { name: groups_cta, label: "Hauskreise — Button-Beschriftung", widget: string, i18n: true, pattern: ['^.{1,40}$', 'max. 40 Zeichen'], hint: "Der gelbe Button im Hauskreis-Bereich der Startseite." }
+          - { name: werte_title, label: "Werte — Überschrift", widget: string, i18n: true, hint: "Überschrift über dem Werte-Rad („Sieben Werte, die uns tragen“)." }
+          - { name: werte_intro, label: "Werte — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Werte-Überschrift. Die sieben Werte selbst: eigener Eintrag „Die 7 Werte“." }
       - name: werte
         label: Die 7 Werte
         file: data/content/werte.json
         i18n: true
         fields:
           - name: values
-            label: Werte
+            label: "Die sieben Werte (Startseite — Werte-Rad)"
+            label_singular: Wert
             widget: list
             i18n: true
             allow_add: false      # es sind genau sieben — das Rad kennt keine acht
+            hint: "Reihenfolge = Reihenfolge im Rad (01–07). Name steht im Kreis, der Leitsatz erscheint beim Anklicken/Scrollen."
             fields:
               - { name: name, label: Name, widget: string, i18n: true, pattern: ['^.{1,20}$', 'max. 20 Zeichen — muss in die Kreise passen'] }
               - { name: line, label: Leitsatz, widget: string, i18n: true, pattern: ['^.{1,90}$', 'max. 90 Zeichen'] }
+      - name: ueber-uns
+        label: Über uns
+        file: data/content/ueber-uns.json
+        i18n: true
+        fields:
+          - { name: hero_title, label: "Seitentitel", widget: string, i18n: true, hint: "Große Überschrift im Foto-Header („Wir sind Jesus Punkt“)." }
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter dem Seitentitel im Foto-Header." }
+          - { name: team_intro, label: "Unser Team — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Unser Team“. Die Personen selbst: Bereich „Bilder & Team“ → Team." }
+          - { name: glaube_1, label: "Was wir glauben — Absatz 1", widget: text, i18n: true, hint: "Bereich „Was wir glauben“, erster Absatz." }
+          - { name: glaube_2, label: "Was wir glauben — Absatz 2", widget: text, i18n: true }
+          - { name: glaube_3, label: "Was wir glauben — Absatz 3", widget: text, i18n: true }
+          - { name: glaube_4_satz, label: "Was wir glauben — fett gedruckter Satz", widget: string, i18n: true, hint: "Der fette Satz im letzten Absatz („Unser Glaube gründet sich …“)." }
+          - { name: glaube_4_rest, label: "Was wir glauben — Satz danach", widget: string, i18n: true, hint: "Der normale Satz direkt nach dem fetten Satz." }
+          - { name: chronik_intro, label: "Unsere Chronik — Einleitungstext", widget: string, i18n: true, hint: "Der Satz unter der Überschrift „Unsere Chronik“. Die Chronik-Stationen selbst pflegt das Website-Team." }
+      - name: gemeindeleben
+        label: Gemeindeleben
+        file: data/content/gemeindeleben.json
+        i18n: true
+        fields:
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter „Gemeindeleben“ im Foto-Header." }
+          - { name: kigo_intro, label: "Kindergottesdienst — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Kindergottesdienst“." }
+          - { name: kigo_wann, label: "Kindergottesdienst — Wann?", widget: string, i18n: true, hint: "Faktenzeile „Wann?“ (z. B. Sonntags · 10:00 Uhr)." }
+          - { name: kigo_wo, label: "Kindergottesdienst — Wo?", widget: string, i18n: true, hint: "Faktenzeile „Wo?“." }
+          - { name: kigo_leitung, label: "Kindergottesdienst — Leitung", widget: string, i18n: true, hint: "Faktenzeile „Leitung“ — Namen, gelten für alle Sprachen." }
+          - { name: jugend_intro, label: "Jugend (ELEVATE) — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Die Jugend“." }
+          - { name: jugend_wann, label: "Jugend — Wann?", widget: string, i18n: true, hint: "Faktenzeile „Wann?“ (z. B. Jeden Freitag · 18:30 – 21:30 Uhr)." }
+          - { name: jugend_fuer, label: "Jugend — Für wen?", widget: string, i18n: true, hint: "Faktenzeile „Für wen?“ (z. B. 13 bis 29 Jahre)." }
+          - { name: jugend_team, label: "Jugend — Team", widget: string, i18n: true, hint: "Faktenzeile „Team“ — Namen, gelten für alle Sprachen." }
+          - { name: hauskreise_text, label: "Hauskreise — zweiter Absatz", widget: text, i18n: true, hint: "Bereich „Hauskreise“ (nur sichtbar, wenn im Eintrag „Hauskreise“ eingeschaltet). Der erste Absatz ist das Feld „Hauskreise — Einleitungstext“ der Startseite." }
+          - { name: hauskreise_cta, label: "Hauskreise — Button-Beschriftung", widget: string, i18n: true, pattern: ['^.{1,40}$', 'max. 40 Zeichen'], hint: "Der gelbe Button „Ich möchte dabei sein“." }
+      - name: angebote
+        label: Angebote
+        file: data/content/angebote.json
+        i18n: true
+        fields:
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter „Angebote“ im Foto-Header." }
+          - { name: angebot_1_titel, label: "Karte 1 — Titel", widget: string, i18n: true, hint: "Erste Angebots-Karte („Weißes Kreuz Beratungsstelle“). Eigenname — gilt für alle Sprachen. Der Kontakt-Link darunter ist fest verdrahtet." }
+          - { name: angebot_1_text, label: "Karte 1 — Text", widget: text, i18n: true }
+          - { name: angebot_2_titel, label: "Karte 2 — Titel", widget: string, i18n: true, hint: "Zweite Angebots-Karte („Hochzeitssprecher“)." }
+          - { name: angebot_2_text, label: "Karte 2 — Text", widget: text, i18n: true }
+          - { name: angebot_3_titel, label: "Karte 3 — Titel", widget: string, i18n: true, hint: "Dritte Angebots-Karte („Beerdigungen“)." }
+          - { name: angebot_3_text, label: "Karte 3 — Text", widget: text, i18n: true }
+      - name: events
+        label: Events
+        file: data/content/events.json
+        i18n: true
+        fields:
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter „Events“ im Foto-Header. Termine, Flyer und Kalender kommen aus ChurchTools — hier nur die festen Texte." }
+          - { name: kalender_intro, label: "Veranstaltungen — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Veranstaltungen“, über dem Monatskalender." }
+          - { name: besondere_intro, label: "Besondere Events — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter „Besondere Events“ (Bereich erscheint nur, wenn es besondere Flyer gibt). Der Predigt-Text darunter: Eintrag „Startseite“ → „Predigten — Einleitungstext“." }
       - name: spenden
-        label: Spenden (Bankverbindung)
+        label: Spenden
         file: data/content/spenden.json
         i18n: true
         fields:
-          - { name: kontoinhaber, label: Kontoinhaber, widget: string, i18n: false }
-          - { name: bank, label: Bank, widget: string, i18n: false }
-          - { name: iban, label: IBAN, widget: string, i18n: false, pattern: ['^DE[0-9 ]{20,27}$', 'Deutsche IBAN (DE + 20 Ziffern)'] }
-          - { name: bic, label: BIC, widget: string, i18n: false }
-          - { name: verwendungszweck, label: Verwendungszweck, widget: string, i18n: false }
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter „Spenden“ im Foto-Header." }
+          - { name: kontoinhaber, label: "Bankverbindung — Kontoinhaber", widget: string, i18n: true, hint: "Die Bankdaten gelten für alle Sprachen." }
+          - { name: bank, label: "Bankverbindung — Bank", widget: string, i18n: true }
+          - { name: iban, label: "Bankverbindung — IBAN", widget: string, i18n: true, pattern: ['^DE[0-9 ]{20,27}$', 'Deutsche IBAN (DE + 20 Ziffern)'] }
+          - { name: bic, label: "Bankverbindung — BIC", widget: string, i18n: true }
+          - { name: verwendungszweck, label: "Bankverbindung — Verwendungszweck", widget: string, i18n: true, hint: "Bleibt in jeder Sprache gleich, damit die Überweisung zugeordnet werden kann." }
+          - { name: hilfe_text, label: "Hilfe-Karte — Text", widget: text, i18n: true, hint: "Gelbe Karte neben der Bankverbindung („Schreib uns gern — wir helfen …“)." }
+          - { name: bescheinigung_intro, label: "Spendenbescheinigung — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Spendenbescheinigung“, über dem Formular. Adresse und Telefonnummer auf dieser Seite: Eintrag „Kontakt & Fußzeile“." }
       - name: kontakt
-        label: Kontaktdaten
+        label: Kontakt & Fußzeile
         file: data/content/kontakt.json
         i18n: true
         fields:
-          - { name: phone, label: Telefon, widget: string, i18n: false, hint: "Format: +49 …" }
-          - { name: email, label: E-Mail, widget: string, i18n: false, pattern: ['^\S+@\S+\.\S+$', 'gültige E-Mail-Adresse'] }
+          - { name: hero_intro, label: "Seitentitel — Untertitel", widget: text, i18n: true, hint: "Der Satz unter „Kontakt“ im Foto-Header." }
+          - { name: phone, label: "Telefonnummer", widget: string, i18n: true, hint: "Format: +49 … — erscheint auf der Kontaktseite, der Spenden-Seite und in der Fußzeile jeder Seite." }
+          - { name: email, label: "E-Mail-Adresse", widget: string, i18n: true, pattern: ['^\S+@\S+\.\S+$', 'gültige E-Mail-Adresse'], hint: "Erscheint auf der Kontaktseite und in der Fußzeile jeder Seite." }
+          - { name: antwort_text, label: "Karte Telefon/E-Mail — Text", widget: text, i18n: true, hint: "Der Satz unter Telefon & E-Mail („Wir antworten so schnell wie möglich …“)." }
+          - { name: service_line, label: "Karte Gottesdienst — Zeit", widget: string, i18n: true, hint: "Gelbe Karte auf der Kontaktseite (z. B. Sonntags · 10:00 Uhr)." }
+          - { name: service_text, label: "Karte Gottesdienst — Text", widget: text, i18n: true, hint: "Der Satz unter der Zeit („Vor Ort und im Livestream auf YouTube.“)." }
+          - { name: address_street, label: "Adresse — Straße", widget: string, i18n: true, hint: "Erscheint auf der Kontaktseite, der Spenden-Seite, im Startseiten-Hero und in der Fußzeile jeder Seite." }
+          - { name: address_city, label: "Adresse — PLZ und Ort", widget: string, i18n: true }
+          - { name: address_text, label: "Karte Adresse — Text", widget: text, i18n: true, hint: "Der Satz unter der Adresse („Parkplätze direkt am Haus.“)." }
+          - { name: social_text, label: "Karte Social Media — Text", widget: text, i18n: true, hint: "Text über den YouTube/Instagram/Facebook-Links." }
+          - { name: form_intro, label: "Schreib uns — Einleitungstext", widget: text, i18n: true, hint: "Der Satz unter der Überschrift „Schreib uns“, über dem Formular." }
+          - { name: service_time, label: "Gottesdienstzeit (Hero + Fußzeile)", widget: string, i18n: true, hint: "Erscheint im Startseiten-Hero und in der Fußzeile jeder Seite (z. B. Sonntags 10:00 Uhr) — bewusst getrennt von der Karte auf der Kontaktseite." }
+          - { name: footer_tagline, label: "Fußzeile — Leitspruch", widget: string, i18n: true, hint: "Der Satz unter dem Logo in der Fußzeile jeder Seite." }
+          - { name: footer_live, label: "Fußzeile — Livestream-Hinweis", widget: string, i18n: true, hint: "Die Zeile unter der Adresse in der Fußzeile („vor Ort und auf YouTube“)." }
       - name: hauskreise
         label: Hauskreise
         file: data/content/hauskreise.json
@@ -80,6 +166,7 @@ collections:
           - { name: enabled, label: "Auf der Website anzeigen", widget: boolean, hint: "Aus = die Hauskreis-Bereiche verschwinden von Start- und Gemeindeleben-Seite" }
           - name: groups
             label: Hauskreise
+            label_singular: Hauskreis
             widget: list
             fields:
               - { name: name, label: Name, widget: string }
@@ -95,6 +182,7 @@ collections:
         fields:
           - name: people
             label: Personen
+            label_singular: Person
             widget: list
             fields:
               - { name: id, label: "ID (klein, mit Bindestrichen)", widget: string, pattern: ['^[a-z0-9-]+$', 'nur kleinbuchstaben-und-bindestriche'] }

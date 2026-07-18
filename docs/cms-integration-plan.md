@@ -76,16 +76,32 @@ New folder `data/content/`, one small JSON per page area; `admin/config.yml` def
 fields (German labels, hints, required flags):
 
 ```
-data/content/
-  home.json         hero eyebrow parts, hero title + highlight word, section intros
-  werte.json        the 7 values: { num, name, line } ×7   ← single source (see §4)
-  glaube.json       "Was wir glauben" paragraphs
-  angebote.json     offer cards (label, title, text, link)
-  spenden.json      Kontoinhaber, IBAN, Verwendungszweck, Anschrift   ← kills the IBAN-TODO
-  kontakt.json      phone, mail, service time, address
-  team.json         (moved from data/mock/) people: name, roles[], photo, featured, note
-img/team/           CMS photo uploads (3:4, consent confirmed via required checkbox field)
+data/content/          (state 2026-07-18 — one file per page, entries named like the site nav)
+  home.json            hero title + highlight word, section titles + intros (Termine, Predigten,
+                       Hauskreise, Werte)
+  werte.json           the 7 values: { name, line } ×7   ← single source (see §4)
+  ueber-uns.json       page hero, team intro, "Was wir glauben" paragraphs, Chronik intro
+  gemeindeleben.json   page hero, KiGo + Jugend intros & fact rows, Hauskreis texts
+  angebote.json        page hero + the 3 offer cards (title, text — links stay hardcoded)
+  events.json          page hero + section intros (calendar, besondere Events)
+  spenden.json         page hero, Kontoinhaber/Bank/IBAN/BIC/Verwendungszweck, side-card texts
+  kontakt.json         page hero, phone, mail, card texts + SHARED strings: service time,
+                       address, footer tagline/livestream line (hero eyebrow + footer of every page)
+  hauskreise.json      enabled-toggle + groups list (flat, not localized)
+  team.json            people: name, roles[], group, photo (consent!)
+img/team/              CMS photo uploads (3:4, consent confirmed)
 ```
+
+Sveltia config gotchas (learned 2026-07-18, the hard way):
+- `i18n: true` is required on the **collection** AND each file — file-level alone silently
+  disables i18n and every field renders empty.
+- `i18n: duplicate` renders a **blank editor** in current Sveltia — non-translatable fields
+  are plain `i18n: true` with identical values per locale instead (bake only reads `de`).
+- The label-dump preview pane is disabled (`editor: preview: false`); per-field `hint`s name
+  the exact page + section instead.
+- Headless verification harness: `python3 -m http.server` + puppeteer overriding
+  `showDirectoryPicker` with an OPFS-backed fake repo (needs a `.git` dir) — enters Sveltia's
+  local-repo mode without OAuth, screenshots every entry, tests a save round-trip.
 
 Editor rules encoded in the config: max lengths where layout is tight (value lines, card titles),
 `pattern` for IBAN, required alt-texts for uploads, no rich text anywhere (plain strings only —
