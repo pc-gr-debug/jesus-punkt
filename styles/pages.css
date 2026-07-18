@@ -152,10 +152,10 @@
 .info-grid {
   margin-top: var(--space-xl);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-md);
 }
-.info-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.info-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .info-card {
   display: flex;
   flex-direction: column;
@@ -289,7 +289,7 @@
 
 /* ---- responsive ---- */
 @media (max-width: 64rem) {
-  .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .info-card { padding: 1.75rem; } /* card padding steps down toward 1.25rem on phones */
   /* side column gets too cramped below 64rem — stack early */
   .feature-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -302,7 +302,7 @@
   .media-strip { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 37.5rem) {
-  .info-grid, .info-grid--2 { grid-template-columns: 1fr; gap: var(--space-lg); } /* stacked rows breathe more */
+  .info-grid, .info-grid--2 { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); } /* stacked rows breathe more */
   .info-card { padding: var(--space-md); } /* 20px endpoint */
   .media-strip { grid-template-columns: 1fr 1fr; }
   .section-cta .btn { width: 100%; }
@@ -430,16 +430,17 @@
   gap: var(--space-2xl);
   align-items: start;
 }
-.split-grid .info-grid--2 { grid-template-columns: 1fr; } /* cards stack in their column */
+.split-grid .info-grid--2 { grid-template-columns: minmax(0, 1fr); } /* cards stack in their column */
 .split-grid__form .contact-form { margin-top: var(--space-lg); max-width: none; }
 @media (max-width: 64rem) {
-  .split-grid { grid-template-columns: 1fr; gap: 3rem; }
+  /* minmax(0, …): a long heading word must not prop the track open past the viewport */
+  .split-grid { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
   .split-grid__form { order: -1; } /* one column: the form comes BEFORE the cards */
   .split-grid--form-below .split-grid__form { order: 0; } /* Spenden: form stacks BELOW the info */
-  .split-grid .info-grid--2 { grid-template-columns: repeat(2, 1fr); } /* full width again — back to 2-up */
+  .split-grid .info-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } /* full width again — back to 2-up */
 }
 @media (max-width: 37.5rem) {
   .split-grid { gap: 4rem; } /* cards↔form row gap grows on phones */
-  .split-grid .info-grid--2 { grid-template-columns: 1fr; }
+  .split-grid .info-grid--2 { grid-template-columns: minmax(0, 1fr); }
 }
 .split-grid .info-grid { margin-top: 0; } /* no section-head above the cards column anymore */

@@ -87,8 +87,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---- Container (never pad the section itself) ---- */
 .container {
-  /* content = 71.25rem (1140, as in the fig); safety padding sits outside it */
-  max-width: calc(var(--container) + 2 * var(--space-lg));
+  /* 74.25rem = 71.25rem content (1140, as in the fig) + 2 × 1.5rem safety padding */
+  max-width: 74.25rem;
   margin-inline: auto;
   padding-inline: var(--space-lg);
 }
@@ -141,6 +141,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .h3 {
   font: 700 var(--fs-h3) / 1.2 var(--font-display);
   color: var(--ink);
+}
+/* long German compounds ("Spendenbescheinigung") exceed narrow screens as one
+   unbreakable word — let phones hyphenate headings instead of overflowing */
+@media (max-width: 37.5rem) {
+  h1, h2, h3 {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 }
 
 /* ---- Section header pattern (spacing lives on covers, not text nodes) ---- */
