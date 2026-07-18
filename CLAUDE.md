@@ -129,4 +129,4 @@ site/                 ARCHIVED v3 prototype (pre-Heritage-Gold) — local-only, 
 assets/               source material (fig exports, photos, renders) — local-only, untracked
 ```
 
-All asset/link paths are **root-absolute** (`/styles/…`, `/img/…`) — serve over HTTP (`python3 -m http.server`), not `file://`. Open TODOs before launch: Vereinsregister on /impressum/, Raveo webfont license, real team/gallery/hero photos (current ones are placeholders), GitHub OAuth app + auth Worker for /admin/ login, domain cutover (see docs/domain-migration.md — forms are domain-independent since the Web3Forms switch, so cutover order no longer matters for them).
+All asset/link paths are **root-absolute** (`/styles/…`, `/img/…`) — serve over HTTP (`python3 -m http.server`), not `file://`. Open TODOs before launch: Vereinsregister on /impressum/, Raveo webfont license, real team/gallery/hero photos (current ones are placeholders), GitHub OAuth app + auth Worker for /admin/ login, Google Search Console + WordPress cancellation after the 2026-07-18 domain cutover (see docs/pipeline.md §Open) — the site is live on https://jesus-punkt.de.

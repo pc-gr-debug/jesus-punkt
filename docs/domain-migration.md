@@ -35,15 +35,15 @@ der Domain — der Cutover kann die Formulare nicht mehr kaputt machen.
 
 WordPress wird nicht mehr gebraucht und kann nach dem Cutover gekündigt werden.
 
-### 3 · Website auf die Domain legen *(Stand 2026-07-17: Hosting = Vercel-Projekt `jesus-punkt`, nicht mehr GitHub Pages)*
-1. Die Seite läuft als Vercel-Projekt `jesus-punkt` (Team Jesus Punkt) auf
-   `https://jesus-punkt.vercel.app` — Build-Pipeline in `tools/vercel-build.sh`
-   (ct-events → yt-sermons → content-bake → i18n-build, Origin bereits `https://jesus-punkt.de`).
-2. Cutover = `jesus-punkt.de` + `www.jesus-punkt.de` dem Projekt zuweisen
-   (`vercel domains add …`) **und** im Vercel-DNS die zwei Alt-Records löschen:
-   `@ A 104.19.154.92` (altes WordPress) und `www CNAME lnszc5ey3e.wpdns.site.` —
-   dann greift der vorhandene ALIAS auf das Vercel-Projekt.
-   ⚠️ Erst NACH Schritt 2 (Formular-Endpoint) — sonst gehen die Formulare kaputt.
+### 3 · ✅ Website auf die Domain gelegt (erledigt 2026-07-18)
+1. Die Seite läuft als Vercel-Projekt `jesus-punkt` (Team Jesus Punkt) —
+   Build-Pipeline in `tools/vercel-build.sh`
+   (ct-events → yt-sermons → content-bake → i18n-build, Origin `https://jesus-punkt.de`).
+2. Cutover durchgeführt: `jesus-punkt.de` dem Projekt zugewiesen,
+   `www.jesus-punkt.de` als 308-Redirect auf den Apex, die zwei Alt-Records
+   (`@ A 104.19.154.92`, `www CNAME lnszc5ey3e.wpdns.site.`) gelöscht — der
+   ALIAS auf das Vercel-Projekt greift. Mail-Records (MX/SPF/DKIM) unangetastet
+   und per dig gegen die Vercel-Nameserver verifiziert.
 3. `jesuspunkt.de`: erledigt (2026-07-17) — Vercel-Projekt `jesuspunkt-redirect`
    leitet Apex + www per 308 auf `https://jesus-punkt.de` um (Pfad bleibt erhalten).
 

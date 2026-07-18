@@ -5,7 +5,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 ## Repo & hosting
 
 - Code: github.com/pc-gr-debug/jesus-punkt, branch main. One clean commit per work session.
-- Hosting: Vercel project "jesus-punkt" (team Jesus Punkt), live at https://jesus-punkt.vercel.app.
+- Hosting: Vercel project "jesus-punkt" (team Jesus Punkt), live at https://jesus-punkt.de (cutover 2026-07-18; jesus-punkt.vercel.app stays as the deployment URL).
 - Deploy: `vercel deploy --prod --yes` from the repo root.
 - Since 2026-07-18 the project is git-connected: every push to main also deploys automatically.
 - Local preview: `python3 -m http.server` from the repo root (root-absolute paths — never file://).
@@ -37,7 +37,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 - GitHub OAuth app, owner pc-gr-debug. Homepage URL https://jesus-punkt.de, callback URL https://jesus-punkt.de/api/callback.
 - The handshake runs through the repo's own Vercel functions api/auth.js + api/callback.js.
 - Vercel env needed: GH_OAUTH_ID (client id), GH_OAUTH_SECRET (client secret). Redeploy after setting.
-- Login works only after the domain cutover (jesus-punkt.de must serve the Vercel project).
+- Since the 2026-07-18 cutover jesus-punkt.de serves the Vercel project; /api/auth/ 302s to GitHub correctly (full login round-trip still needs a human test).
 - Editors need write access to the GitHub repo.
 
 ## Env vars (Vercel project jesus-punkt, Production)
@@ -50,19 +50,19 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 ## Domains & DNS (all in Vercel, team Jesus Punkt)
 
 - jesus-punkt.de: nameservers = Vercel. MX (5x Google), SPF, DKIM (krs._domainkey), site-verification = Google Workspace mail — never touch these.
-- jesus-punkt.de apex A 104.19.154.92 and www CNAME lnszc5ey3e.wpdns.site still point at the old WordPress — on purpose, until cutover.
+- jesus-punkt.de: cutover done 2026-07-18 — the old apex A 104.19.154.92 and www CNAME lnszc5ey3e.wpdns.site (WordPress) are deleted; the ALIAS records (apex + wildcard → cname.vercel-dns-017.com) serve the project. www.jesus-punkt.de 308s to the apex.
 - jesuspunkt.de: done. Vercel project "jesuspunkt-redirect" 308-redirects apex + www + every path to https://jesus-punkt.de.
 - Recommended addition: TXT _dmarc "v=DMARC1; p=none; rua=mailto:info@jesus-punkt.de".
 
-## Cutover to jesus-punkt.de (in this order)
+## Cutover to jesus-punkt.de — DONE 2026-07-18
 
-- Form backend: done — both forms post to Web3Forms (no own backend, works from any origin). The WordPress rehost (alt.jesus-punkt.de) is no longer needed.
-- Add the domains to the project: `vercel domains add jesus-punkt.de` and `vercel domains add www.jesus-punkt.de` (project jesus-punkt).
-- Delete exactly two DNS records in the jesus-punkt.de zone: the apex A 104.19.154.92 and the www CNAME lnszc5ey3e.wpdns.site. The existing ALIAS records then serve the Vercel project.
-- Check: https://jesus-punkt.de loads the new site, /en/ and /uk/ work, /admin/ login works, a test mail to info@jesus-punkt.de arrives.
-- Google Search Console: add the property, submit https://jesus-punkt.de/sitemap.xml.
-- Afterwards: cancel WordPress hosting (forms are replaced — Web3Forms), rotate the old domain transfer auth codes.
+- Domains attached to the project (apex + www as 308 redirect), the two WordPress DNS records deleted, mail records untouched.
+- Verified live: home, /en/, /uk/, /kontakt/, /spenden/, /admin/, /sitemap.xml all 200; Kontakt form probe through Web3Forms succeeded from the live domain; /api/auth/ 302s to GitHub; jesuspunkt.de still 308s to the apex; MX/SPF/DKIM answer correctly from the Vercel nameservers.
 
-## Currently blocked / open
+## Open (post-cutover)
 
-- Before launch: Raveo webfont license, real team/gallery/hero photos, Vereinsregister number on /impressum/.
+- Google Search Console: add the https://jesus-punkt.de property, submit /sitemap.xml (needs the Google account).
+- Cancel WordPress hosting; rotate the old domain transfer auth codes.
+- Human test of the full /admin/ GitHub login round-trip.
+- Recommended DNS addition: TXT _dmarc "v=DMARC1; p=none; rua=mailto:info@jesus-punkt.de".
+- Before real launch: Raveo webfont license, real team/gallery/hero photos, Vereinsregister number on /impressum/.
