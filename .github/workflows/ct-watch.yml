@@ -1,0 +1,62 @@
+# Hourly ChurchTools watcher: fetch events + flyer anonymously and compare with
+# what the live site serves — only a real change triggers a deploy (via the same
+# VERCEL_DEPLOY_HOOK the daily rebuild uses). Volatile fields (_source, updated)
+# are ignored. Sermons are NOT watched here; the 04:00 daily rebuild covers them.
+name: ChurchTools watch
+
+on:
+  schedule:
+    - cron: '20 * * * *'  # hourly, offset from the 04:00 daily rebuild
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch fresh ChurchTools data
+        id: fetch
+        continue-on-error: true  # CT downtime = skip this hour, not a red run
+        run: python3 tools/ct-events.py
+      - name: Compare with live site
+        id: diff
+        if: steps.fetch.outcome == 'success'
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import hashlib, json, urllib.request
+
+          LIVE = "https://jesus-punkt.de"
+
+          def get(url, binary=False):
+              with urllib.request.urlopen(url, timeout=30) as r:
+                  return r.read() if binary else json.loads(r.read().decode())
+
+          def norm_events(d):
+              return json.dumps(d.get("events"), sort_keys=True)
+
+          def norm_flyer(d):
+              return json.dumps({k: v for k, v in d.items() if k != "updated"}, sort_keys=True)
+
+          changed = []
+          fresh_e = json.load(open("data/ct/events.json"))
+          fresh_f = json.load(open("data/ct/flyer.json"))
+          if norm_events(get(f"{LIVE}/data/ct/events.json")) != norm_events(fresh_e):
+              changed.append("events")
+          live_f = get(f"{LIVE}/data/ct/flyer.json")
+          if norm_flyer(live_f) != norm_flyer(fresh_f):
+              changed.append("flyer-meta")
+          else:
+              # same metadata can still hide a re-uploaded image — compare bytes
+              url = fresh_f.get("url", "")
+              if url:
+                  live_img = get(f"{LIVE}/{url}", binary=True)
+                  fresh_img = open(url, "rb").read()
+                  if hashlib.sha256(live_img).digest() != hashlib.sha256(fresh_img).digest():
+                      changed.append("flyer-image")
+          print(f"changed={','.join(changed)}")
+          EOF
+      - name: Trigger deploy
+        if: steps.diff.outputs.changed != ''
+        run: |
+          echo "ChurchTools change detected (${{ steps.diff.outputs.changed }}) — deploying"
+          curl -sf -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"

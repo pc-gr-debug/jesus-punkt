@@ -195,5 +195,15 @@
   "Bank": "Банк",
   "BIC": "BIC",
   "Besondere Events": "Особливі події",
-  "Diese Termine wollen geplant sein — merk sie dir am besten gleich vor.": "Ці події варто спланувати заздалегідь — занотуй їх собі вже зараз."
+  "Diese Termine wollen geplant sein — merk sie dir am besten gleich vor.": "Ці події варто спланувати заздалегідь — занотуй їх собі вже зараз.",
+  "Thema (optional)": "Тема (необов'язково)",
+  "Thema": "Тема",
+  "Bitte wählen...": "Оберіть...",
+  "Allgemeine Anfrage": "Загальне питання",
+  "Beratung (Weißes Kreuz)": "Консультація (Weißes Kreuz)",
+  "Hochzeit": "Весілля",
+  "Beerdigung": "Похорон",
+  "Kleingruppe / Hauskreis": "Мала група / домашня група",
+  "Seelsorge": "Душпастирська опіка",
+  "Sonstiges": "Інше"
 }

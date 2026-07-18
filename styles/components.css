@@ -91,14 +91,15 @@
   background: var(--line);
   margin-inline: 0.5rem 0.25rem;
 }
-.nav-pill__lang { position: relative; z-index: 1; }
-/* invisible bridge over the gap to the menu so hover stays contiguous */
+.nav-pill__lang { position: relative; z-index: 1; --lang-menu-w: 10.5rem; }
+/* invisible bridge over the gap to the menu so hover stays contiguous —
+   spans the full menu width (right-aligned overhang), not just the button */
 .nav-pill__lang::after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 0;
   right: 0;
+  width: max(100%, var(--lang-menu-w));
   height: 0.5rem;
 }
 .nav-pill__lang-btn {
@@ -133,7 +134,7 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  min-width: 10.5rem;
+  min-width: var(--lang-menu-w);
   padding: 0.5rem;
   background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(1.25rem);

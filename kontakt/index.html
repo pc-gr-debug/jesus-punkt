@@ -18,6 +18,10 @@
   <link rel="stylesheet" href="/styles/base.css">
   <link rel="stylesheet" href="/styles/components.css">
   <link rel="stylesheet" href="/styles/pages.css">
+  <link rel="alternate" hreflang="de" href="https://jesus-punkt.de/kontakt/">
+  <link rel="alternate" hreflang="en" href="https://jesus-punkt.de/en/kontakt/">
+  <link rel="alternate" hreflang="uk" href="https://jesus-punkt.de/uk/kontakt/">
+  <link rel="alternate" hreflang="x-default" href="https://jesus-punkt.de/kontakt/">
 </head>
 <body>
 
@@ -164,9 +168,27 @@
               <div><span class="form-error">Bitte gib eine gültige E-Mail-Adresse an.</span></div>
             </div>
           </div>
-          <!-- the live form has an optional Ansprechpartner select; the empty hidden field
-               keeps the submitted payload identical to a submission with nothing selected -->
-          <input type="hidden" id="cf-ansprechpartner" data-brz-name="jgqbmrxvggnoxwdlmnguytidnvbfdjwiyyfc" data-brz-label="Ansprechpartner (optional)" data-brz-type="Select" value="">
+          <div class="form-group form-group--full">
+            <div class="form-group__label-cover"><label for="cf-thema">Thema (optional)</label></div>
+            <div class="form-group__input-cover">
+              <div class="form-select" id="thema-select">
+                <button type="button" class="form-select__trigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="form-select__value form-select__value--placeholder">Bitte wählen...</span>
+                  <span class="form-select__caret" aria-hidden="true"></span>
+                </button>
+                <ul class="form-select__menu" role="listbox" aria-label="Thema">
+                  <li class="form-select__option" role="option" data-value="allgemein">Allgemeine Anfrage</li>
+                  <li class="form-select__option" role="option" data-value="beratung">Beratung (Weißes Kreuz)</li>
+                  <li class="form-select__option" role="option" data-value="hochzeit">Hochzeit</li>
+                  <li class="form-select__option" role="option" data-value="beerdigung">Beerdigung</li>
+                  <li class="form-select__option" role="option" data-value="kleingruppe">Kleingruppe / Hauskreis</li>
+                  <li class="form-select__option" role="option" data-value="seelsorge">Seelsorge</li>
+                  <li class="form-select__option" role="option" data-value="sonstiges">Sonstiges</li>
+                </ul>
+                <input type="hidden" id="cf-thema" data-brz-name="thema" data-brz-label="Thema" data-brz-type="Select" value="">
+              </div>
+            </div>
+          </div>
           <div class="form-group form-group--full">
             <div class="form-group__label-cover"><label for="cf-nachricht">Deine Nachricht an uns: *</label></div>
             <div class="form-group__input-cover">

@@ -1,0 +1,9 @@
+{
+  "kindergottesdienst": [
+    { "image": "/img/hero-ueber-uns.jpg", "alt": "Gemeinschaft im Jesus Punkt" }
+  ],
+  "jugend": [
+    { "image": "/img/hero-events.jpg", "alt": "Lobpreis bei ELEVATE" },
+    { "image": "/img/hero-ueber-uns.jpg", "alt": "Gemeinschaft bei ELEVATE" }
+  ]
+}

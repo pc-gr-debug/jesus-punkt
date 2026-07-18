@@ -195,5 +195,15 @@
   "Bank": "Bank",
   "BIC": "BIC",
   "Besondere Events": "Special events",
-  "Diese Termine wollen geplant sein — merk sie dir am besten gleich vor.": "These dates take a little planning — best save them right away."
+  "Diese Termine wollen geplant sein — merk sie dir am besten gleich vor.": "These dates take a little planning — best save them right away.",
+  "Thema (optional)": "Topic (optional)",
+  "Thema": "Topic",
+  "Bitte wählen...": "Please choose...",
+  "Allgemeine Anfrage": "General inquiry",
+  "Beratung (Weißes Kreuz)": "Counselling (Weißes Kreuz)",
+  "Hochzeit": "Wedding",
+  "Beerdigung": "Funeral",
+  "Kleingruppe / Hauskreis": "Small group / home group",
+  "Seelsorge": "Pastoral care",
+  "Sonstiges": "Other"
 }

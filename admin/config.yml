@@ -1,6 +1,6 @@
 # Jesus Punkt — Sveltia CMS content model
 # Editing surface for the rare-change content (docs/cms-integration-plan.md §3).
-# Weekly content (Termine, Flyer, Hauskreise) lives in ChurchTools — NOT here.
+# Weekly content (Termine, Flyer, Hauskreis-Termine) lives in ChurchTools — NOT here.
 #
 # Login: GitHub OAuth app (owner: pc-gr-debug) + the /api/auth + /api/callback
 # Vercel functions in this repo (no Cloudflare Worker needed since the Vercel move).
@@ -9,13 +9,17 @@ backend:
   name: github
   repo: pc-gr-debug/jesus-punkt
   branch: main
-  # NOTE: login works only after the domain cutover — the OAuth callback is
-  # https://jesus-punkt.de/api/callback, so the domain must serve the Vercel project.
   base_url: https://jesus-punkt.de
   auth_endpoint: api/auth
 
-media_folder: img/team
-public_folder: /img/team
+site_url: https://jesus-punkt.de
+display_url: https://jesus-punkt.de
+logo_url: /img/logo.png
+
+# general media library — team photos and gallery photos get their own folders
+# via the field-level overrides below
+media_folder: img/uploads
+public_folder: /img/uploads
 
 i18n:
   structure: single_file
@@ -25,6 +29,7 @@ i18n:
 collections:
   - name: inhalte
     label: Inhalte
+    description: "Texte und Daten der Website. Änderungen sind nach dem nächsten Deploy online (spätestens am nächsten Morgen — oder direkt nach einem Push)."
     files:
       - name: home
         label: Startseite
@@ -79,6 +84,11 @@ collections:
             fields:
               - { name: name, label: Name, widget: string }
               - { name: meeting, label: "Treffzeit (z. B. dienstags · 19:30)", widget: string }
+
+  - name: bilder
+    label: Bilder & Team
+    description: "Fotos hochladen und zuordnen. Bitte nur Bilder verwenden, für die ein Einverständnis der abgebildeten Personen vorliegt."
+    files:
       - name: team
         label: Team
         file: data/content/team.json
@@ -97,4 +107,22 @@ collections:
                   - { label: Gemeindeleitung, value: leitung }
                   - { label: Personal, value: personal }
               - { name: roles, label: "Rollen (z. B. Pastor, Lobpreis, Technik)", widget: list, field: { name: role, label: Rolle, widget: string } }
-              - { name: photo, label: "Foto (3:4 · nur mit Einverständnis!)", widget: image, required: false }
+              - { name: photo, label: "Foto (3:4 · nur mit Einverständnis!)", widget: image, required: false, media_folder: /img/team, public_folder: /img/team }
+      - name: galerie
+        label: Galerien (Gemeindeleben)
+        file: data/content/galerie.json
+        fields:
+          - name: kindergottesdienst
+            label: "Galerie: Kindergottesdienst"
+            widget: list
+            hint: "Querformat wirkt am besten. Leere Plätze bis 4 füllt die Website automatisch mit Farbflächen."
+            fields:
+              - { name: image, label: Bild, widget: image, media_folder: /img/gemeindeleben, public_folder: /img/gemeindeleben }
+              - { name: alt, label: "Bildbeschreibung (für Vorlesefunktion)", widget: string, required: false }
+          - name: jugend
+            label: "Galerie: Jugend (ELEVATE)"
+            widget: list
+            hint: "Querformat wirkt am besten. Leere Plätze bis 4 füllt die Website automatisch mit Farbflächen."
+            fields:
+              - { name: image, label: Bild, widget: image, media_folder: /img/gemeindeleben, public_folder: /img/gemeindeleben }
+              - { name: alt, label: "Bildbeschreibung (für Vorlesefunktion)", widget: string, required: false }

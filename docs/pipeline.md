@@ -19,7 +19,8 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 
 ## Daily refresh
 
-- .github/workflows/vercel-rebuild.yml runs at 04:00 UTC and POSTs the VERCEL_DEPLOY_HOOK secret.
+- .github/workflows/vercel-rebuild.yml runs at 04:00 UTC and POSTs the VERCEL_DEPLOY_HOOK secret (guaranteed daily refresh, also covers YouTube sermons).
+- .github/workflows/ct-watch.yml runs hourly (xx:20): fetches ChurchTools events + flyer anonymously, compares with what jesus-punkt.de serves (ignoring the volatile _source/updated fields, hashing the flyer image bytes), and POSTs the deploy hook only on a real change — so a new flyer or Termin is live within the hour, without 24 pointless deploys a day.
 - Working since 2026-07-18: deploy hook "daily-rebuild" (ref main) on the project, URL stored as repo secret VERCEL_DEPLOY_HOOK. Hook builds check out github.com/pc-gr-debug/jesus-punkt@main — unpushed local work does not ship this way.
 
 ## Content — who edits what

@@ -365,6 +365,67 @@
     }
   };
 
+  /* ---------- custom form select (Thema, kontakt form) ---------- */
+  (function () {
+    var wrapper = document.getElementById('thema-select');
+    if (!wrapper) return;
+
+    var trigger = wrapper.querySelector('.form-select__trigger');
+    var menu    = wrapper.querySelector('.form-select__menu');
+    var valueEl = wrapper.querySelector('.form-select__value');
+    var hidden  = wrapper.querySelector('input[type="hidden"]');
+    var options = wrapper.querySelectorAll('.form-select__option');
+    var placeholder = valueEl.textContent; /* captured before any preselect — stays translated */
+
+    function open() {
+      menu.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+    function close() {
+      menu.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    function select(opt) {
+      options.forEach(function (o) { o.removeAttribute('aria-selected'); });
+      opt.setAttribute('aria-selected', 'true');
+      valueEl.textContent = opt.textContent;
+      valueEl.classList.remove('form-select__value--placeholder');
+      /* the mail shows the label, not the slug */
+      hidden.value = opt.textContent;
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.contains('open') ? close() : open();
+    });
+    options.forEach(function (opt) {
+      opt.addEventListener('click', function () { select(opt); close(); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!wrapper.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+
+    /* deep link from the Angebote cards: /kontakt/?thema=hochzeit */
+    var thema = new URLSearchParams(location.search).get('thema');
+    if (thema) {
+      options.forEach(function (opt) {
+        if (opt.getAttribute('data-value') === thema) select(opt);
+      });
+    }
+
+    /* contact.js calls this after a successful send — form.reset() can't restore the widget */
+    wrapper._reset = function () {
+      options.forEach(function (o) { o.removeAttribute('aria-selected'); });
+      valueEl.textContent = placeholder;
+      valueEl.classList.add('form-select__value--placeholder');
+      hidden.value = '';
+      close();
+    };
+  })();
+
   /* ---------- Galleries (scroll-snap sliders) ---------- */
   document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     var track = gallery.querySelector('.gallery__track');

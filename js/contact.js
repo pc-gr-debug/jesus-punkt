@@ -40,6 +40,14 @@
     if (group) group.classList.toggle('has-error', on);
   }
 
+  /* form.reset() clears hidden inputs but not the custom select's visible state —
+     each widget exposes _reset (set up in main.js) */
+  function resetSelects(form) {
+    form.querySelectorAll('.form-select').forEach(function (sel) {
+      if (sel._reset) sel._reset();
+    });
+  }
+
   document.querySelectorAll('form.contact-form').forEach(function (form) {
 
     function validate() {
@@ -86,6 +94,7 @@
           if (!data || !data.success) throw new Error('send failed');
           form.classList.remove('is-sending');
           form.reset();
+          resetSelects(form);
           showSuccess();
         })
         .catch(function () {

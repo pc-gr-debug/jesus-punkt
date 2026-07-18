@@ -19,7 +19,8 @@
     sermons: BASE + 'data/ct/sermons.json',
     sermonsFallback: BASE + 'data/mock/sermons.json',
     groups: BASE + 'data/content/hauskreise.json', /* CMS-managed incl. enabled-toggle */
-    team: BASE + 'data/content/team.json' /* CMS-managed (photos need explicit consent — never from CT) */
+    team: BASE + 'data/content/team.json', /* CMS-managed (photos need explicit consent — never from CT) */
+    galerie: BASE + 'data/content/galerie.json' /* CMS-managed gallery photos (gemeindeleben) */
   };
 
   /* events are real now — use the real clock (kept overridable for demos) */
@@ -146,6 +147,8 @@
       return new Date(a.start) - new Date(b.start);
     });
     if (!events.length) return;
+    /* only the next upcoming event gets the accent — not every Gottesdienst */
+    var nextEvent = events.filter(function (e) { return new Date(e.start) >= now(); })[0];
     function monthKey(d) { return d.getFullYear() * 12 + d.getMonth(); }
     var first = new Date(events[0].start);
     var last = new Date(events[events.length - 1].start);
@@ -168,7 +171,7 @@
         return;
       }
       slot.innerHTML = monthEvents.map(function (e) {
-        return eventRowHTML(e, e.type === 'gottesdienst', null);
+        return eventRowHTML(e, e === nextEvent, null);
       }).join('');
     }
     prev.addEventListener('click', function () { if (cur > minM) { cur--; render(); } });
@@ -302,6 +305,24 @@
     });
   }
 
+  /* ---------- galleries (gemeindeleben, CMS-managed) ---------- */
+  function renderGalleries(data) {
+    Object.keys(data).forEach(function (key) {
+      var track = document.querySelector('[data-ct="galerie-' + key + '"]');
+      var images = data[key];
+      if (!track || !Array.isArray(images) || !images.length) return; /* keep the static fallback */
+      var items = images.map(function (img) {
+        return '<div class="gallery__item"><img src="' + esc(img.image) + '" alt="' + esc(img.alt || '') + '" loading="lazy"></div>';
+      });
+      /* pad to four tiles with the design's alternating placeholders */
+      for (var i = images.length; i < 4; i++) {
+        var tint = (i - images.length) % 2 === 0 ? ' gallery__item--tint' : '';
+        items.push('<div class="gallery__item' + tint + '" aria-hidden="true"></div>');
+      }
+      track.innerHTML = items.join('');
+    });
+  }
+
   /* ---------- boot: fetch only what the page needs ---------- */
   function boot() {
     if (document.querySelector('[data-ct="events"]')) {
@@ -328,6 +349,9 @@
     }
     if (document.querySelector('[data-ct="team-leitung"], [data-ct="team-personal"]')) {
       getJSON(URLS.team).then(renderTeam).catch(function (e) { console.warn('[data] team:', e.message); });
+    }
+    if (document.querySelector('[data-ct^="galerie-"]')) {
+      getJSON(URLS.galerie).then(renderGalleries).catch(function (e) { console.warn('[data] galerie:', e.message); });
     }
   }
 

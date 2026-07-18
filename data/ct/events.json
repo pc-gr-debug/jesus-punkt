@@ -1,13 +1,6 @@
 {
-  "_source": "jp.church.tools calendars [2, 3], fetched 2026-07-17T12:18Z",
+  "_source": "jp.church.tools calendars [2, 3], fetched 2026-07-18T12:51Z",
   "events": [
-    {
-      "id": "ct-1573-20260717",
-      "start": "2026-07-17T18:30:00",
-      "type": "jugend",
-      "title": "Elevate Jugend",
-      "meta": "Für Jugendliche zwischen 13 und 29 Jahren"
-    },
     {
       "id": "ct-1576-20260719",
       "start": "2026-07-19T10:00:00",
