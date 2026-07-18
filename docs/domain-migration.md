@@ -25,19 +25,15 @@ kommt keine Mail mehr an (Arnes wichtigster Hinweis).
    (kein Google-Workspace-Preset verwenden — Arne ist unsicher, ob es zu ihrer Instanz passt; die Werte oben sind die bestätigten.)
 3. Test: `dig MX jesus-punkt.de` gegen die Vercel-Nameserver, Probemail an info@jesus-punkt.de.
 
-### 2 · ⚠️ Formular-Endpoint sichern (BEVOR die Domain umzeigt!)
-**Entscheidung (2026-07-17, ersetzt die vom 2026-07-10): eigene Vercel-Function
-statt WordPress.** `api/contact.js` nimmt beide Formulare (Kontakt,
-Spendenbescheinigung) entgegen und mailt sie per Google-Workspace-SMTP an
-info@jesus-punkt.de; `js/contact.js` postet bereits an `/api/contact`.
-Das WordPress-Rehosting (alt.jesus-punkt.de) entfällt damit. Vor Cutover:
+### 2 · ✅ Formular-Endpoint gesichert (erledigt 2026-07-18)
+**Entscheidung (2026-07-18, ersetzt die vom 2026-07-17): Web3Forms statt
+eigener Vercel-Function.** Beide Formulare (Kontakt, Spendenbescheinigung)
+posten per AJAX direkt an `api.web3forms.com/submit`; der jeweilige
+`access_key` (registriert auf info@jesus-punkt.de) liegt als Hidden-Input im
+Markup. Kein eigener Server, keine Env-Variablen, funktioniert unabhängig von
+der Domain — der Cutover kann die Formulare nicht mehr kaputt machen.
 
-1. `SMTP_PASS` in der Vercel-Env setzen (Google-App-Passwort für
-   info@jesus-punkt.de: Google-Konto → Sicherheit → 2FA → App-Passwörter),
-   dann redeployen.
-2. Kurz beide Formulare testen (je eine Probe-Nachricht an info@jesus-punkt.de).
-
-WordPress wird danach nicht mehr gebraucht und kann nach dem Cutover gekündigt werden.
+WordPress wird nicht mehr gebraucht und kann nach dem Cutover gekündigt werden.
 
 ### 3 · Website auf die Domain legen *(Stand 2026-07-17: Hosting = Vercel-Projekt `jesus-punkt`, nicht mehr GitHub Pages)*
 1. Die Seite läuft als Vercel-Projekt `jesus-punkt` (Team Jesus Punkt) auf

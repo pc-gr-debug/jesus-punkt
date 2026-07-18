@@ -1,17 +1,18 @@
 /* Jesus Punkt — Formulare (Kontakt, Spendenbescheinigung) · no dependencies
-   Every form[data-brz-form] submits to our own /api/contact Vercel function
-   (api/contact.js), which mails the payload to info@jesus-punkt.de via Google
-   Workspace SMTP. Protocol kept from the Brizy days: form_id + data = JSON
-   array of {name, value, label, type, required}. The form's data-brz-form
-   attribute carries its form_id; field tokens ride data-brz-name on each input.
-   Same-origin POST — the response IS readable, so !res.ok shows the error
-   state instead of a false success. */
+   Every form.contact-form submits via AJAX to Web3Forms (api.web3forms.com),
+   which mails the payload to info@jesus-punkt.de — the access_key rides as a
+   hidden input in the markup, no server of our own involved. Field metadata
+   still lives in data-brz-label/-type attributes (Brizy heritage): the label
+   becomes the field name in the notification mail; the Email-typed field is
+   sent as "email" so Web3Forms uses it as Reply-To. Cross-origin POST with
+   Accept: application/json — the response is readable, so a failed send shows
+   the error state instead of a false success. */
 (function () {
   'use strict';
 
-  /* DECISION 2026-07-17: own /api/contact replaces the old WordPress/Brizy
-     endpoint (needs SMTP_PASS in the Vercel env — docs/pipeline.md §Cutover). */
-  var ENDPOINT = '/api/contact';
+  /* DECISION 2026-07-18: Web3Forms replaces the own /api/contact SMTP
+     function (retired — no SMTP_PASS env needed anymore). */
+  var ENDPOINT = 'https://api.web3forms.com/submit';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   /* ---------- success modal (one per page) ---------- */
@@ -39,8 +40,7 @@
     if (group) group.classList.toggle('has-error', on);
   }
 
-  document.querySelectorAll('form[data-brz-form]').forEach(function (form) {
-    var formId = form.getAttribute('data-brz-form');
+  document.querySelectorAll('form.contact-form').forEach(function (form) {
 
     function validate() {
       var ok = true;
@@ -67,25 +67,23 @@
 
       if (!validate()) return;
 
-      var fields = [];
+      /* named hidden inputs (access_key, subject, botcheck) come in via the
+         form itself; the visible fields are appended under their label */
+      var body = new FormData(form);
       form.querySelectorAll('[data-brz-name]').forEach(function (el) {
-        fields.push({
-          name: el.getAttribute('data-brz-name'),
-          value: el.value,
-          label: el.getAttribute('data-brz-label'),
-          type: el.getAttribute('data-brz-type'),
-          required: el.hasAttribute('required')
-        });
+        var isEmail = el.getAttribute('data-brz-type') === 'Email';
+        body.append(isEmail ? 'email' : el.getAttribute('data-brz-label'), el.value);
       });
 
-      var body = new URLSearchParams();
-      body.append('form_id', formId);
-      body.append('data', JSON.stringify(fields));
-
       form.classList.add('is-sending');
-      fetch(ENDPOINT, { method: 'POST', body: body })
-        .then(function (res) {
-          if (!res.ok) throw new Error('send failed');
+      fetch(ENDPOINT, {
+        method: 'POST',
+        body: body,
+        headers: { 'Accept': 'application/json' }
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!data || !data.success) throw new Error('send failed');
           form.classList.remove('is-sending');
           form.reset();
           showSuccess();

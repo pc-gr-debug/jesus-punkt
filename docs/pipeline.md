@@ -31,7 +31,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 - Sermons: upload/stream via the YouTube channel; the site reads the uploads playlist.
 - Rare texts (bank details, team, section intros, the 7 Werte): /admin/ (Sveltia CMS), commits into data/content/*.json, live after the next deploy.
 - Translations: data/i18n/en.json and uk.json map exact German strings to en/uk. Impressum + Datenschutz stay German-only.
-- Forms (Kontakt, Spendenbescheinigung): POST to our own /api/contact function (api/contact.js), which mails to info@jesus-punkt.de via Google Workspace SMTP. Needs SMTP_PASS in the Vercel env; until it is set the function returns 503 and the forms show their error state.
+- Forms (Kontakt, Spendenbescheinigung): AJAX POST to Web3Forms (api.web3forms.com/submit), which mails to info@jesus-punkt.de. Each form carries its own access_key as a hidden input (Kontakt 3eb60d80-…, Spendenbescheinigung a31c4d24-…, both registered to info@jesus-punkt.de). No server-side function, no env vars — the old /api/contact SMTP function was retired 2026-07-18 without ever going live (SMTP_PASS was never set).
 
 ## /admin/ login (Sveltia CMS)
 
@@ -46,7 +46,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 - YT_PLAYLIST_ID — set (UUGJVox4diQQw41RG4NT1hhw).
 - YT_API_KEY — set (2026-07-17; recovered from the old GitHub-Actions secret, verified against the Data API).
 - GH_OAUTH_ID / GH_OAUTH_SECRET — set (OAuth app Ov23livdJg9FhDIjtPhW, owner pc-gr-debug).
-- SMTP_PASS — missing; Google app password for info@jesus-punkt.de (Google account → Security → 2-step verification → App passwords), needed by api/contact.js. Optional overrides: SMTP_USER, CONTACT_TO (both default info@jesus-punkt.de).
+- (SMTP_PASS is no longer needed — forms moved to Web3Forms 2026-07-18.)
 
 ## Domains & DNS (all in Vercel, team Jesus Punkt)
 
@@ -57,15 +57,14 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 
 ## Cutover to jesus-punkt.de (in this order)
 
-- Form backend: /api/contact is built and wired (js/contact.js posts to it). Before cutover: set SMTP_PASS, redeploy, send one probe through each form. The WordPress rehost (alt.jesus-punkt.de) is no longer needed.
+- Form backend: done — both forms post to Web3Forms (no own backend, works from any origin). The WordPress rehost (alt.jesus-punkt.de) is no longer needed.
 - Add the domains to the project: `vercel domains add jesus-punkt.de` and `vercel domains add www.jesus-punkt.de` (project jesus-punkt).
 - Delete exactly two DNS records in the jesus-punkt.de zone: the apex A 104.19.154.92 and the www CNAME lnszc5ey3e.wpdns.site. The existing ALIAS records then serve the Vercel project.
 - Check: https://jesus-punkt.de loads the new site, /en/ and /uk/ work, /admin/ login works, a test mail to info@jesus-punkt.de arrives.
 - Google Search Console: add the property, submit https://jesus-punkt.de/sitemap.xml.
-- Afterwards: cancel WordPress hosting (only if the forms were replaced), rotate the old domain transfer auth codes.
+- Afterwards: cancel WordPress hosting (forms are replaced — Web3Forms), rotate the old domain transfer auth codes.
 
 ## Currently blocked / open
 
 - Vercel-GitHub connection: church Vercel account has no GitHub login connection (Account Settings, Login Connections). Needed for auto-deploys + deploy hook.
-- Env values: SMTP_PASS (forms return 503 until set).
 - Before launch: Raveo webfont license, real team/gallery/hero photos, Vereinsregister number on /impressum/.
