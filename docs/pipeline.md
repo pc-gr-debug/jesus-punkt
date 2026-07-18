@@ -7,7 +7,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 - Code: github.com/pc-gr-debug/jesus-punkt, branch main. One clean commit per work session.
 - Hosting: Vercel project "jesus-punkt" (team Jesus Punkt), live at https://jesus-punkt.vercel.app.
 - Deploy: `vercel deploy --prod --yes` from the repo root.
-- After the Vercel-GitHub connection exists: every push to main deploys automatically.
+- Since 2026-07-18 the project is git-connected: every push to main also deploys automatically.
 - Local preview: `python3 -m http.server` from the repo root (root-absolute paths — never file://).
 
 ## Build (tools/vercel-build.sh — runs on every deploy, in this order)
@@ -20,8 +20,7 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 ## Daily refresh
 
 - .github/workflows/vercel-rebuild.yml runs at 04:00 UTC and POSTs the VERCEL_DEPLOY_HOOK secret.
-- The deploy hook can only be created after the Vercel-GitHub connection exists (Vercel: project jesus-punkt, Settings, Git, Deploy Hooks). Then: `gh secret set VERCEL_DEPLOY_HOOK` in the repo.
-- Until then: content refresh = manual `vercel deploy --prod --yes`.
+- Working since 2026-07-18: deploy hook "daily-rebuild" (ref main) on the project, URL stored as repo secret VERCEL_DEPLOY_HOOK. Hook builds check out github.com/pc-gr-debug/jesus-punkt@main — unpushed local work does not ship this way.
 
 ## Content — who edits what
 
@@ -66,5 +65,4 @@ Stand 2026-07-17. Plain runbook: what runs where, who edits what, what is still 
 
 ## Currently blocked / open
 
-- Vercel-GitHub connection: church Vercel account has no GitHub login connection (Account Settings, Login Connections). Needed for auto-deploys + deploy hook.
 - Before launch: Raveo webfont license, real team/gallery/hero photos, Vereinsregister number on /impressum/.
