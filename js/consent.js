@@ -8,7 +8,7 @@
   'use strict';
 
   var STORAGE_KEY = 'jp-consent';
-  var GA_ID = ''; /* TODO: set the GA4 measurement ID once the church has one — empty = analytics never loads */
+  var GA_ID = 'G-TYZCBH3T5Z';
   var BASE = new URL('..', document.currentScript.src).pathname;
   var PRIVACY_URL = BASE + 'datenschutz/'; /* German-only page, linked from every locale */
 
