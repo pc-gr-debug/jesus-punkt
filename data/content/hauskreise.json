@@ -1,6 +1,5 @@
 {
-  "_comment": "Hauskreise/Kleingruppen — enabled=false blendet die Sektionen auf Start- und Gemeindeleben-Seite aus (Bake + JS). Pflege im CMS (/admin/).",
-  "enabled": false,
+  "enabled": true,
   "groups": [
     {
       "name": "Oststadt",
@@ -22,5 +21,6 @@
       "name": "Junge Erwachsene",
       "meeting": "freitags · 20:00"
     }
-  ]
+  ],
+  "_comment": "Hauskreise/Kleingruppen — enabled=false blendet die Sektionen auf Start- und Gemeindeleben-Seite aus (Bake + JS). Pflege im CMS (/admin/)."
 }
