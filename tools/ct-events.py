@@ -34,10 +34,29 @@ KNOWN = [
 ]
 
 
-def classify(raw_title: str, subtitle: str | None) -> tuple[str, str, str]:
+def format_location(address: dict | None) -> str | None:
+    """CT's per-appointment address field (the location picker, same idea as the flyer
+    image field) — team sets it on the Gottesdienst appointment to move a Sunday
+    somewhere else; unset means the default Kruseshofer Str. 20 stays."""
+    if not isinstance(address, dict):
+        return None
+    label = (address.get("name") or "").strip() or (address.get("street") or "").strip()
+    if not label:
+        return None
+    city = (address.get("city") or "").strip()
+    if city and city.lower() != "neubrandenburg":
+        label = f"{label}, {city}"
+    return label
+
+
+def classify(raw_title: str, subtitle: str | None, address: dict | None) -> tuple[str, str, str]:
     low = raw_title.lower()
     for needle, ctype, title, meta in KNOWN:
         if needle in low:
+            if ctype == "gottesdienst":
+                location = format_location(address)
+                if location:
+                    meta = f"{location} · vor Ort und im Livestream"
             return ctype, title, meta
     return "sonstiges", raw_title.strip(), (subtitle or "").strip()
 
@@ -163,7 +182,7 @@ def main() -> int:
             .astimezone(BERLIN)
             .replace(tzinfo=None)
         )
-        ctype, title, meta = classify(base.get("title", ""), base.get("subtitle"))
+        ctype, title, meta = classify(base.get("title", ""), base.get("subtitle"), base.get("address"))
         events.append({
             "id": f"ct-{base.get('id')}-{start:%Y%m%d}",
             "start": start.isoformat(),

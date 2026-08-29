@@ -17,6 +17,10 @@ Die Website liest ChurchTools 1× täglich (gegen 06:00) und bei jeder Website-�
   | „Hauskreis" | Hauskreis-Abend · „In Wohnzimmern in ganz Neubrandenburg" |
   | (alles andere) | Original-Titel, **Untertitel** des Termins wird als Beschreibung angezeigt |
 - Der **nächste Gottesdienst** wird automatisch gelb hervorgehoben.
+- **Ort des Gottesdienstes ändern** (z.&nbsp;B. Gottesdienst auf dem Marktplatz statt in der
+  Kruseshofer Str.): am Gottesdienst-Termin das **Adressfeld** (Ort-Auswahl in ChurchTools)
+  setzen. Die Website übernimmt diesen Ort automatisch in den Anzeigetext. Kein Adressfeld
+  gesetzt → es bleibt beim Standardtext „Kruseshofer Str. 20 · vor Ort und im Livestream".
 
 ## Flyer (Startseite)
 
