@@ -1,0 +1,156 @@
+:root {
+  --wed-cream: #f6f1e7;
+  --wed-brown-dark: #3b2a1f;
+  --wed-brown: #6b4c35;
+  --wed-gold: #a9822f;
+  --wed-line: #d9cbb0;
+  --wed-error: #a4372a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--wed-cream);
+  color: var(--wed-brown-dark);
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.card {
+  width: 100%;
+  max-width: 32rem;
+  background: #fffdf9;
+  border: 1px solid var(--wed-line);
+  border-radius: 0.5rem;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 1rem 2.5rem rgba(59, 42, 31, 0.08);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--wed-gold);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  margin: 0 0 0.5rem;
+}
+
+.details {
+  margin: 0 0 1.5rem;
+  color: var(--wed-brown);
+}
+
+.intro {
+  margin: 0 0 2rem;
+  line-height: 1.6;
+}
+
+.rsvp-form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.field input {
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--wed-line);
+  border-radius: 0.3rem;
+  background: var(--wed-cream);
+  color: var(--wed-brown-dark);
+}
+
+.field input:focus {
+  outline: 2px solid var(--wed-gold);
+  outline-offset: 1px;
+}
+
+.family-members {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn {
+  font: inherit;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: transform 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid var(--wed-brown);
+  color: var(--wed-brown);
+  align-self: flex-start;
+}
+
+.btn--outline:hover {
+  background: var(--wed-brown);
+  color: var(--wed-cream);
+}
+
+.btn--primary {
+  background: var(--wed-brown-dark);
+  border: 1px solid var(--wed-brown-dark);
+  color: var(--wed-cream);
+  font-size: 1rem;
+}
+
+.btn--primary:hover {
+  background: var(--wed-gold);
+  border-color: var(--wed-gold);
+  color: var(--wed-brown-dark);
+  transform: translateY(-2px);
+}
+
+.form-error {
+  margin: 0;
+  color: var(--wed-error);
+  font-size: 0.85rem;
+}
+
+.thanks {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+@media (max-width: 30rem) {
+  .card {
+    padding: 2rem 1.25rem;
+  }
+
+  .btn--primary,
+  .btn--outline {
+    width: 100%;
+  }
+}

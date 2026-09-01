@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hochzeit von [Name] &amp; [Name]</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/hochzeit-feier/style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <p class="eyebrow">Wir heiraten</p>
+      <h1>[Name] &amp; [Name]</h1>
+      <p class="details">[Datum] &middot; [Ort]</p>
+      <p class="intro">
+        Wir freuen uns riesig, diesen Tag mit euch zu feiern! Damit wir
+        wissen, mit wie vielen Gästen wir rechnen dürfen, tragt euch bitte
+        hier ein.
+      </p>
+
+      <form id="rsvp-form" class="rsvp-form">
+        <label class="field">
+          <span>Dein Name</span>
+          <input type="text" name="name" required maxlength="100" autocomplete="name" />
+        </label>
+
+        <div id="family-members" class="family-members"></div>
+
+        <button type="button" id="add-family-member" class="btn btn--outline">
+          + Familienmitglied hinzufügen
+        </button>
+
+        <p id="form-error" class="form-error" hidden></p>
+
+        <button type="submit" class="btn btn--primary">Eintragen</button>
+      </form>
+
+      <div id="thanks" class="thanks" hidden>
+        <p>Danke, du bist bereits eingetragen! Wir freuen uns auf dich.</p>
+      </div>
+    </section>
+  </main>
+  <script src="/hochzeit-feier/rsvp.js"></script>
+</body>
+</html>
