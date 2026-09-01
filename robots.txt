@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /design-system.html
+Disallow: /hochzeit-feier/
 
 Sitemap: https://jesus-punkt.de/sitemap.xml
