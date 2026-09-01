@@ -29,6 +29,14 @@
     return;
   }
 
+  function updateRemoveButtons() {
+    const fields = Array.from(familyMembersEl.children);
+    fields.forEach(function (field, index) {
+      const btn = field.querySelector('.field__remove');
+      if (btn) btn.hidden = index !== fields.length - 1;
+    });
+  }
+
   function addFamilyMemberField() {
     if (familyMembersEl.children.length >= MAX_FAMILY_MEMBERS) return;
 
@@ -51,12 +59,14 @@
     removeButton.textContent = '×';
     removeButton.addEventListener('click', function () {
       label.remove();
+      updateRemoveButtons();
     });
 
     row.appendChild(input);
     row.appendChild(removeButton);
     label.appendChild(row);
     familyMembersEl.appendChild(label);
+    updateRemoveButtons();
     input.focus();
   }
 
