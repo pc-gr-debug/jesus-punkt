@@ -1,4 +1,6 @@
 .DS_Store
+node_modules/
+.env*.local
 tools/node_modules/
 tools/figfile/
 docs/superpowers/plans/shots/
