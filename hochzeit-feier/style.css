@@ -1,8 +1,10 @@
 :root {
-  --wed-cream: #f6f1e7;
+  --wed-bg: #2b1c14;
+  --wed-milk: #f4ecdb;
+  --wed-field-bg: #fffdf9;
   --wed-brown-dark: #3b2a1f;
   --wed-brown: #6b4c35;
-  --wed-gold: #a9822f;
+  --wed-green: #2f4a3c;
   --wed-line: #d9cbb0;
   --wed-error: #a4372a;
 }
@@ -18,19 +20,19 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: var(--wed-cream);
+  background: var(--wed-bg);
   color: var(--wed-brown-dark);
-  font-family: 'EB Garamond', Georgia, serif;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .card {
   width: 100%;
   max-width: 32rem;
-  background: #fffdf9;
+  background: var(--wed-milk);
   border: 1px solid var(--wed-line);
   border-radius: 0.5rem;
   padding: 2.5rem 2rem;
-  box-shadow: 0 1rem 2.5rem rgba(59, 42, 31, 0.08);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.25);
   text-align: center;
 }
 
@@ -39,13 +41,13 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-size: 0.75rem;
-  color: var(--wed-gold);
+  color: var(--wed-green);
 }
 
 h1 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 600;
-  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  font-size: clamp(2.75rem, 8vw, 4rem);
   margin: 0 0 0.5rem;
 }
 
@@ -78,12 +80,12 @@ h1 {
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--wed-line);
   border-radius: 0.3rem;
-  background: var(--wed-cream);
+  background: var(--wed-field-bg);
   color: var(--wed-brown-dark);
 }
 
 .field input:focus {
-  outline: 2px solid var(--wed-gold);
+  outline: 2px solid var(--wed-green);
   outline-offset: 1px;
 }
 
@@ -109,21 +111,22 @@ h1 {
 }
 
 .btn--outline:hover {
-  background: var(--wed-brown);
-  color: var(--wed-cream);
+  background: var(--wed-green);
+  border-color: var(--wed-green);
+  color: var(--wed-milk);
 }
 
 .btn--primary {
   background: var(--wed-brown-dark);
   border: 1px solid var(--wed-brown-dark);
-  color: var(--wed-cream);
+  color: var(--wed-milk);
   font-size: 1rem;
 }
 
 .btn--primary:hover {
-  background: var(--wed-gold);
-  border-color: var(--wed-gold);
-  color: var(--wed-brown-dark);
+  background: var(--wed-green);
+  border-color: var(--wed-green);
+  color: var(--wed-milk);
   transform: translateY(-2px);
 }
 
