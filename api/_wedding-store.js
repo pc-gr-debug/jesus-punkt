@@ -1,11 +1,23 @@
-const { list, put } = require('@vercel/blob');
+const { put } = require('@vercel/blob');
 
 const PATHNAME = 'wedding/guests.json';
 
+// `list()`'s metadata index lags behind the object itself after a `put()` —
+// the object is already fetchable directly while list() can still miss it.
+// Since PATHNAME is fixed (addRandomSuffix: false), the direct URL is
+// deterministic from the store id embedded in BLOB_READ_WRITE_TOKEN
+// (format: vercel_blob_rw_<storeId>_<secret>), so read that way instead.
+function storeUrl() {
+  const token = process.env.BLOB_READ_WRITE_TOKEN || '';
+  const match = /^vercel_blob_rw_([a-zA-Z0-9]+)_/.exec(token);
+  if (!match) {
+    throw new Error('BLOB_READ_WRITE_TOKEN is missing or has an unexpected format');
+  }
+  return `https://${match[1].toLowerCase()}.public.blob.vercel-storage.com/${PATHNAME}`;
+}
+
 async function readGuests() {
-  const { blobs } = await list({ prefix: PATHNAME, limit: 1 });
-  if (blobs.length === 0) return [];
-  const response = await fetch(blobs[0].url);
+  const response = await fetch(storeUrl(), { cache: 'no-store' });
   if (!response.ok) return [];
   const data = await response.json();
   return Array.isArray(data.guests) ? data.guests : [];
