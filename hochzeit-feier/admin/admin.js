@@ -4,28 +4,30 @@
   const guestList = document.getElementById('guest-list');
   const totalCountEl = document.getElementById('total-count');
   const guestRowsEl = document.getElementById('guest-rows');
+  const exportButton = document.getElementById('export-pdf');
+
+  function addRow(nameText, dateText, isFamilyMember) {
+    const row = document.createElement('tr');
+    if (isFamilyMember) row.className = 'row--family';
+
+    const nameCell = document.createElement('td');
+    nameCell.textContent = isFamilyMember ? '↳ ' + nameText : nameText;
+
+    const dateCell = document.createElement('td');
+    dateCell.textContent = dateText;
+
+    row.appendChild(nameCell);
+    row.appendChild(dateCell);
+    guestRowsEl.appendChild(row);
+  }
 
   function renderGuests(data) {
     totalCountEl.textContent = String(data.total);
     guestRowsEl.innerHTML = '';
     data.guests.forEach((guest) => {
-      const row = document.createElement('tr');
-
-      const nameCell = document.createElement('td');
-      nameCell.textContent = guest.name;
-
-      const familyCell = document.createElement('td');
-      familyCell.textContent = guest.familyMembers.length
-        ? guest.familyMembers.join(', ')
-        : '—';
-
-      const dateCell = document.createElement('td');
-      dateCell.textContent = new Date(guest.createdAt).toLocaleString('de-DE');
-
-      row.appendChild(nameCell);
-      row.appendChild(familyCell);
-      row.appendChild(dateCell);
-      guestRowsEl.appendChild(row);
+      const dateText = new Date(guest.createdAt).toLocaleString('de-DE');
+      addRow(guest.name, dateText, false);
+      guest.familyMembers.forEach((member) => addRow(member, dateText, true));
     });
 
     loginForm.hidden = true;
@@ -69,6 +71,10 @@
       loginError.hidden = false;
       submitButton.disabled = false;
     }
+  });
+
+  exportButton.addEventListener('click', function () {
+    window.print();
   });
 
   loadGuests();

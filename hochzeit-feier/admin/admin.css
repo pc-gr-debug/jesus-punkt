@@ -13,6 +13,10 @@
   color: var(--wed-brown);
 }
 
+#export-pdf {
+  margin: 0 0 1.25rem;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -33,4 +37,28 @@ td {
 th {
   color: var(--wed-brown);
   font-weight: 600;
+}
+
+.row--family td:first-child {
+  padding-left: 1.75rem;
+  color: var(--wed-brown);
+  font-style: italic;
+}
+
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+  }
+
+  .card--wide {
+    box-shadow: none;
+    border: none;
+    max-width: none;
+    padding: 0;
+  }
+
+  #export-pdf {
+    display: none;
+  }
 }
