@@ -12,7 +12,8 @@ function createSessionCookie() {
   const exp = Date.now() + SESSION_MS;
   const payload = String(exp);
   const value = `${payload}.${sign(payload)}`;
-  return `${COOKIE_NAME}=${value}; HttpOnly; Secure; Path=/; Max-Age=${SESSION_MS / 1000}; SameSite=Lax`;
+  const secure = process.env.VERCEL_ENV === 'production' ? ' Secure;' : '';
+  return `${COOKIE_NAME}=${value}; HttpOnly;${secure} Path=/; Max-Age=${SESSION_MS / 1000}; SameSite=Lax`;
 }
 
 function isValidSession(cookieHeader) {
