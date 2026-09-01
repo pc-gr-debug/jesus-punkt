@@ -1,37 +1,37 @@
-const { put } = require('@vercel/blob');
+const { put, list } = require('@vercel/blob');
 
-const PATHNAME = 'wedding/guests.json';
+// One file per guest (named by their unique id) rather than one shared JSON
+// file. Vercel Blob is not read-your-writes consistent — a shared file with
+// read-modify-write appends can silently drop an entry if two submissions
+// land within the same few-second propagation window. A dedicated file per
+// guest makes every submission an independent `put()`, so no write ever
+// depends on reading a possibly-stale prior state. `list()`'s index can still
+// lag a few seconds before showing the newest file, but no data is ever lost
+// — it just takes a moment to appear in the admin view.
+const PREFIX = 'wedding/guests/';
 
-// `list()`'s metadata index lags behind the object itself after a `put()` —
-// the object is already fetchable directly while list() can still miss it.
-// Since PATHNAME is fixed (addRandomSuffix: false), the direct URL is
-// deterministic from the store id embedded in BLOB_READ_WRITE_TOKEN
-// (format: vercel_blob_rw_<storeId>_<secret>), so read that way instead.
-function storeUrl() {
-  const token = process.env.BLOB_READ_WRITE_TOKEN || '';
-  const match = /^vercel_blob_rw_([a-zA-Z0-9]+)_/.exec(token);
-  if (!match) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is missing or has an unexpected format');
-  }
-  return `https://${match[1].toLowerCase()}.public.blob.vercel-storage.com/${PATHNAME}`;
+async function appendGuest(guest) {
+  await put(`${PREFIX}${guest.id}.json`, JSON.stringify(guest), {
+    access: 'public',
+    contentType: 'application/json',
+  });
 }
 
 async function readGuests() {
-  const response = await fetch(storeUrl(), { cache: 'no-store' });
-  if (!response.ok) return [];
-  const data = await response.json();
-  return Array.isArray(data.guests) ? data.guests : [];
-}
+  const guests = [];
+  let cursor;
+  do {
+    const result = await list({ prefix: PREFIX, cursor, limit: 1000 });
+    const files = await Promise.all(
+      result.blobs.map((blob) =>
+        fetch(blob.url, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null))
+      )
+    );
+    guests.push(...files.filter(Boolean));
+    cursor = result.cursor;
+  } while (cursor);
 
-async function appendGuest(guest) {
-  const guests = await readGuests();
-  guests.push(guest);
-  await put(PATHNAME, JSON.stringify({ guests }), {
-    access: 'public',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: 'application/json',
-  });
+  guests.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   return guests;
 }
 
