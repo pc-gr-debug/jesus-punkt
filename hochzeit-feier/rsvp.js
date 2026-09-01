@@ -7,11 +7,22 @@
   const familyMembersEl = document.getElementById('family-members');
   const addButton = document.getElementById('add-family-member');
   const errorEl = document.getElementById('form-error');
+  const successModal = document.getElementById('success-modal');
+  const modalCloseButton = document.getElementById('modal-close');
 
   function showThanks() {
     form.hidden = true;
     thanks.hidden = false;
   }
+
+  function closeModal() {
+    successModal.hidden = true;
+  }
+
+  modalCloseButton.addEventListener('click', closeModal);
+  successModal.addEventListener('click', function (event) {
+    if (event.target === successModal) closeModal();
+  });
 
   if (localStorage.getItem(STORAGE_KEY)) {
     showThanks();
@@ -71,6 +82,7 @@
 
       localStorage.setItem(STORAGE_KEY, new Date().toISOString());
       showThanks();
+      successModal.hidden = false;
     } catch (err) {
       errorEl.textContent = 'Verbindung fehlgeschlagen. Bitte versuch es erneut.';
       errorEl.hidden = false;
