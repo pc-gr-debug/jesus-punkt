@@ -1,0 +1,37 @@
+.card--wide {
+  max-width: 48rem;
+  text-align: left;
+}
+
+.card--wide h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  text-align: center;
+}
+
+.total-count {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--wed-brown);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--wed-line);
+}
+
+th {
+  color: var(--wed-brown);
+  font-weight: 600;
+}
