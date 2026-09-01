@@ -89,6 +89,36 @@ h1 {
   outline-offset: 1px;
 }
 
+.field__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.field__row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.field__remove {
+  flex: 0 0 auto;
+  width: 3rem;
+  min-height: 3rem;
+  border: 1px solid var(--wed-line);
+  border-radius: 0.3rem;
+  background: var(--wed-field-bg);
+  color: var(--wed-brown);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.field__remove:hover {
+  background: var(--wed-brown-dark);
+  border-color: var(--wed-brown-dark);
+  color: var(--wed-milk);
+}
+
 .family-members {
   display: flex;
   flex-direction: column;

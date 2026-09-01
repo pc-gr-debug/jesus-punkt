@@ -31,14 +31,31 @@
 
   function addFamilyMemberField() {
     if (familyMembersEl.children.length >= MAX_FAMILY_MEMBERS) return;
+
     const label = document.createElement('label');
     label.className = 'field';
     label.innerHTML = '<span>Familienmitglied</span>';
+
+    const row = document.createElement('div');
+    row.className = 'field__row';
+
     const input = document.createElement('input');
     input.type = 'text';
     input.name = 'familyMember';
     input.maxLength = 100;
-    label.appendChild(input);
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'field__remove';
+    removeButton.setAttribute('aria-label', 'Familienmitglied entfernen');
+    removeButton.textContent = '×';
+    removeButton.addEventListener('click', function () {
+      label.remove();
+    });
+
+    row.appendChild(input);
+    row.appendChild(removeButton);
+    label.appendChild(row);
     familyMembersEl.appendChild(label);
     input.focus();
   }
