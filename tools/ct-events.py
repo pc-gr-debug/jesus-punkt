@@ -77,7 +77,16 @@ def extract_flyer(payload: dict, out_dir: Path, now: datetime) -> None:
     def img_url(base):
         img = base.get("image")
         if isinstance(img, dict):
-            return img.get("fileUrl") or img.get("url") or img.get("imageUrl")
+            # `fileUrl` (public/filedownload) now 401s — "Berechtigung appointment_image
+            # ist notwendig" — even for images on anonymously-readable appointments.
+            # `imageUrl` (the Glide-backed /images/{id}/{hash} route) stays anonymous,
+            # but defaults to CT's stored calendar-thumbnail crop (e.g. 1600x150) unless
+            # told to bypass it: crop=original + an explicit width for a real flyer size.
+            image_url = img.get("imageUrl")
+            if image_url:
+                sep = "&" if "?" in image_url else "?"
+                return f"{image_url}{sep}crop=original&w=2000"
+            return img.get("fileUrl") or img.get("url")
         if isinstance(img, str) and img.startswith("http"):
             return img
         return None
