@@ -129,17 +129,26 @@
 /* ================= BESONDERE EVENTS (Blöcke unter den Terminen) =================
    Pro Block: Infospalte + Flyerstapel. Die Infospalte bleibt sticky, während die
    Flyer eines Blocks beim Scrollen übereinander geschoben werden (jede Karte ist
-   selbst sticky, die spätere überdeckt die frühere). Blöcke wechseln die Seite. */
+   selbst sticky, die spätere überdeckt die frühere). Blöcke wechseln die Seite.
+
+   Höhe statt Breite ist hier das Maß: ein Flyer ist --hl-h hoch, daraus folgt über
+   das A4-Verhältnis seine Breite. Nur so lässt sich der Stapel senkrecht mittig
+   pinnen und die Verweildauer in Bildschirmhöhen ausdrücken. --vh ist die
+   eingefrorene Viewporthöhe aus js/main.js (Safari-Toolbar, siehe dort). */
 .highlights {
-  margin-top: var(--space-2xl);
+  --hl-gap-top: clamp(5.5rem, 9vw, 9rem);    /* Termine -> Besondere Events */
+  --hl-gap-head: clamp(3rem, 5vw, 5rem);     /* Überschrift -> erster Block */
+  --hl-gap-block: clamp(6rem, 10vw, 10rem);  /* Block -> Block */
+  margin-top: var(--hl-gap-top);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);   /* Label -> erster Block */
+  gap: var(--hl-gap-head);
 }
+.highlights__head { text-align: center; }
 .highlights__list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);  /* Block -> Block */
+  gap: var(--hl-gap-block);
 }
 
 .hl-event {
@@ -157,7 +166,7 @@
   top: calc(var(--header-h) + var(--space-xl));
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-lg);
 }
 .hl-event__title {
   font: 700 var(--fs-h2) / 1.3 var(--font-display);  /* luftiger als --lh-heading, sonst
@@ -167,7 +176,7 @@
 .hl-event__details {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.875rem;
 }
 .hl-event__detail {
   position: relative;
@@ -188,54 +197,100 @@
 
 .hl-event__media { display: flex; justify-content: center; }
 .hl-event__stack {
-  --hl-ratio: 1.4142;   /* DIN-A4 hochkant: Höhe / Breite */
-  --hl-step: 0.68;      /* Anteil einer Flyerhöhe, der pro Flyer gescrollt wird */
+  /* Flyerhöhe — drei Deckel: Bildschirmhöhe, ein Maximum, und die verfügbare
+     Breite (sonst presst max-width auf schmalen Handys das A4-Format platt) */
+  --hl-h: min(calc(var(--vh, 1vh) * 68), 40rem, calc((100vw - 3rem) * 1.4142));
+  --hl-dwell: calc(var(--vh, 1vh) * 26);           /* Scrollweg, den ein Flyer allein steht */
   width: 100%;
-  max-width: 26rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  /* der letzte Flyer bekommt dieselbe Verweildauer wie alle davor */
+  padding-bottom: var(--hl-dwell);
 }
 .hl-event__slide {
   position: sticky;
-  top: calc(var(--header-h) + var(--space-xl));
+  /* senkrecht mittig, aber nie unter den fixen Header */
+  top: max(calc(var(--header-h) + var(--space-sm)),
+           calc((var(--vh, 1vh) * 100 - var(--hl-h)) / 2));
   z-index: calc(var(--i, 0) + 1); /* der spätere Flyer schiebt sich über den früheren */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* JS setzt --s beim Scrollen: das hintere Blatt schrumpft, das vordere wächst */
+  transform: scale(var(--s, 1)); /* scroll-linked in js/main.js — deliberately untransitioned */
+  will-change: transform;
 }
-/* negativer Abstand verkürzt den Scrollweg: ohne ihn bräuchte jeder Flyer seine
-   volle Höhe. Prozentwerte beziehen sich auf die BREITE des Stapels. */
-.hl-event__slide + .hl-event__slide {
-  margin-top: calc((var(--hl-step) - 1) * var(--hl-ratio) * 100%);
-}
+/* POSITIVER Abstand: der nächste Flyer startet erst, wenn der aktuelle komplett
+   und mittig zu sehen war (--hl-dwell Scrollweg lang). */
+.hl-event__slide + .hl-event__slide { margin-top: var(--hl-dwell); }
 
-/* Flyerblatt: feste A4-Bühne, das Bild wird eingepasst statt beschnitten —
-   ein Querformat-Flyer aus dem CMS verliert so nichts. */
+/* Flyerblatt: A4-Bühne mit fester Höhe, das Bild wird eingepasst statt beschnitten —
+   ein Querformat-Flyer aus dem CMS verliert so nichts. Als Button: öffnet die Galerie. */
 .flyer-card--sheet {
+  height: var(--hl-h);
+  width: auto;
+  max-width: 100%;
   aspect-ratio: 1 / 1.4142;
+  padding: 0;
   background: var(--paper);
-  box-shadow: var(--shadow-soft); /* hebt jedes Blatt vom darunterliegenden ab */
+  box-shadow: var(--shadow-soft);
+  cursor: zoom-in;
+  display: block;
 }
-.flyer-card--sheet img { object-fit: contain; object-position: center; }
+.flyer-card--sheet img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.flyer-card--sheet:hover,
+.flyer-card--sheet:focus-visible {
+  transform: translateY(-0.1875rem); /* eigene Ebene — die Stapel-Skalierung sitzt auf .hl-event__slide */
+  box-shadow: var(--shadow-card), var(--shadow-soft);
+}
+.flyer-card--sheet:hover img { transform: none; } /* das Blatt hebt sich, das Motiv zoomt nicht */
+/* Hinweis, dass sich der Flyer öffnen lässt — dauerhaft sichtbar, weil es auf
+   Touchgeräten kein Hover gibt, das ihn einblenden könnte */
+.flyer-card__zoom {
+  position: absolute;
+  right: 0.625rem;
+  bottom: 0.625rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(26, 18, 1, 0.62);
+  color: var(--creme);
+  transition: background var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.flyer-card--sheet:hover .flyer-card__zoom,
+.flyer-card--sheet:focus-visible .flyer-card__zoom {
+  background: var(--accent);
+  color: var(--ink);
+  transform: scale(1.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flyer-card__zoom { transition: none; }
+}
 
 @media (max-width: 64rem) {
-  .highlights { gap: var(--space-lg); }
-  .highlights__list { gap: var(--space-xl); }
   .hl-event { gap: var(--space-xl); }
 }
-/* einspaltig — Infos ÜBER den Flyern, der Stapel bleibt erhalten.
-   Die Flyerbreite braucht hier keine Stufen: width:100% + max-width:26rem lässt das
-   Blatt von allein mitschrumpfen, sobald die Spalte schmaler als 26rem wird. */
+/* einspaltig — Infos ÜBER den Flyern, der Stapel bleibt erhalten */
 @media (max-width: 48rem) {
-  .hl-event { display: flex; flex-direction: column; gap: var(--space-lg); }
+  .hl-event { display: flex; flex-direction: column; gap: var(--space-xl); }
   .hl-event__sticky { position: static; }
+  /* --hl-h braucht hier keinen Sonderfall mehr: der Breiten-Deckel oben greift von allein */
 }
 @media (max-width: 37.5rem) {
   .hl-event__title { font-size: 1.75rem; }
   .hl-event__detail { padding-left: 1rem; }
+  .hl-event__stack { --hl-dwell: calc(var(--vh, 1vh) * 20); }
 }
 
-/* Reduzierte Bewegung: kein Pinnen, kein Stapeln — einfach untereinander */
+/* Reduzierte Bewegung: kein Pinnen, kein Stapeln, keine Skalierung */
 @media (prefers-reduced-motion: reduce) {
   .hl-event__sticky, .hl-event__slide { position: static; }
-  .hl-event__slide + .hl-event__slide { margin-top: var(--space-lg); }
+  .hl-event__slide { transform: none; transition: none; will-change: auto; }
+  .hl-event__slide + .hl-event__slide { margin-top: var(--space-xl); }
+  .hl-event__stack { padding-bottom: 0; }
 }
 
 /* ================= KLEINGRUPPEN ================= */

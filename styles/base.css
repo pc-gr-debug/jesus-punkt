@@ -60,7 +60,8 @@ html {
 }
 /* state-scoped exception to the no-overflow-on-html rule:
    locks the page only while the fullscreen menu is open */
-html.menu-open { overflow: hidden; }
+html.menu-open,
+html.lightbox-open { overflow: hidden; } /* state-scoped scroll locks — the only two */
 body {
   background: var(--paper);
   color: var(--ink);

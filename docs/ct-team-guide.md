@@ -58,9 +58,12 @@ ChurchTools kann nur *ein Bild pro Termin* und keine Detailtexte. Für ein Event
 
 Pro Event: Titel (wird gelb markiert), beliebig viele Detailzeilen, beliebig viele Flyer,
 optional ein Link und ein „Anzeigen bis"-Datum (danach verschwindet der Block von allein).
-Mehrere Flyer schieben sich beim Scrollen übereinander, die Infos daneben bleiben stehen;
-von Block zu Block wechseln Infos und Flyer die Seite. Reihenfolge = Reihenfolge der Liste
-im CMS (Einträge zum Umsortieren ziehen).
+Jeder Flyer steht erst einmal vollständig und mittig auf dem Bildschirm; erst danach
+schiebt sich beim Weiterscrollen der nächste darüber, wobei der hintere kleiner und der
+vordere größer wird. Die Infos daneben bleiben stehen; von Block zu Block wechseln Infos
+und Flyer die Seite. Ein Klick (oder Tipp) auf einen Flyer öffnet ihn in voller Größe —
+von dort lässt sich durch alle Flyer desselben Events blättern. Reihenfolge = Reihenfolge
+der Liste im CMS (Einträge zum Umsortieren ziehen).
 
 Beide Wege funktionieren gleichzeitig: die CMS-Blöcke stehen oben, die ChurchTools-Flyer
 dahinter.

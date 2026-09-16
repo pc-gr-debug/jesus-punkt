@@ -93,6 +93,13 @@
 
   /* curated map first (the recurring ChurchTools events), then the page dictionary
      (free-text titles/metas from the CMS), then German */
+  /* labels this file renders into markup (main.js keeps its own set for the nav) */
+  var UI = ({
+    de: { enlarge: ' — vergrößern' },
+    en: { enlarge: ' — enlarge' },
+    uk: { enlarge: ' — збільшити' }
+  })[LANG] || { enlarge: ' — vergrößern' };
+
   function trTitle(t) { return (I18N[LANG] && I18N[LANG].titles[t]) || trText(t); }
   function trMeta(m) { return (I18N[LANG] && I18N[LANG].metas[m]) || trText(m); }
   function trMeeting(m) { return (I18N[LANG] && I18N[LANG].meetings[m]) || m; }
@@ -333,13 +340,30 @@
   }
 
   function highlightHTML(b) {
+    /* one gallery per block — every sheet is a button that opens it at its own index
+       (js/main.js reads data-gallery/data-index; without JS the flyers simply stay
+       pictures, which is the correct no-JS result) */
+    var gallery = esc(JSON.stringify(b.flyers.map(function (f) {
+      return { src: BASE + String(f.image).replace(/^\//, ''), alt: trText(f.alt || b.title) };
+    })));
     var slides = b.flyers.map(function (f, n) {
+      var alt = esc(trText(f.alt || b.title));
       return (
         '<div class="hl-event__slide" style="--i: ' + n + '">' +
-          '<div class="flyer-card flyer-card--sheet">' +
+          '<button type="button" class="flyer-card flyer-card--sheet"' +
+            ' data-gallery="' + gallery + '" data-index="' + n + '"' +
+            ' aria-label="' + alt + UI.enlarge + '">' +
             '<img src="' + esc(BASE + String(f.image).replace(/^\//, '')) + '"' +
-              ' alt="' + esc(trText(f.alt || b.title)) + '" loading="lazy" decoding="async">' +
-          '</div>' +
+              ' alt="' + alt + '" loading="lazy" decoding="async">' +
+            /* always visible, never hover-only: on touch there is no hover to
+               reveal that the flyer opens a gallery */
+            '<span class="flyer-card__zoom" aria-hidden="true">' +
+              '<svg width="15" height="15" viewBox="0 0 15 15" fill="none">' +
+              '<circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6"/>' +
+              '<path d="M10.5 10.5 L14 14M6.5 4.3v4.4M4.3 6.5h4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+              '</svg>' +
+            '</span>' +
+          '</button>' +
         '</div>'
       );
     }).join('');

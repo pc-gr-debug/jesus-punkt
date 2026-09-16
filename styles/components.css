@@ -325,6 +325,111 @@
   .page-hero { min-height: calc(var(--vh, 1vh) * 42); }
 }
 
+/* ================= LIGHTBOX (Flyer-Galerie) =================
+   Öffnet sich aus den Besondere-Events-Blöcken: der angeklickte Flyer in voller
+   Größe, mit Blättern durch alle Flyer desselben Events. Wird von js/main.js
+   einmalig an <body> gehängt. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+}
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 18, 1, 0.88); /* --night, deckend genug für helle Flyer */
+  -webkit-backdrop-filter: blur(0.25rem);
+  backdrop-filter: blur(0.25rem);
+}
+.lightbox__dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: min(100%, 56rem);
+  max-height: 100%;
+}
+.lightbox__figure {
+  display: flex;
+  min-height: 0; /* sonst wächst das Bild aus dem Flex-Container heraus */
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper);
+}
+.lightbox__figure img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.lightbox__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.lightbox__counter {
+  font: 700 0.8125rem / 1.2 var(--font-ui);
+  letter-spacing: 0.08em;
+  color: var(--creme-72);
+  min-width: 3.5rem;     /* Platz reservieren: „1 / 4" darf beim Blättern nicht springen */
+  text-align: center;
+}
+.lightbox__btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--creme-16);
+  border-radius: 50%;
+  /* deckendes Dunkel, nicht durchscheinend: die Knöpfe liegen auf dem Flyer und
+     müssen auch auf einem weißen Blatt sichtbar bleiben */
+  background: rgba(26, 18, 1, 0.78);
+  color: var(--creme);
+  cursor: pointer;
+  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease),
+              transform var(--t-med) var(--ease);
+}
+.lightbox__btn:hover, .lightbox__btn:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+  transform: translateY(-0.125rem);
+}
+.lightbox__btn[disabled] { opacity: 0.32; cursor: default; transform: none; }
+.lightbox__btn[disabled]:hover { background: rgba(26, 18, 1, 0.78); border-color: var(--creme-16); color: var(--creme); }
+.lightbox__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(0.25rem, -0.25rem);
+}
+.lightbox__close:hover, .lightbox__close:focus-visible { transform: translate(0.25rem, -0.375rem); }
+.lightbox__caption {
+  font: 300 0.8125rem / 1.5 var(--font-body);
+  color: var(--creme-72);
+  text-align: center;
+  max-width: 40rem;
+}
+/* einzelner Flyer: kein Blättern nötig */
+.lightbox[data-single="true"] .lightbox__btn--prev,
+.lightbox[data-single="true"] .lightbox__btn--next,
+.lightbox[data-single="true"] .lightbox__counter { display: none; }
+
+@media (max-width: 37.5rem) {
+  .lightbox__dialog { gap: var(--space-sm); }
+  .lightbox__btn { width: 2.5rem; height: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__btn { transition: none; }
+}
+
 /* ================= EYEBROW LABEL =================
    Shared by home + subpages — lives here, not in pages.css, because
    index.html loads components.css but not pages.css. */

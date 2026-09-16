@@ -5,9 +5,12 @@
   /* page locale (set on <html lang> by the i18n build; German is the default) */
   var LANG = (document.documentElement.lang || 'de').slice(0, 2);
   var UI_I18N = {
-    de: { open: 'Menü öffnen', close: 'Menü schließen', show: ' anzeigen' },
-    en: { open: 'Open menu', close: 'Close menu', show: ' — show' },
-    uk: { open: 'Відкрити меню', close: 'Закрити меню', show: ' — показати' }
+    de: { open: 'Menü öffnen', close: 'Menü schließen', show: ' anzeigen',
+          lbLabel: 'Flyer-Galerie', lbClose: 'Galerie schließen', lbPrev: 'Vorheriger Flyer', lbNext: 'Nächster Flyer' },
+    en: { open: 'Open menu', close: 'Close menu', show: ' — show',
+          lbLabel: 'Flyer gallery', lbClose: 'Close gallery', lbPrev: 'Previous flyer', lbNext: 'Next flyer' },
+    uk: { open: 'Відкрити меню', close: 'Закрити меню', show: ' — показати',
+          lbLabel: 'Галерея флаєрів', lbClose: 'Закрити галерею', lbPrev: 'Попередній флаєр', lbNext: 'Наступний флаєр' }
   };
   var UI = UI_I18N[LANG] || UI_I18N.de;
 
@@ -317,6 +320,203 @@
         burger.focus();
       }
     });
+  }
+
+  /* ---------- Flyer gallery (lightbox) ----------
+     Any [data-gallery] button opens the flyers of its own block at its own index.
+     The markup is built once, on demand, and reused. */
+  (function () {
+    var box = null, imgEl, capEl, countEl, prevBtn, nextBtn, dialog;
+    var shots = [], at = 0, opener = null;
+
+    function build() {
+      box = document.createElement('div');
+      box.className = 'lightbox';
+      box.hidden = true;
+      box.innerHTML =
+        '<div class="lightbox__backdrop"></div>' +
+        '<div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="' + UI.lbLabel + '">' +
+          '<button type="button" class="lightbox__btn lightbox__close" aria-label="' + UI.lbClose + '">' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
+            '<path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8"/></svg>' +
+          '</button>' +
+          '<figure class="lightbox__figure"><img alt=""></figure>' +
+          '<figcaption class="lightbox__caption"></figcaption>' +
+          '<div class="lightbox__bar">' +
+            '<button type="button" class="lightbox__btn lightbox__btn--prev" aria-label="' + UI.lbPrev + '">' +
+              '<svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true">' +
+              '<path d="M9 2 L2 10 L9 18" stroke="currentColor" stroke-width="1.5"/></svg>' +
+            '</button>' +
+            '<span class="lightbox__counter" aria-live="polite"></span>' +
+            '<button type="button" class="lightbox__btn lightbox__btn--next" aria-label="' + UI.lbNext + '">' +
+              '<svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true">' +
+              '<path d="M2 2 L9 10 L2 18" stroke="currentColor" stroke-width="1.5"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(box);
+      dialog = box.querySelector('.lightbox__dialog');
+      imgEl = box.querySelector('.lightbox__figure img');
+      capEl = box.querySelector('.lightbox__caption');
+      countEl = box.querySelector('.lightbox__counter');
+      prevBtn = box.querySelector('.lightbox__btn--prev');
+      nextBtn = box.querySelector('.lightbox__btn--next');
+
+      box.querySelector('.lightbox__backdrop').addEventListener('click', close);
+      box.querySelector('.lightbox__close').addEventListener('click', close);
+      prevBtn.addEventListener('click', function () { go(at - 1); });
+      nextBtn.addEventListener('click', function () { go(at + 1); });
+
+      /* swipe left/right on touch — the primary device for this site */
+      var x0 = null, y0 = null;
+      box.addEventListener('touchstart', function (e) {
+        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+      }, { passive: true });
+      box.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        var dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(at + (dx < 0 ? 1 : -1));
+        x0 = y0 = null;
+      }, { passive: true });
+    }
+
+    function go(i) {
+      if (i < 0 || i >= shots.length) return;
+      at = i;
+      imgEl.src = shots[i].src;
+      imgEl.alt = shots[i].alt || '';
+      capEl.textContent = shots[i].alt || '';
+      countEl.textContent = (i + 1) + ' / ' + shots.length;
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === shots.length - 1;
+    }
+
+    function open(list, i, from) {
+      if (!box) build();
+      shots = list;
+      opener = from;
+      box.dataset.single = shots.length < 2 ? 'true' : 'false';
+      box.hidden = false;
+      document.documentElement.classList.add('lightbox-open');
+      go(i);
+      box.querySelector('.lightbox__close').focus();
+    }
+
+    function close() {
+      if (!box || box.hidden) return;
+      box.hidden = true;
+      document.documentElement.classList.remove('lightbox-open');
+      if (opener) opener.focus();
+      opener = null;
+    }
+
+    /* delegated: the blocks are rendered by js/data.js after this runs */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-gallery]');
+      if (!btn) return;
+      var list;
+      try { list = JSON.parse(btn.getAttribute('data-gallery')); } catch (err) { return; }
+      if (!list || !list.length) return;
+      e.preventDefault();
+      open(list, Number(btn.getAttribute('data-index')) || 0, btn);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!box || box.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1); }
+      else if (e.key === 'Tab') {
+        /* keep focus inside the dialog while it is open */
+        var f = dialog.querySelectorAll('button:not([disabled])');
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+  })();
+
+  /* ---------- Besondere Events: vertical carousel scaling ----------
+     While the next flyer slides up over the current one, the covered sheet shrinks
+     and the incoming one grows back to full size. Scroll-driven in JS rather than
+     with animation-timeline, so Safari behaves like every other effect here.
+
+     The geometry is derived from layout values only (offsetHeight + the computed
+     margin/top), never from getBoundingClientRect of the slides themselves — those
+     already carry the scale we are about to set, which would feed back on itself.
+     The transform sits on .hl-event__slide, the sticky element itself: that is safe,
+     only a transform on an ANCESTOR would break sticky. */
+  if (!reduceMotion.matches) {
+    var MIN_SCALE = 0.88;
+    var stacks = [];
+
+    var collectStacks = function () {
+      stacks = [].slice.call(document.querySelectorAll('.hl-event__stack'))
+        .map(function (el) {
+          return { el: el, slides: [].slice.call(el.querySelectorAll('.hl-event__slide')) };
+        })
+        .filter(function (st) { return st.slides.length > 1; });
+    };
+
+    var applyScales = function () {
+      for (var s = 0; s < stacks.length; s++) {
+        var st = stacks[s];
+        var box = st.el.getBoundingClientRect(); /* the stack has no transform of its own */
+        if (box.bottom < 0 || box.top > vhPx) continue; /* off-screen: nothing to update */
+
+        var n = st.slides.length;
+        var heights = [], tops = [], offset = 0;
+        for (var i = 0; i < n; i++) {
+          var slide = st.slides[i];
+          var cs = getComputedStyle(slide);
+          if (i > 0) offset += parseFloat(cs.marginTop) || 0; /* the dwell gap */
+          var h = slide.offsetHeight || 1;
+          var pin = parseFloat(cs.top) || 0;               /* resolved max()/calc() in px */
+          var natural = box.top + offset;
+          /* sticky: held at the pin once it would scroll past it, and never pushed
+             beyond the bottom of its containing block */
+          tops.push(Math.min(Math.max(natural, pin), box.bottom - h));
+          heights.push(h);
+          offset += h;
+        }
+
+        for (var j = 0; j < n; j++) {
+          /* how far the successor has advanced across this sheet: 0 = still fully
+             below it, 1 = exactly on top of it */
+          var out = j < n - 1
+            ? (tops[j] + heights[j] - tops[j + 1]) / heights[j]
+            : 0;
+          var into = j === 0
+            ? 1  /* the first sheet starts at full size */
+            : (tops[j - 1] + heights[j - 1] - tops[j]) / heights[j - 1];
+          out = out < 0 ? 0 : (out > 1 ? 1 : out);
+          into = into < 0 ? 0 : (into > 1 ? 1 : into);
+          var scale = MIN_SCALE + (1 - MIN_SCALE) * (into - out);
+          if (scale > 1) scale = 1;
+          if (scale < MIN_SCALE) scale = MIN_SCALE;
+          st.slides[j].style.setProperty('--s', scale.toFixed(4));
+        }
+      }
+    };
+
+    var ticking = false;
+    var onHlScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { applyScales(); ticking = false; });
+    };
+    window.addEventListener('scroll', onHlScroll, { passive: true });
+    window.addEventListener('resize', onHlScroll);
+    /* js/data.js renders the blocks after this file runs — pick them up when they land */
+    var hlList = document.querySelector('.highlights__list');
+    if (hlList) {
+      new MutationObserver(function () { collectStacks(); applyScales(); })
+        .observe(hlList, { childList: true });
+    }
+    collectStacks();
+    applyScales();
   }
 
   /* ---------- Carousels (full-bleed) — one init per .carousel[id] ---------- */
