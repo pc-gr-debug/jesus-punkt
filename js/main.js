@@ -326,7 +326,7 @@
      Any [data-gallery] button opens the flyers of its own block at its own index.
      The markup is built once, on demand, and reused. */
   (function () {
-    var box = null, imgEl, capEl, countEl, prevBtn, nextBtn;
+    var box = null, imgEl, countEl, prevBtn, nextBtn, dialog;
     var shots = [], at = 0, opener = null;
 
     function build() {
@@ -341,9 +341,8 @@
           '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">' +
           '<path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.6"/></svg>' +
         '</button>' +
-        '<div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="' + UI.lbLabel + '">' +
+        '<div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="' + UI.lbLabel + '" tabindex="-1">' +
           '<figure class="lightbox__figure"><img alt=""></figure>' +
-          '<figcaption class="lightbox__caption"></figcaption>' +
           '<div class="lightbox__bar">' +
             '<button type="button" class="lightbox__btn lightbox__btn--prev" aria-label="' + UI.lbPrev + '">' +
               '<svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true">' +
@@ -357,8 +356,8 @@
           '</div>' +
         '</div>';
       document.body.appendChild(box);
+      dialog = box.querySelector('.lightbox__dialog');
       imgEl = box.querySelector('.lightbox__figure img');
-      capEl = box.querySelector('.lightbox__caption');
       countEl = box.querySelector('.lightbox__counter');
       prevBtn = box.querySelector('.lightbox__btn--prev');
       nextBtn = box.querySelector('.lightbox__btn--next');
@@ -387,7 +386,6 @@
       at = i;
       imgEl.src = shots[i].src;
       imgEl.alt = shots[i].alt || '';
-      capEl.textContent = shots[i].alt || '';
       countEl.textContent = (i + 1) + ' / ' + shots.length;
       prevBtn.disabled = i === 0;
       nextBtn.disabled = i === shots.length - 1;
@@ -401,7 +399,9 @@
       box.hidden = false;
       document.documentElement.classList.add('lightbox-open');
       go(i);
-      box.querySelector('.lightbox__close').focus();
+      /* focus the dialog, not a button: keeps the keyboard inside the overlay
+         without lighting up a focus ring the moment it opens */
+      dialog.focus();
     }
 
     function close() {
@@ -430,7 +430,8 @@
       else if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1); }
       else if (e.key === 'Tab') {
         /* keep focus inside the dialog while it is open */
-        var f = box.querySelectorAll('button:not([disabled])');
+        var f = [].slice.call(box.querySelectorAll('button:not([disabled])'))
+          .filter(function (el) { return el.offsetParent !== null; });
         if (!f.length) return;
         var first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }

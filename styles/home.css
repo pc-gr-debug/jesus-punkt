@@ -136,7 +136,8 @@
    pinnen und die Verweildauer in Bildschirmhöhen ausdrücken. --vh ist die
    eingefrorene Viewporthöhe aus js/main.js (Safari-Toolbar, siehe dort). */
 .highlights {
-  --hl-gap-top: clamp(9.375rem, 15.3vw, 15.3rem); /* Termine -> Besondere Events (1,7x) */
+  --hl-gap-top: clamp(12.5rem, 15.3vw, 15.3rem); /* Termine -> Besondere Events; die
+                                                   Untergrenze ist der Handy-Wert */
   --hl-gap-head: clamp(3rem, 5vw, 5rem);     /* Überschrift -> erster Block */
   --hl-gap-block: clamp(6rem, 10vw, 10rem);  /* Block -> Block */
   margin-top: var(--hl-gap-top);
@@ -205,8 +206,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* der letzte Flyer bekommt dieselbe Verweildauer wie alle davor */
-  padding-bottom: var(--hl-dwell);
+  /* der letzte Flyer bekommt dieselbe Verweildauer wie alle davor — auf dem Handy
+     weniger, dort liest sich der Rest als leere Fläche unter dem Stapel */
+  --hl-tail: var(--hl-dwell);
+  padding-bottom: var(--hl-tail);
 }
 .hl-event__slide {
   position: sticky;
@@ -277,12 +280,18 @@
 @media (max-width: 48rem) {
   .hl-event { display: flex; flex-direction: column; gap: var(--space-xl); }
   .hl-event__sticky { position: static; }
+  /* einspaltig steht der Nachlauf des Stapels als leere Fläche da (daneben ist
+     keine Infospalte mehr) — hier kürzer, auf dem Handy noch kürzer */
+  .hl-event__stack { --hl-tail: calc(var(--vh, 1vh) * 10); }
   /* --hl-h braucht hier keinen Sonderfall mehr: der Breiten-Deckel oben greift von allein */
 }
 @media (max-width: 37.5rem) {
   .hl-event__title { font-size: 1.75rem; }
   .hl-event__detail { padding-left: 1rem; }
-  .hl-event__stack { --hl-dwell: calc(var(--vh, 1vh) * 20); }
+  .hl-event__stack {
+    --hl-dwell: calc(var(--vh, 1vh) * 20);
+    --hl-tail: calc(var(--vh, 1vh) * 7); /* der letzte Flyer hält kürzer, dafür kein Loch */
+  }
 }
 
 /* Reduzierte Bewegung: kein Pinnen, kein Stapeln, keine Skalierung */

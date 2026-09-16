@@ -350,6 +350,7 @@
 .lightbox :focus-visible { outline-color: var(--creme); }
 .lightbox__dialog {
   position: relative;
+  outline: none; /* nimmt beim Öffnen den Fokus auf, soll ihn aber nicht zeigen */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -409,18 +410,26 @@
   height: 2.75rem;
 }
 .lightbox__close:hover, .lightbox__close:focus-visible { color: var(--accent); transform: scale(1.12); }
-.lightbox__caption {
-  font: 300 0.8125rem / 1.5 var(--font-body);
-  color: var(--creme-72);
-  text-align: center;
-  max-width: 40rem;
-}
 /* einzelner Flyer: kein Blättern nötig */
 .lightbox[data-single="true"] .lightbox__bar { display: none; }
 
+/* Handy: keine Pfeile (gewischt wird sowieso), nur der Zähler — und der liegt
+   auf dem Bild statt darunter, damit unter dem Flyer keine Leiste Platz frisst.
+   Das Bild rutscht dafür nach unten. */
 @media (max-width: 37.5rem) {
-  .lightbox__dialog { gap: var(--space-sm); }
-  /* die Knöpfe bleiben 2.75rem = 44px: kleinere Ziele trifft man auf dem Handy nicht */
+  .lightbox { align-items: flex-end; padding-bottom: clamp(0.75rem, 2vw, 1.25rem); }
+  .lightbox__dialog { gap: 0; }
+  .lightbox__btn { display: none; }
+  .lightbox__bar {
+    position: absolute;
+    left: 50%;
+    bottom: 0.75rem;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.66); /* muss auf hellen wie dunklen Flyern lesbar sein */
+  }
+  .lightbox__counter { color: var(--creme); min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .lightbox__btn, .lightbox__close { transition: none; }
