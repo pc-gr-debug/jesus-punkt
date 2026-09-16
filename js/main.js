@@ -326,7 +326,7 @@
      Any [data-gallery] button opens the flyers of its own block at its own index.
      The markup is built once, on demand, and reused. */
   (function () {
-    var box = null, imgEl, capEl, countEl, prevBtn, nextBtn, dialog;
+    var box = null, imgEl, capEl, countEl, prevBtn, nextBtn;
     var shots = [], at = 0, opener = null;
 
     function build() {
@@ -335,11 +335,13 @@
       box.hidden = true;
       box.innerHTML =
         '<div class="lightbox__backdrop"></div>' +
+        /* the cross lives on the overlay, not inside the dialog, so it always sits
+           in the screen corner and never lands on top of the flyer */
+        '<button type="button" class="lightbox__close" aria-label="' + UI.lbClose + '">' +
+          '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">' +
+          '<path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.6"/></svg>' +
+        '</button>' +
         '<div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="' + UI.lbLabel + '">' +
-          '<button type="button" class="lightbox__btn lightbox__close" aria-label="' + UI.lbClose + '">' +
-            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
-            '<path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8"/></svg>' +
-          '</button>' +
           '<figure class="lightbox__figure"><img alt=""></figure>' +
           '<figcaption class="lightbox__caption"></figcaption>' +
           '<div class="lightbox__bar">' +
@@ -355,7 +357,6 @@
           '</div>' +
         '</div>';
       document.body.appendChild(box);
-      dialog = box.querySelector('.lightbox__dialog');
       imgEl = box.querySelector('.lightbox__figure img');
       capEl = box.querySelector('.lightbox__caption');
       countEl = box.querySelector('.lightbox__counter');
@@ -429,7 +430,7 @@
       else if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1); }
       else if (e.key === 'Tab') {
         /* keep focus inside the dialog while it is open */
-        var f = dialog.querySelectorAll('button:not([disabled])');
+        var f = box.querySelectorAll('button:not([disabled])');
         if (!f.length) return;
         var first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }

@@ -327,8 +327,9 @@
 
 /* ================= LIGHTBOX (Flyer-Galerie) =================
    Öffnet sich aus den Besondere-Events-Blöcken: der angeklickte Flyer in voller
-   Größe, mit Blättern durch alle Flyer desselben Events. Wird von js/main.js
-   einmalig an <body> gehängt. */
+   Größe, mit Blättern durch alle Flyer desselben Events. Bewusst schmucklos —
+   schwarzer, leicht durchscheinender Grund, ein Kreuz in der Ecke, flache
+   Pfeile. Wird von js/main.js einmalig an <body> gehängt. */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -336,15 +337,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(0.75rem, 3vw, 2.5rem);
+  /* oben mehr Luft: dort sitzt das Kreuz, das Bild darf nicht bis dorthin reichen */
+  padding: clamp(3.5rem, 7vw, 5rem) clamp(0.75rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem);
 }
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(26, 18, 1, 0.88); /* --night, deckend genug für helle Flyer */
-  -webkit-backdrop-filter: blur(0.25rem);
-  backdrop-filter: blur(0.25rem);
+  background: rgba(0, 0, 0, 0.82); /* schlicht schwarz, die Seite scheint leicht durch */
 }
+/* dunkler Grund: der Standard-Fokusrahmen in --ink wäre hier praktisch unsichtbar
+   (gleiche Regel wie in der Fußzeile, siehe .on-dark in base.css) */
+.lightbox :focus-visible { outline-color: var(--creme); }
 .lightbox__dialog {
   position: relative;
   display: flex;
@@ -381,36 +384,31 @@
   min-width: 3.5rem;     /* Platz reservieren: „1 / 4" darf beim Blättern nicht springen */
   text-align: center;
 }
-.lightbox__btn {
+/* flache Icon-Knöpfe: kein Rahmen, keine Fläche — sie liegen auf dem dunklen Grund */
+.lightbox__btn,
+.lightbox__close {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid var(--creme-16);
-  border-radius: 50%;
-  /* deckendes Dunkel, nicht durchscheinend: die Knöpfe liegen auf dem Flyer und
-     müssen auch auf einem weißen Blatt sichtbar bleiben */
-  background: rgba(26, 18, 1, 0.78);
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--creme);
   cursor: pointer;
-  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease),
-              transform var(--t-med) var(--ease);
+  transition: color var(--t-med) var(--ease), transform var(--t-med) var(--ease);
 }
-.lightbox__btn:hover, .lightbox__btn:focus-visible {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--ink);
-  transform: translateY(-0.125rem);
-}
-.lightbox__btn[disabled] { opacity: 0.32; cursor: default; transform: none; }
-.lightbox__btn[disabled]:hover { background: rgba(26, 18, 1, 0.78); border-color: var(--creme-16); color: var(--creme); }
+.lightbox__btn { width: 2.75rem; height: 2.75rem; }
+.lightbox__btn:hover, .lightbox__btn:focus-visible { color: var(--accent); transform: scale(1.12); }
+.lightbox__btn[disabled] { opacity: 0.3; cursor: default; }
+.lightbox__btn[disabled]:hover { color: var(--creme); transform: none; }
+/* Kreuz in der Bildschirmecke, außerhalb des Bildes */
 .lightbox__close {
   position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(0.25rem, -0.25rem);
+  top: clamp(0.75rem, 2.2vw, 1.75rem);
+  right: clamp(0.75rem, 2.2vw, 1.75rem);
+  width: 2.75rem;
+  height: 2.75rem;
 }
-.lightbox__close:hover, .lightbox__close:focus-visible { transform: translate(0.25rem, -0.375rem); }
+.lightbox__close:hover, .lightbox__close:focus-visible { color: var(--accent); transform: scale(1.12); }
 .lightbox__caption {
   font: 300 0.8125rem / 1.5 var(--font-body);
   color: var(--creme-72);
@@ -418,16 +416,15 @@
   max-width: 40rem;
 }
 /* einzelner Flyer: kein Blättern nötig */
-.lightbox[data-single="true"] .lightbox__btn--prev,
-.lightbox[data-single="true"] .lightbox__btn--next,
-.lightbox[data-single="true"] .lightbox__counter { display: none; }
+.lightbox[data-single="true"] .lightbox__bar { display: none; }
 
 @media (max-width: 37.5rem) {
   .lightbox__dialog { gap: var(--space-sm); }
-  .lightbox__btn { width: 2.5rem; height: 2.5rem; }
+  /* die Knöpfe bleiben 2.75rem = 44px: kleinere Ziele trifft man auf dem Handy nicht */
 }
 @media (prefers-reduced-motion: reduce) {
-  .lightbox__btn { transition: none; }
+  .lightbox__btn, .lightbox__close { transition: none; }
+  .lightbox__btn:hover, .lightbox__close:hover { transform: none; }
 }
 
 /* ================= EYEBROW LABEL =================
