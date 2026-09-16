@@ -81,20 +81,29 @@ def main() -> int:
         text = MARKER_RE.sub(sub, text)
 
         # section flags: data/content/<flag>.json with {"enabled": false} hides every
-        # element carrying data-section-flag="<flag>" (works without JS, SEO-clean)
+        # element carrying data-section-flag="<flag>" (works without JS, SEO-clean).
+        # The toggle runs BOTH ways — switching a flag back on has to strip the
+        # `hidden` again, or the section could never come back (the checked-in markup
+        # may carry it from an earlier off state).
         for flag_m in set(re.findall(r'data-section-flag="([^"]+)"', text)):
             flag_file = ROOT / "data" / "content" / f"{flag_m}.json"
             if not flag_file.exists():
                 errors.append(f"{page}: section flag {flag_m} has no data/content/{flag_m}.json")
                 continue
-            if json.loads(flag_file.read_text(encoding="utf-8")).get("enabled", True):
-                continue
-            text = re.sub(
+            enabled = json.loads(flag_file.read_text(encoding="utf-8")).get("enabled", True)
+
+            def toggle(m, enabled=enabled):
+                # `\s+hidden` can't match inside aria-hidden="true" (preceded by "-",
+                # followed by "="), so the lookahead + leading space are enough
+                open_tag = re.sub(r"\s+hidden(?=[\s/>]|$)", "", m.group(1))
+                return open_tag + ("" if enabled else " hidden") + m.group(2)
+
+            text, n = re.subn(
                 r'(<[a-z0-9]+\b[^>]*\bdata-section-flag="' + re.escape(flag_m) + r'"[^>]*?)(\s*/?>)',
-                lambda m: m.group(1) + (m.group(2) if " hidden" in m.group(1) else " hidden" + m.group(2)),
+                toggle,
                 text,
             )
-            replaced += 1
+            replaced += n
 
         if "<!-- bake:werte-lines -->" in text:
             werte = content.get("werte", {})

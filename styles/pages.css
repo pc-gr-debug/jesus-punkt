@@ -13,14 +13,6 @@
 .prose p { font: 300 0.9375rem / 1.75 var(--font-body); color: var(--ink-2); }
 .prose strong { font-weight: 400; color: var(--ink); }
 
-/* ---- eyebrow label ---- */
-.eyebrow {
-  font: 700 0.8125rem / 1.2 var(--font-display);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-text);
-}
-
 /* ---- person / team ---- */
 .avatar {
   width: 4.5rem;

@@ -121,10 +121,15 @@
       '.hero__copy > div',
       '.hero__actions',
       '.page-hero__inner > div',
-      '[data-ct]:not(.carousel__track)', /* dynamic slots reveal as blocks — data.js replaces their children */
+      /* dynamic slots reveal as blocks — data.js replaces their children. Two are
+         excluded: the carousel track (its transform belongs to the carousel) and the
+         Besondere-Events list, whose reveal transform would become the containing
+         block for the sticky info column and flyer stack inside it. */
+      '[data-ct]:not(.carousel__track):not(.highlights__list)',
       '.carousel',                       /* the track itself is owned by the carousel's inline transform */
       '.sermons__foot',
       '.groups__copy > div',
+      '.highlights__head', /* Besondere Events: the blocks themselves must stay transform-free */
       '.info-card',
       '.card'
     ].join(', '));

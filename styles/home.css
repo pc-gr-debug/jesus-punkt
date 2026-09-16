@@ -71,6 +71,17 @@
   transform: translateY(-50%);
   background: var(--accent);
 }
+/* mehrzeilige Variante (Besondere Events): der Balken kann nicht absolut sitzen,
+   weil er jede umbrochene Zeile einzeln treffen muss — box-decoration-break gibt
+   jeder Zeile ihr eigenes Markerfeld. */
+.hl--wrap {
+  white-space: normal;
+  padding-inline: 0.11em;
+  background: var(--accent);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.hl--wrap::before { content: none; }
 
 @media (max-width: 48rem) {
   .hero__container { gap: 2.25rem; }
@@ -113,6 +124,118 @@
   .events__flyer { order: 0; aspect-ratio: 525 / 297; align-self: auto; }
   .events__foot { margin-top: 1.75rem; }
   /* event rows keep the shared .event-row layout — same design as the /events/ calendar */
+}
+
+/* ================= BESONDERE EVENTS (Blöcke unter den Terminen) =================
+   Pro Block: Infospalte + Flyerstapel. Die Infospalte bleibt sticky, während die
+   Flyer eines Blocks beim Scrollen übereinander geschoben werden (jede Karte ist
+   selbst sticky, die spätere überdeckt die frühere). Blöcke wechseln die Seite. */
+.highlights {
+  margin-top: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);   /* Label -> erster Block */
+}
+.highlights__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);  /* Block -> Block */
+}
+
+.hl-event {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  /* align-items bleibt stretch: nur so hat die sticky Infospalte Laufweg */
+}
+/* jeder zweite Block spiegelt sich — Flyer links, Infos rechts */
+.hl-event:nth-child(even) > .hl-event__info { grid-column: 2; grid-row: 1; }
+.hl-event:nth-child(even) > .hl-event__media { grid-column: 1; grid-row: 1; }
+
+.hl-event__sticky {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-xl));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.hl-event__title {
+  font: 700 var(--fs-h2) / 1.3 var(--font-display);  /* luftiger als --lh-heading, sonst
+                                                        stoßen die Markerbalken aneinander */
+  color: var(--ink);
+}
+.hl-event__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.hl-event__detail {
+  position: relative;
+  padding-left: 1.125rem;
+}
+.hl-event__detail::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.hl-event__detail span { font: 300 0.9375rem / var(--lh-body) var(--font-body); color: var(--ink-2); }
+.hl-event__cta { margin-top: var(--space-xs); }
+
+.hl-event__media { display: flex; justify-content: center; }
+.hl-event__stack {
+  --hl-ratio: 1.4142;   /* DIN-A4 hochkant: Höhe / Breite */
+  --hl-step: 0.68;      /* Anteil einer Flyerhöhe, der pro Flyer gescrollt wird */
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+}
+.hl-event__slide {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-xl));
+  z-index: calc(var(--i, 0) + 1); /* der spätere Flyer schiebt sich über den früheren */
+}
+/* negativer Abstand verkürzt den Scrollweg: ohne ihn bräuchte jeder Flyer seine
+   volle Höhe. Prozentwerte beziehen sich auf die BREITE des Stapels. */
+.hl-event__slide + .hl-event__slide {
+  margin-top: calc((var(--hl-step) - 1) * var(--hl-ratio) * 100%);
+}
+
+/* Flyerblatt: feste A4-Bühne, das Bild wird eingepasst statt beschnitten —
+   ein Querformat-Flyer aus dem CMS verliert so nichts. */
+.flyer-card--sheet {
+  aspect-ratio: 1 / 1.4142;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft); /* hebt jedes Blatt vom darunterliegenden ab */
+}
+.flyer-card--sheet img { object-fit: contain; object-position: center; }
+
+@media (max-width: 64rem) {
+  .highlights { gap: var(--space-lg); }
+  .highlights__list { gap: var(--space-xl); }
+  .hl-event { gap: var(--space-xl); }
+}
+/* einspaltig — Infos ÜBER den Flyern, der Stapel bleibt erhalten.
+   Die Flyerbreite braucht hier keine Stufen: width:100% + max-width:26rem lässt das
+   Blatt von allein mitschrumpfen, sobald die Spalte schmaler als 26rem wird. */
+@media (max-width: 48rem) {
+  .hl-event { display: flex; flex-direction: column; gap: var(--space-lg); }
+  .hl-event__sticky { position: static; }
+}
+@media (max-width: 37.5rem) {
+  .hl-event__title { font-size: 1.75rem; }
+  .hl-event__detail { padding-left: 1rem; }
+}
+
+/* Reduzierte Bewegung: kein Pinnen, kein Stapeln — einfach untereinander */
+@media (prefers-reduced-motion: reduce) {
+  .hl-event__sticky, .hl-event__slide { position: static; }
+  .hl-event__slide + .hl-event__slide { margin-top: var(--space-lg); }
 }
 
 /* ================= KLEINGRUPPEN ================= */

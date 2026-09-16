@@ -325,6 +325,16 @@
   .page-hero { min-height: calc(var(--vh, 1vh) * 42); }
 }
 
+/* ================= EYEBROW LABEL =================
+   Shared by home + subpages — lives here, not in pages.css, because
+   index.html loads components.css but not pages.css. */
+.eyebrow {
+  font: 700 0.8125rem / 1.2 var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
 /* ================= TINTED SECTIONS + ZIGZAG TRANSITION =================
    Background changes never happen on a straight line: a .zig strip forms
    a mountain profile between paper and creme. Place `.zig--top` directly
@@ -421,8 +431,6 @@ a.flyer-card:hover img { transform: scale(1.03); }
   gap: var(--space-lg);
   align-items: start;
 }
-.special-grid--home { grid-template-columns: repeat(auto-fit, minmax(14rem, 18rem)); }
-.special-strip { display: grid; gap: var(--space-lg); margin-top: var(--space-2xl); }
 .special-card { position: relative; display: block; }
 .special-card__badge {
   position: absolute;

@@ -44,10 +44,34 @@ Die Website zeigt nur den Eventnamen (das Wort „Flyer" wird entfernt) und wirb
 bis zum Datum des Termins** — der Flyer verschwindet also automatisch, wenn das Event vorbei
 ist. Werbestart steuern = den Termin einfach erst dann anlegen, wenn die Werbung losgehen soll.
 
-Diese Flyer erscheinen mit „Vormerken"-Badge im Bereich **Besondere Events** auf der
-Startseite und der Events-Seite (max. 3 gleichzeitig, das nächstliegende zuerst). Der normale
-Wochen-Flyer (Punkt oben) läuft unabhängig davon weiter — nur der nackte Titel „Flyer"
-zählt als Wochen-Flyer, alles mit Namenszusatz als Besonderes Event.
+Diese Flyer erscheinen im Bereich **Besondere Events** (max. 3 gleichzeitig, das
+nächstliegende zuerst) — auf der Events-Seite als Karte mit „Vormerken"-Badge, auf der
+Startseite als Block (Titel + Flyer). Der normale Wochen-Flyer (Punkt oben) läuft
+unabhängig davon weiter — nur der nackte Titel „Flyer" zählt als Wochen-Flyer, alles mit
+Namenszusatz als Besonderes Event.
+
+### Der ausführliche Weg: im Website-CMS
+
+ChurchTools kann nur *ein Bild pro Termin* und keine Detailtexte. Für ein Event mit
+**mehreren Flyern** oder mit Infozeilen (Datum, Gäste, „bitte etwas mitbringen") deshalb:
+`/admin/` → **Inhalte → Besondere Events** → Event hinzufügen.
+
+Pro Event: Titel (wird gelb markiert), beliebig viele Detailzeilen, beliebig viele Flyer,
+optional ein Link und ein „Anzeigen bis"-Datum (danach verschwindet der Block von allein).
+Mehrere Flyer schieben sich beim Scrollen übereinander, die Infos daneben bleiben stehen;
+von Block zu Block wechseln Infos und Flyer die Seite. Reihenfolge = Reihenfolge der Liste
+im CMS (Einträge zum Umsortieren ziehen).
+
+Beide Wege funktionieren gleichzeitig: die CMS-Blöcke stehen oben, die ChurchTools-Flyer
+dahinter.
+
+## Termine, die nicht in ChurchTools stehen
+
+Normalfall bleibt: **Termine in ChurchTools pflegen.** Für Ausnahmen (ein Termin, der dort
+nicht geführt wird) gibt es `/admin/` → **Inhalte → Termine von Hand**. Datum, Uhrzeit, Art,
+Titel und Zusatzzeile eintragen — der Termin taucht dann in der Liste auf der Startseite und
+im Monatskalender auf, einsortiert nach Datum. Steht in ChurchTools am selben Tag schon ein
+Termin mit demselben Titel, wird der Eintrag ignoriert (keine Doppelungen).
 
 ## Was (noch) NICHT aus ChurchTools kommt
 

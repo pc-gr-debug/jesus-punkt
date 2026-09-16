@@ -159,6 +159,68 @@ collections:
           - { name: service_time, label: "Gottesdienstzeit (Hero + Fußzeile)", widget: string, i18n: true, hint: "Erscheint im Startseiten-Hero und in der Fußzeile jeder Seite (z. B. Sonntags 10:00 Uhr) — bewusst getrennt von der Karte auf der Kontaktseite." }
           - { name: footer_tagline, label: "Fußzeile — Leitspruch", widget: string, i18n: true, hint: "Der Satz unter dem Logo in der Fußzeile jeder Seite." }
           - { name: footer_live, label: "Fußzeile — Livestream-Hinweis", widget: string, i18n: true, hint: "Die Zeile unter der Adresse in der Fußzeile („vor Ort und auf YouTube“)." }
+      - name: highlights
+        label: Besondere Events
+        file: data/content/highlights.json
+        fields:
+          - { name: enabled, label: "Bereich auf der Startseite anzeigen", widget: boolean, default: true, hint: "Aus = der ganze Bereich „Besondere Events“ verschwindet von der Startseite. Einzelne Events schaltest du weiter unten ab." }
+          - name: events
+            label: "Events (Reihenfolge = Reihenfolge auf der Seite)"
+            label_singular: Event
+            widget: list
+            collapsed: false
+            summary: "{{fields.title}}"
+            hint: "Jedes Event wird ein Block unter den Terminen: links die Infos, rechts die Flyer — beim nächsten Block wechseln die Seiten automatisch. Zum Umsortieren die Einträge ziehen."
+            fields:
+              - { name: enabled, label: "Dieses Event anzeigen", widget: boolean, default: true, hint: "Aus = nur dieser eine Block verschwindet." }
+              - { name: title, label: Titel, widget: string, hint: "Große Überschrift des Blocks — wird gelb markiert wie „lebt“ im Hero." }
+              - { name: until, label: "Anzeigen bis (einschließlich)", widget: datetime, format: "YYYY-MM-DD", date_format: "DD.MM.YYYY", time_format: false, picker_utc: false, required: false, hint: "Nach diesem Tag verschwindet der Block von allein. Leer = bleibt stehen, bis du ihn abschaltest." }
+              - name: details
+                label: Detailzeilen
+                label_singular: Zeile
+                widget: list
+                required: false
+                field: { name: text, label: Zeile, widget: string }
+                hint: "Je eine Zeile für Datum, Uhrzeit, Gäste, Ort … — erscheinen als Aufzählung unter dem Titel."
+              - name: flyers
+                label: Flyer
+                label_singular: Flyer
+                widget: list
+                required: false
+                hint: "Ein Flyer = ein Bild. Bei mehreren schieben sie sich beim Scrollen übereinander, während die Infos daneben stehen bleiben. Hochformat (DIN A4) wirkt am besten; andere Formate werden vollständig eingepasst, nie beschnitten."
+                fields:
+                  - { name: image, label: Bild, widget: image, media_folder: /img/events, public_folder: /img/events }
+                  - { name: alt, label: "Bildbeschreibung (für Vorlesefunktion)", widget: string, required: false }
+              - { name: link, label: "Link (optional)", widget: string, required: false, pattern: ['^$|^(https?://|/|mailto:).+', 'leer, oder https://… bzw. /seite/'], hint: "Erzeugt einen Textlink mit Pfeil unter den Detailzeilen. Leer = kein Link." }
+              - { name: link_label, label: "Link — Beschriftung", widget: string, required: false, hint: "Der Text des Links, z. B. „Zum vollen Programm“. Ohne Link ohne Wirkung." }
+      - name: termine
+        label: Termine von Hand
+        file: data/content/termine.json
+        fields:
+          - name: events
+            label: "Zusätzliche Termine"
+            label_singular: Termin
+            widget: list
+            collapsed: false
+            summary: "{{fields.date}} · {{fields.title}}"
+            hint: "Nur für Termine, die NICHT in ChurchTools stehen — der Kalender auf der Events-Seite und die Liste auf der Startseite mischen sie automatisch ein. Steht in ChurchTools am selben Tag schon ein Termin mit demselben Titel, wird der Eintrag hier übersprungen (keine Doppelungen). Der Normalfall bleibt: Termine in ChurchTools pflegen."
+            fields:
+              - { name: enabled, label: "Termin anzeigen", widget: boolean, default: true }
+              - { name: date, label: Datum, widget: datetime, format: "YYYY-MM-DD", date_format: "DD.MM.YYYY", time_format: false, picker_utc: false }
+              - { name: time, label: Uhrzeit, widget: string, default: "10:00", pattern: ['^([01]\d|2[0-3]):[0-5]\d$', 'Format HH:MM, z. B. 18:30'] }
+              - name: type
+                label: Art
+                widget: select
+                default: sonstiges
+                options:
+                  - { label: Gottesdienst, value: gottesdienst }
+                  - { label: Jugend, value: jugend }
+                  - { label: Gebet, value: gebet }
+                  - { label: Hauskreis, value: hauskreis }
+                  - { label: Sonstiges, value: sonstiges }
+                hint: "„Gottesdienst“ zählt auf der Startseite als der hervorgehobene nächste Gottesdienst."
+              - { name: title, label: Titel, widget: string, hint: "Erscheint fett in der Terminzeile." }
+              - { name: meta, label: Zusatzzeile, widget: string, required: false, hint: "Die kleine goldene Zeile darunter — Ort, Uhrzeitspanne, für wen." }
       - name: hauskreise
         label: Hauskreise
         file: data/content/hauskreise.json

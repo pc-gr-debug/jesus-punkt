@@ -161,10 +161,14 @@
           <img src="/img/flyer-aktuell.jpg" alt="Aktueller Flyer zum Sonntagsgottesdienst" loading="lazy">
         </a>
       </div>
-      <!-- long-notice flyers — JS unhides when ChurchTools delivers any -->
-      <div class="special-strip" data-ct-section="special-flyers" hidden>
-        <div><span class="eyebrow">Besondere Events</span></div>
-        <div class="special-grid special-grid--home" data-ct="special-flyers"></div>
+      <!-- Besondere Events — CMS-Bloecke (data/content/highlights.json) plus die
+           ChurchTools-Flyer (Termin "Flyer Eventname"), im selben Block-Layout.
+           Infos und Flyer wechseln die Seite von Block zu Block; mehrere Flyer
+           eines Blocks schieben sich beim Scrollen uebereinander. JS blendet ein.
+           Keine spitzen Klammern hier: tools/i18n-build.py liest sie als Tag. -->
+      <div class="highlights" data-ct-section="highlights" hidden>
+        <div class="highlights__head"><span class="eyebrow">Besondere Events</span></div>
+        <div class="highlights__list" data-ct="highlights"></div>
       </div>
     </div>
   </section>
@@ -275,8 +279,8 @@
   </section>
 
   <!-- ================= KLEINGRUPPEN ================= -->
-  <div class="zig zig--top" aria-hidden="true" data-section-flag="hauskreise" hidden></div>
-  <section class="section section--tint" id="kleingruppen" aria-labelledby="kleingruppen-h" data-section-flag="hauskreise" hidden>
+  <div class="zig zig--top" aria-hidden="true" data-section-flag="hauskreise"></div>
+  <section class="section section--tint" id="kleingruppen" aria-labelledby="kleingruppen-h" data-section-flag="hauskreise">
     <div class="container groups__grid">
       <ul class="kg-list groups__list" data-ct="groups">
         <li>
@@ -348,7 +352,7 @@
       </div>
     </div>
   </section>
-  <div class="zig zig--bottom" aria-hidden="true" data-section-flag="hauskreise" hidden></div>
+  <div class="zig zig--bottom" aria-hidden="true" data-section-flag="hauskreise"></div>
 
   <!-- ================= WERTE (scroll wheel) ================= -->
   <section class="section werte" id="werte" aria-labelledby="werte-h">

@@ -1,0 +1,44 @@
+{
+  "_comment": "Besondere Events — die Blöcke unter den Terminen auf der Startseite. Pro Block: Titel (gelb markiert), Detailzeilen und ein oder mehrere Flyer. Mehrere Flyer werden beim Scrollen übereinander geschoben. Die Blöcke wechseln sich automatisch ab (Infos links / Flyer rechts, dann umgekehrt). Pflege im CMS (/admin/ → Inhalte → Besondere Events).",
+  "enabled": true,
+  "events": [
+    {
+      "enabled": true,
+      "title": "Gebetstag für MV",
+      "until": "2026-09-19",
+      "details": [
+        "Samstag, 19. September 2026 · 11–16 Uhr",
+        "Mit Bernd Oettinghaus — Theologe, leidenschaftlicher Beter und Leiter des Runden Tisch Gebet der Koalition für Evangelisation",
+        "Parallel läuft der Kindergebetstag: ein spannendes Programm für alle Altersgruppen",
+        "Bitte bringt eine Kleinigkeit zum gemeinsamen Mittagsbuffet mit",
+        "Jesus Punkt · Kruseshofer Str. 20, 17036 Neubrandenburg"
+      ],
+      "link": "",
+      "link_label": "",
+      "flyers": [
+        { "image": "/img/events/gebetstag-mv-2026.jpg", "alt": "Flyer: Gebetstag für MV am 19. September 2026 im Jesus Punkt" },
+        { "image": "/img/events/kindergebetstag-mv-2026.jpg", "alt": "Flyer: Kindergebetstag für MV am 19. September 2026 im Jesus Punkt" }
+      ]
+    },
+    {
+      "enabled": true,
+      "title": "Interkulturelle Woche 2026",
+      "until": "2026-10-11",
+      "details": [
+        "19. September bis 11. Oktober 2026 — wir sind dabei",
+        "Dienstag, 29. September · 16–20 Uhr — Offenes Wohnzimmer für Jung und Alt",
+        "Sonntag, 4. Oktober · 10:00 Uhr — Gottesdienst „DAFÜR“ mit Pastor Philipp Strauch",
+        "Freitag, 9. Oktober · 18:30–21:30 Uhr — Elevate Youth Night, ab 12 Jahren",
+        "Jesus Punkt · Kruseshofer Str. 20, 17036 Neubrandenburg"
+      ],
+      "link": "https://www.demokratie-nb.de/ikw2026",
+      "link_label": "Das volle Programm der Interkulturellen Woche",
+      "flyers": [
+        { "image": "/img/events/interkulturelle-woche-2026.jpg", "alt": "Plakat: Interkulturelle Woche 2026 in Neubrandenburg, 19.09. bis 11.10." },
+        { "image": "/img/events/ikw-offenes-wohnzimmer-2026.jpg", "alt": "Flyer: Offenes Wohnzimmer am 29. September 2026 im Jesus Punkt" },
+        { "image": "/img/events/ikw-dafuer-2026.jpg", "alt": "Flyer: Gottesdienst DAFÜR am 4. Oktober 2026 mit Pastor Philipp Strauch" },
+        { "image": "/img/events/ikw-elevate-youth-night-2026.jpg", "alt": "Flyer: Elevate Youth Night am 9. Oktober 2026 im Jesus Punkt" }
+      ]
+    }
+  ]
+}

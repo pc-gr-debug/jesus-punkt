@@ -70,6 +70,26 @@ def has_words(s: str) -> bool:
 
 CONTENT_KEYS: set = set()  # keys merged from data/content — used by the bake/JS, not (only) markup
 
+# Flat data/content files that js/data.js translates at RUNTIME through data/i18n/<loc>.json
+# (they carry no per-locale layout of their own — German is the source, as in the markup).
+RUNTIME_TRANSLATED = {"highlights", "termine"}
+# fields in those files that are never text: paths, dates, flags, machine values
+NON_TEXT_FIELDS = {"image", "link", "url", "date", "time", "type", "enabled", "until", "id", "_comment"}
+
+
+def collect_strings(node, key=None) -> set:
+    """Every translatable German string in a flat CMS file."""
+    found = set()
+    if isinstance(node, dict):
+        for k, v in node.items():
+            found |= collect_strings(v, k)
+    elif isinstance(node, list):
+        for v in node:
+            found |= collect_strings(v, key)
+    elif isinstance(node, str) and key not in NON_TEXT_FIELDS and has_words(node):
+        found.add(norm(node))
+    return found
+
 
 def load_dict(loc: str) -> dict:
     p = ROOT / "data" / "i18n" / f"{loc}.json"
@@ -97,6 +117,12 @@ def merge_content_translations(table: dict, loc: str) -> None:
         data = json.loads(p.read_text(encoding="utf-8"))
         if "de" in data:
             walk(data["de"], data.get(loc, {}))
+        elif p.stem in RUNTIME_TRANSLATED:
+            # Flat CMS files whose German strings js/data.js looks up in this very
+            # dictionary at runtime (Besondere Events, Termine von Hand). Register them
+            # so a translation added here is not reported as an unused key — and so a
+            # missing one stays the documented silent German fallback.
+            CONTENT_KEYS.update(collect_strings(data))
 
 
 def split_segments(html: str):

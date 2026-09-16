@@ -72,6 +72,7 @@ Use these named tiers consistently across **all** stylesheets:
 - Cards/rows lift with `--shadow-soft`/`--shadow-card`; kleingruppen rows indent + extend their arrow; textlinks slide their arrow.
 - The sermon carousel is **full-bleed**: `width: 100vw` breakout, track aligned to the container, overflow visible to the screen edge, `padding-block` + negative margin so hover shadows are never clipped. Carousels init per `.carousel[id]` with `data-carousel-prev/next="<id>"` buttons.
 - The Werte section is a **pinned scroll wheel**: sticky 100dvh stage inside a 420vh section (360vh phone), scroll progress steps the ring through all 7 values; tapping a value jumps the scroll position into its segment (seamless while pinned). All bubbles are sand; only the active one turns accent. On phones the wheel is intentionally wider than the screen (stage clips it) and the active bubble moves to the ring's center. `prefers-reduced-motion` collapses it to a static list.
+- **Besondere Events** (`.highlights`, inside `#veranstaltungen` on the homepage): one block per event — info column (title in a wrapping `.hl hl--wrap` marker + detail lines) beside a stack of flyers. Blocks alternate sides (`nth-child(even)`); several flyers of one block slide over each other on scroll (each `.hl-event__slide` is `position: sticky`, later ones paint on top) while `.hl-event__sticky` holds the info column. Phone: info above, stack keeps working. `prefers-reduced-motion` drops both stickies. Nothing in that subtree may get a `transform` — it would become the containing block and kill the sticky (that is why `.highlights__list` is excluded from the reveal observer in `js/main.js`).
 - **i18n:** German markup is the single source. `/en/` and `/uk/` are generated at deploy by `tools/i18n-build.py` from `data/i18n/*.json` — a new/changed German string needs dictionary entries or the build warns and ships German fallback. Ukrainian runs entirely on Arimo (Cyrillic subset in `fonts/`). Impressum/Datenschutz stay German-only.
 - Tinted (`--creme`) sections are framed by **zig-zag strips** (`.zig--top` / `.zig--bottom`, conic-gradient mask) — a background-color change never happens on a straight line.
 
@@ -101,7 +102,8 @@ Wrap all text elements (`span`, `p`, headings, `a`) in a `<div>` cover element �
 ## ChurchTools Integration
 
 Dynamic slots are marked in the HTML with `data-ct` attributes (flyer, events + calendar, sermons, kleingruppen, team).
-`js/data.js` renders them from `data/mock/*.json` — swapping to live ChurchTools means changing only its URL map. Static markup inside the slots is the no-JS fallback; keep it in sync with the mock data. See `docs/churchtools-integration.md` for the endpoint map and auth model, `docs/cms-integration-plan.md` for the CMS × ChurchTools editing architecture and rollout phases, and `docs/i18n-plan.md` for the de/en/uk translation architecture. Do not hardcode content into those slots without keeping the `data-ct` markers.
+`js/data.js` renders them from `data/mock/*.json` — swapping to live ChurchTools means changing only its URL map.
+Two slots are CMS-first rather than ChurchTools-first: `data/content/highlights.json` (the Besondere-Events blocks; ChurchTools `Flyer <Name>` specials are appended to the same renderer) and `data/content/termine.json` (dates ChurchTools does not carry — merged into the calendar, and skipped when ChurchTools already has that title on that day). `mergeEvents()` also collapses the duplicate Gottesdienste ChurchTools returns from its two public calendars. Their German strings are translated at runtime through `data/i18n/<loc>.json`, so `tools/i18n-build.py` registers them via `RUNTIME_TRANSLATED`. Static markup inside the slots is the no-JS fallback; keep it in sync with the mock data. See `docs/churchtools-integration.md` for the endpoint map and auth model, `docs/cms-integration-plan.md` for the CMS × ChurchTools editing architecture and rollout phases, and `docs/i18n-plan.md` for the de/en/uk translation architecture. Do not hardcode content into those slots without keeping the `data-ct` markers.
 
 ## Anti-Pattern Guardrails
 
@@ -121,6 +123,8 @@ design-system.html    living styleguide (tokens + components)
 styles/               tokens.css → base.css → components.css → home.css | pages.css
 js/main.js            header state, nav glider, fullscreen nav, carousels, Werte wheel, galleries — no frameworks
 js/data.js            renders data-ct slots from data/mock/*.json (swap URL map for live ChurchTools); locale-aware
+data/content/         CMS-managed content (Sveltia, /admin/) — incl. highlights.json
+                      (Besondere Events) + termine.json (Termine von Hand)
 data/i18n/            en.json + uk.json (German string → translation); de markup is the source
 tools/i18n-build.py   generates /en/ + /uk/ trees at deploy (never edit those by hand; gitignored)
 img/  fonts/  data/   assets; data/ holds mock JSON mirroring ChurchTools responses

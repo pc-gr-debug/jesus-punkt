@@ -18,6 +18,8 @@
        daily cron in pages.yml) once YT_API_KEY + YT_PLAYLIST_ID are set; mock stays the fallback */
     sermons: BASE + 'data/ct/sermons.json',
     sermonsFallback: BASE + 'data/mock/sermons.json',
+    termine: BASE + 'data/content/termine.json', /* CMS-managed dates merged into the CT calendar */
+    highlights: BASE + 'data/content/highlights.json', /* CMS-managed "Besondere Events" blocks */
     groups: BASE + 'data/content/hauskreise.json', /* CMS-managed incl. enabled-toggle */
     team: BASE + 'data/content/team.json', /* CMS-managed (photos need explicit consent — never from CT) */
     galerie: BASE + 'data/content/galerie.json' /* CMS-managed gallery photos (gemeindeleben) */
@@ -73,8 +75,26 @@
       }
     }
   };
-  function trTitle(t) { return (I18N[LANG] && I18N[LANG].titles[t]) || t; }
-  function trMeta(m) { return (I18N[LANG] && I18N[LANG].metas[m]) || m; }
+  /* CMS-managed strings (Besondere Events, Termine von Hand) are German-first like
+     the rest of the markup. On /en/ and /uk/ we look them up in the very dictionary
+     the i18n build uses — an entry translates, no entry keeps German. Same contract
+     as the static pages, no second place to maintain translations. */
+  var DICT = null;
+  function loadDict() {
+    if (LANG === 'de') return Promise.resolve(null);
+    return getJSON(BASE + 'data/i18n/' + LANG + '.json')
+      .then(function (d) { DICT = d; return d; })
+      .catch(function () { return null; }); /* German fallback, never a broken page */
+  }
+  function trText(str) {
+    if (!DICT || !str) return str;
+    return DICT[String(str).replace(/\s+/g, ' ').trim()] || str;
+  }
+
+  /* curated map first (the recurring ChurchTools events), then the page dictionary
+     (free-text titles/metas from the CMS), then German */
+  function trTitle(t) { return (I18N[LANG] && I18N[LANG].titles[t]) || trText(t); }
+  function trMeta(m) { return (I18N[LANG] && I18N[LANG].metas[m]) || trText(m); }
   function trMeeting(m) { return (I18N[LANG] && I18N[LANG].meetings[m]) || m; }
 
   var WD = new Intl.DateTimeFormat(LOCALE, { weekday: 'short' });
@@ -117,6 +137,42 @@
       if (!r.ok) throw new Error(url + ' → ' + r.status);
       return r.json();
     });
+  }
+
+  /* ---------- calendar: ChurchTools + the dates kept by hand in the CMS ----------
+     Two jobs in one pass:
+     1. ChurchTools serves the same Gottesdienst from two public calendars, so every
+        Sunday arrives twice — identical (start, title) pairs collapse to one.
+     2. data/content/termine.json adds events ChurchTools does not carry. A manual
+        entry is DROPPED when ChurchTools already has that title on that day, so a
+        date can never end up listed twice. */
+  function sameTitle(a, b) {
+    return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
+  }
+  function mergeEvents(ct, manual) {
+    var out = [], seen = Object.create(null);
+    ((ct && ct.events) || []).forEach(function (e) {
+      var key = e.start + '|' + String(e.title).trim().toLowerCase();
+      if (seen[key]) return;
+      seen[key] = true;
+      out.push(e);
+    });
+    ((manual && manual.events) || []).forEach(function (m, i) {
+      if (!m || m.enabled === false || !m.date || !m.title) return;
+      var clash = out.some(function (e) {
+        return e.start.slice(0, 10) === m.date && sameTitle(e.title, m.title);
+      });
+      if (clash) return; /* ChurchTools wins — it is the calendar of record */
+      out.push({
+        id: 'cms-' + m.date + '-' + i,
+        start: m.date + 'T' + (m.time || '00:00') + ':00',
+        type: m.type || 'sonstiges',
+        title: m.title,
+        meta: m.meta || ''
+      });
+    });
+    out.sort(function (a, b) { return new Date(a.start) - new Date(b.start); });
+    return { events: out };
   }
 
   /* ---------- homepage: exactly 3 next events ---------- */
@@ -237,16 +293,101 @@
     });
   }
 
+  /* ---------- Besondere Events: CMS blocks + ChurchTools specials ----------
+     One block = an info column (marker-highlighted title + detail lines) beside a
+     stack of flyers. Sides alternate per block (CSS nth-child); several flyers of
+     one block slide over each other on scroll (CSS sticky) while the info column
+     stays pinned. A ChurchTools "Flyer <Eventname>" special becomes a block with
+     just a title and its one flyer, so that convention keeps working here. */
+  function highlightBlocks(cms, specials) {
+    var blocks = [];
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (cms && cms.enabled !== false) {
+      (cms.events || []).forEach(function (b) {
+        if (!b || b.enabled === false) return;
+        /* "until" lets a block retire itself — nobody has to remember to delete it */
+        if (b.until && new Date(b.until + 'T23:59:59') < today) return;
+        var flyers = (b.flyers || []).filter(function (f) { return f && f.image; });
+        if (!b.title && !flyers.length) return;
+        blocks.push({
+          title: b.title || '',
+          details: (b.details || []).filter(Boolean),
+          link: b.link || '',
+          linkLabel: b.link_label || '',
+          flyers: flyers
+        });
+      });
+    }
+    (specials || []).forEach(function (sp) {
+      if (!sp || !sp.url) return;
+      blocks.push({
+        title: sp.title || '',
+        details: [],
+        link: '',
+        linkLabel: '',
+        flyers: [{ image: sp.url, alt: sp.alt || sp.title }]
+      });
+    });
+    return blocks;
+  }
+
+  function highlightHTML(b) {
+    var slides = b.flyers.map(function (f, n) {
+      return (
+        '<div class="hl-event__slide" style="--i: ' + n + '">' +
+          '<div class="flyer-card flyer-card--sheet">' +
+            '<img src="' + esc(BASE + String(f.image).replace(/^\//, '')) + '"' +
+              ' alt="' + esc(trText(f.alt || b.title)) + '" loading="lazy" decoding="async">' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+    var details = b.details.map(function (d) {
+      return '<li class="hl-event__detail"><div><span>' + esc(trText(d)) + '</span></div></li>';
+    }).join('');
+    var external = /^https?:/i.test(b.link);
+    var cta = b.link
+      ? '<div class="hl-event__cta"><a class="textlink" href="' + esc(b.link) + '"' +
+          (external ? ' target="_blank" rel="noopener"' : '') + '>' +
+          esc(trText(b.linkLabel || b.link)) + ' <span class="textlink__arrow">\u2192</span></a></div>'
+      : '';
+    return (
+      '<article class="hl-event">' +
+        '<div class="hl-event__info"><div class="hl-event__sticky">' +
+          (b.title
+            ? '<div class="hl-event__title-cover"><h3 class="hl-event__title">' +
+                '<span class="hl hl--wrap">' + esc(trText(b.title)) + '</span></h3></div>'
+            : '') +
+          (details ? '<ul class="hl-event__details">' + details + '</ul>' : '') +
+          cta +
+        '</div></div>' +
+        '<div class="hl-event__media"><div class="hl-event__stack">' + slides + '</div></div>' +
+      '</article>'
+    );
+  }
+
+  function renderHighlights(cms, specials) {
+    var list = document.querySelector('[data-ct="highlights"]');
+    if (!list) return;
+    var blocks = highlightBlocks(cms, specials);
+    list.innerHTML = blocks.map(highlightHTML).join('');
+    /* the section ships hidden — nothing to show means it stays that way */
+    document.querySelectorAll('[data-ct-section="highlights"]').forEach(function (el) {
+      el.hidden = !blocks.length;
+    });
+  }
+
   /* ---------- groups ---------- */
   function renderGroups(data) {
-    if (data.enabled === false) {
-      /* no Hauskreise right now: hide the flagged sections (deploy bake does the
-         same server-side; this covers local dev and stale deploys) */
-      document.querySelectorAll('[data-section-flag="hauskreise"]').forEach(function (el) {
-        el.hidden = true;
-      });
-      return;
-    }
+    /* the toggle runs BOTH ways: switching Hauskreise back on in the CMS has to
+       un-hide the sections again, not just stop hiding them (the deploy bake does
+       the same server-side; this covers local dev and stale deploys) */
+    var on = data.enabled !== false && Array.isArray(data.groups) && data.groups.length > 0;
+    document.querySelectorAll('[data-section-flag="hauskreise"]').forEach(function (el) {
+      el.hidden = !on;
+    });
+    if (!on) return;
     document.querySelectorAll('[data-ct="groups"]').forEach(function (list) {
       var href = list.closest('#hauskreise') ? '#hauskreise' : PAGE_BASE + 'gemeindeleben/#hauskreise';
       list.innerHTML = data.groups.map(function (g) {
@@ -326,17 +467,33 @@
   /* ---------- boot: fetch only what the page needs ---------- */
   function boot() {
     if (document.querySelector('[data-ct="events"]')) {
-      getJSON(URLS.events)
-        .catch(function () { return getJSON(URLS.eventsFallback); })
-        .then(function (d) {
-          renderHomeEvents(d);
-          initCalendar(d);
-        }).catch(function (e) { console.warn('[data] events:', e.message); });
+      Promise.all([
+        getJSON(URLS.events).catch(function () { return getJSON(URLS.eventsFallback); }),
+        /* dates kept by hand are optional — a missing file is not an error */
+        getJSON(URLS.termine).catch(function () { return { events: [] }; }),
+        loadDict()
+      ]).then(function (res) {
+        var d = mergeEvents(res[0], res[1]);
+        renderHomeEvents(d);
+        initCalendar(d);
+      }).catch(function (e) { console.warn('[data] events:', e.message); });
     }
-    if (document.querySelector('[data-ct="flyer"]')) {
-      getJSON(URLS.flyer)
-        .catch(function () { return getJSON(URLS.flyerFallback); })
-        .then(renderFlyer).catch(function (e) { console.warn('[data] flyer:', e.message); });
+    /* flyer feed serves two slots: the weekly flyer card and the ChurchTools
+       specials that join the Besondere-Events blocks — fetch it once for both */
+    var wantsFlyer = !!document.querySelector('[data-ct="flyer"], [data-ct="special-flyers"]');
+    var wantsHighlights = !!document.querySelector('[data-ct="highlights"]');
+    if (wantsFlyer || wantsHighlights) {
+      Promise.all([
+        getJSON(URLS.flyer)
+          .catch(function () { return getJSON(URLS.flyerFallback); })
+          .catch(function () { return {}; }),
+        wantsHighlights ? getJSON(URLS.highlights).catch(function () { return {}; })
+                        : Promise.resolve({}),
+        loadDict()
+      ]).then(function (res) {
+        if (wantsFlyer) renderFlyer(res[0]);
+        if (wantsHighlights) renderHighlights(res[1], res[0].special || []);
+      }).catch(function (e) { console.warn('[data] flyer/highlights:', e.message); });
     }
     if (document.querySelector('[data-ct="sermons"]')) {
       getJSON(URLS.sermons)

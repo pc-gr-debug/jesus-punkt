@@ -1,0 +1,29 @@
+{
+  "_comment": "Termine von Hand — ergänzt den ChurchTools-Kalender (data/ct/events.json) um Veranstaltungen, die nicht in CT stehen. js/data.js mischt sie ein und sortiert nach Datum. Ein Termin wird ÜBERSPRUNGEN, wenn ChurchTools am selben Tag schon einen Termin mit demselben Titel liefert — doppelte Einträge sind also ausgeschlossen. Pflege im CMS (/admin/ → Inhalte → Termine von Hand).",
+  "events": [
+    {
+      "enabled": true,
+      "date": "2026-09-19",
+      "time": "11:00",
+      "type": "gebet",
+      "title": "Gebetstag für MV",
+      "meta": "11–16 Uhr · mit Bernd Oettinghaus · Kindergebetstag parallel"
+    },
+    {
+      "enabled": true,
+      "date": "2026-09-29",
+      "time": "16:00",
+      "type": "sonstiges",
+      "title": "Offenes Wohnzimmer",
+      "meta": "Interkulturelle Woche · 16–20 Uhr · für Jung und Alt, für Groß und Klein"
+    },
+    {
+      "enabled": true,
+      "date": "2026-10-09",
+      "time": "18:30",
+      "type": "jugend",
+      "title": "Elevate Youth Night",
+      "meta": "Interkulturelle Woche · 18:30–21:30 Uhr · ab 12 Jahren"
+    }
+  ]
+}
