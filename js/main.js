@@ -381,14 +381,33 @@
       }, { passive: true });
     }
 
-    function go(i) {
+    /* Bildwechsel: erst das neue Bild laden, dann tauschen und in Laufrichtung
+       einfliegen lassen — sonst steht für einen Moment ein leerer Rahmen da.
+       `seq` verwirft Ladevorgänge, die ein schnellerer Wisch überholt hat. */
+    var seq = 0;
+    function go(i, animate) {
       if (i < 0 || i >= shots.length) return;
+      var dir = i > at ? 1 : (i < at ? -1 : 0);
       at = i;
-      imgEl.src = shots[i].src;
-      imgEl.alt = shots[i].alt || '';
       countEl.textContent = (i + 1) + ' / ' + shots.length;
       prevBtn.disabled = i === 0;
       nextBtn.disabled = i === shots.length - 1;
+
+      var token = ++seq, done = false;
+      var show = function () {
+        if (done || token !== seq) return;
+        done = true;
+        imgEl.src = shots[i].src;
+        imgEl.alt = shots[i].alt || '';
+        if (animate === false || !dir || reduceMotion.matches) return;
+        imgEl.classList.remove('is-next', 'is-prev');
+        void imgEl.offsetWidth; /* Reflow erzwingen, sonst startet die Animation nicht neu */
+        imgEl.classList.add(dir > 0 ? 'is-next' : 'is-prev');
+      };
+      var pre = new Image();
+      pre.onload = pre.onerror = show;
+      pre.src = shots[i].src;
+      if (pre.complete) show(); /* schon im Cache — kein Warten */
     }
 
     function open(list, i, from) {
@@ -398,7 +417,7 @@
       box.dataset.single = shots.length < 2 ? 'true' : 'false';
       box.hidden = false;
       document.documentElement.classList.add('lightbox-open');
-      go(i);
+      go(i, false);
       /* focus the dialog, not a button: keeps the keyboard inside the overlay
          without lighting up a focus ring the moment it opens */
       dialog.focus();

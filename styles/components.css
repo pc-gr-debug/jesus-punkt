@@ -373,6 +373,26 @@
   height: auto;
   object-fit: contain;
 }
+/* Blättern: das neue Bild fliegt aus der Laufrichtung ein. js/main.js setzt die
+   Klasse erst, wenn das Bild geladen ist, und entfernt sie vor dem Neusetzen. */
+.lightbox__figure img.is-next { animation: lb-slide-next var(--t-slow) var(--ease); }
+.lightbox__figure img.is-prev { animation: lb-slide-prev var(--t-slow) var(--ease); }
+@keyframes lb-slide-next {
+  from { opacity: 0; transform: translateX(7%) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes lb-slide-prev {
+  from { opacity: 0; transform: translateX(-7%) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+/* Öffnen: Grund blendet auf, das Blatt kommt leicht heran */
+.lightbox:not([hidden]) .lightbox__backdrop { animation: lb-fade var(--t-med) var(--ease); }
+.lightbox:not([hidden]) .lightbox__dialog { animation: lb-rise var(--t-slow) var(--ease); }
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lb-rise {
+  from { opacity: 0; transform: scale(0.965); }
+  to   { opacity: 1; transform: none; }
+}
 .lightbox__bar {
   display: flex;
   align-items: center;
@@ -417,7 +437,8 @@
    auf dem Bild statt darunter, damit unter dem Flyer keine Leiste Platz frisst.
    Das Bild rutscht dafür nach unten. */
 @media (max-width: 37.5rem) {
-  .lightbox { align-items: flex-end; padding-bottom: clamp(0.75rem, 2vw, 1.25rem); }
+  /* mittig — die obere Polsterung (Platz fürs Kreuz) ist größer als die untere,
+     dadurch sitzt das Bild von allein einen Tick unterhalb der Mitte */
   .lightbox__dialog { gap: 0; }
   .lightbox__btn { display: none; }
   .lightbox__bar {
@@ -434,6 +455,10 @@
 @media (prefers-reduced-motion: reduce) {
   .lightbox__btn, .lightbox__close { transition: none; }
   .lightbox__btn:hover, .lightbox__close:hover { transform: none; }
+  .lightbox__figure img.is-next,
+  .lightbox__figure img.is-prev,
+  .lightbox:not([hidden]) .lightbox__backdrop,
+  .lightbox:not([hidden]) .lightbox__dialog { animation: none; }
 }
 
 /* ================= EYEBROW LABEL =================
