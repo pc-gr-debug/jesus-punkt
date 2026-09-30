@@ -9,7 +9,7 @@
         "Gottesdienst",
         "Jugendbereich"
       ],
-      "photo": null
+      "photo": "/img/team/philipp.webp"
     },
     {
       "id": "friederike-wittnebel",
@@ -37,7 +37,7 @@
       "roles": [
         "Lobpreis"
       ],
-      "photo": null
+      "photo": "/img/team/tymur.webp"
     },
     {
       "id": "mykhailo-sibahatov",
@@ -47,7 +47,7 @@
         "Website",
         "Jugendbereich"
       ],
-      "photo": null
+      "photo": "/img/team/mykhailo.webp"
     },
     {
       "id": "lydia-wegner",
@@ -56,7 +56,7 @@
       "roles": [
         "Kindergottesdienst"
       ],
-      "photo": null
+      "photo": "/img/team/lydia.webp"
     },
     {
       "id": "anja-maas",
@@ -65,7 +65,7 @@
       "roles": [
         "Kindergottesdienst"
       ],
-      "photo": null
+      "photo": "/img/team/anja.webp"
     },
     {
       "id": "ulrike-huhn",
@@ -94,7 +94,7 @@
         "Social Media",
         "Gemeinde Chat"
       ],
-      "photo": null
+      "photo": "/img/team/saskia.webp"
     },
     {
       "id": "yurii-uglov",
@@ -103,7 +103,7 @@
       "roles": [
         "Hausmeister"
       ],
-      "photo": null
+      "photo": "/img/team/yurii.webp"
     }
   ],
   "_comment": "Reference shape for GET /api/team (ChurchTools persons + group roles) — one entry per person, all roles aggregated. group: leitung | personal (CMS-assignable)."
