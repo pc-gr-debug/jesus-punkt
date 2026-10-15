@@ -16,6 +16,7 @@
   --creme:      #FBF7EE;  /* text on ink/night */
   --night:      #1A1201;  /* footer background */
   --paper:      #FFFFFF;  /* page background */
+  --alert:      #D92D20;  /* cancellations (ausfall.json) · 4.8:1 on paper, 4:1 on sand (large text only) */
 
   /* ---- Color · lines & surfaces ---- */
   --line:        #D9D9D9;                /* card borders, hairlines */

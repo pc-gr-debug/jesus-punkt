@@ -508,7 +508,7 @@
   transition: transform var(--t-med) var(--ease);
 }
 .notice__close:hover, .notice__close:focus-visible { transform: scale(1.12); }
-.notice__title { margin-top: var(--space-xs); }
+.notice__title { margin-top: var(--space-xs); color: var(--alert); }
 .notice__text {
   margin-top: var(--space-md);
   color: var(--ink-2);
@@ -643,7 +643,7 @@ a.flyer-card:hover img { transform: scale(1.03); }
 }
 .flyer-cancel__title {
   font: 700 var(--fs-h2-xl) / var(--lh-heading) var(--font-display);
-  color: var(--ink);
+  color: var(--alert);
   text-wrap: balance;
 }
 
