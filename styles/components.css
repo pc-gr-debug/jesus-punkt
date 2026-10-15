@@ -461,6 +461,65 @@
   .lightbox:not([hidden]) .lightbox__dialog { animation: none; }
 }
 
+/* ================= NOTICE (cancelled date, data/content/ausfall.json) =================
+   Popup on entry, built by js/data.js once per visit. Shares the lightbox's
+   scroll lock (html.lightbox-open) and its open animation. */
+.notice {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+}
+.notice__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(38, 35, 28, 0.6); /* --ink, the page stays visible behind */
+  animation: lb-fade var(--t-med) var(--ease);
+}
+.notice__dialog {
+  position: relative;
+  width: min(100%, 30rem);
+  padding: clamp(2rem, 1.5rem + 2vw, 2.75rem) clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  outline: none;
+  animation: lb-rise var(--t-slow) var(--ease);
+}
+.notice__close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform var(--t-med) var(--ease);
+}
+.notice__close:hover, .notice__close:focus-visible { transform: scale(1.12); }
+.notice__title { margin-top: var(--space-xs); }
+.notice__text {
+  margin-top: var(--space-md);
+  color: var(--ink-2);
+}
+.notice__actions { margin-top: var(--space-xl); }
+@media (max-width: 37.5rem) {
+  .notice__actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .notice__backdrop, .notice__dialog { animation: none; }
+  .notice__close { transition: none; }
+  .notice__close:hover { transform: none; }
+}
+
 /* ================= EYEBROW LABEL =================
    Shared by home + subpages — lives here, not in pages.css, because
    index.html loads components.css but not pages.css. */
@@ -559,6 +618,31 @@ a.flyer-card:hover img { transform: scale(1.03); }
 /* adaptive: the card takes the flyer image's own format instead of a fixed ratio */
 .flyer-card--adaptive { aspect-ratio: auto; min-height: 10rem; }
 .flyer-card--adaptive img { height: auto; display: block; }
+
+/* cancelled: big centred notice in place of the flyer (js/data.js, ausfall.json) */
+.flyer-card--cancelled {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 525 / 297;
+  min-height: 0;
+  padding: var(--space-lg);
+  background: var(--sand);
+  text-align: center;
+}
+.flyer-cancel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.flyer-cancel__date {
+  font: 700 var(--fs-h3) / 1.2 var(--font-display);
+  color: var(--gold-text);
+}
+.flyer-cancel__title {
+  font: 700 var(--fs-h2-xl) / var(--lh-heading) var(--font-display);
+  color: var(--ink);
+  text-wrap: balance;
+}
 
 /* ================= SPECIAL FLYERS (long-notice events) ================= */
 .special-grid {

@@ -72,7 +72,7 @@ CONTENT_KEYS: set = set()  # keys merged from data/content — used by the bake/
 
 # Flat data/content files that js/data.js translates at RUNTIME through data/i18n/<loc>.json
 # (they carry no per-locale layout of their own — German is the source, as in the markup).
-RUNTIME_TRANSLATED = {"highlights", "termine"}
+RUNTIME_TRANSLATED = {"highlights", "termine", "ausfall"}
 # fields in those files that are never text: paths, dates, flags, machine values
 NON_TEXT_FIELDS = {"image", "link", "url", "date", "time", "type", "enabled", "until", "id", "_comment"}
 

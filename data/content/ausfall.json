@@ -1,0 +1,9 @@
+{
+  "_comment": "Ausfallender Termin. Solange enabled=true und das Datum nicht vorbei ist: Hinweis-Popup beim ersten Seitenaufruf (einmal pro Sitzung) und großer Ausfall-Text statt des Flyers. Der Termin dieses Typs an diesem Tag fliegt aus Kalender und Startseiten-Liste — auch wenn ChurchTools ihn noch führt. Ab dem Folgetag erlischt alles von selbst.",
+  "enabled": true,
+  "date": "2026-10-18",
+  "type": "gottesdienst",
+  "title": "Gottesdienst fällt aus",
+  "text": "Am Sonntag, 18.10., findet kein Gottesdienst statt. Wir sehen uns wieder am Sonntag, 25.10., um 10:00 Uhr.",
+  "button": "Verstanden"
+}

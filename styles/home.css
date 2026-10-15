@@ -110,6 +110,8 @@
 }
 .events__flyer { order: -1; aspect-ratio: auto; align-self: stretch; } /* left column */
 .events__flyer img { object-position: center; }
+/* cancelled-date notice: own ratio, not stretched to the rows (one row would squash it) */
+.events__flyer.flyer-card--cancelled { aspect-ratio: 525 / 297; align-self: start; }
 .events__foot {
   margin-top: 2.75rem; /* 44 */
   text-align: right;

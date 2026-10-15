@@ -22,7 +22,8 @@
     highlights: BASE + 'data/content/highlights.json', /* CMS-managed "Besondere Events" blocks */
     groups: BASE + 'data/content/hauskreise.json', /* CMS-managed incl. enabled-toggle */
     team: BASE + 'data/content/team.json', /* CMS-managed (photos need explicit consent — never from CT) */
-    galerie: BASE + 'data/content/galerie.json' /* CMS-managed gallery photos (gemeindeleben) */
+    galerie: BASE + 'data/content/galerie.json', /* CMS-managed gallery photos (gemeindeleben) */
+    ausfall: BASE + 'data/content/ausfall.json' /* a cancelled date: popup, flyer notice, calendar filter */
   };
 
   /* events are real now — use the real clock (kept overridable for demos) */
@@ -95,10 +96,10 @@
      (free-text titles/metas from the CMS), then German */
   /* labels this file renders into markup (main.js keeps its own set for the nav) */
   var UI = ({
-    de: { enlarge: ' — vergrößern' },
-    en: { enlarge: ' — enlarge' },
-    uk: { enlarge: ' — збільшити' }
-  })[LANG] || { enlarge: ' — vergrößern' };
+    de: { enlarge: ' — vergrößern', close: 'Hinweis schließen' },
+    en: { enlarge: ' — enlarge', close: 'Close notice' },
+    uk: { enlarge: ' — збільшити', close: 'Закрити повідомлення' }
+  })[LANG] || { enlarge: ' — vergrößern', close: 'Hinweis schließen' };
 
   function trTitle(t) { return (I18N[LANG] && I18N[LANG].titles[t]) || trText(t); }
   function trMeta(m) { return (I18N[LANG] && I18N[LANG].metas[m]) || trText(m); }
@@ -268,8 +269,21 @@
   }
 
   /* ---------- flyer ---------- */
-  function renderFlyer(data) {
-    if (data.url) {
+  function renderFlyer(data, ausfall) {
+    if (ausfall) {
+      var day = new Date(ausfall.date + 'T12:00:00');
+      var when = new Intl.DateTimeFormat(LOCALE, { weekday: 'long' }).format(day) + ', ' +
+                 new Intl.DateTimeFormat(LOCALE, { day: '2-digit', month: '2-digit' }).format(day);
+      document.querySelectorAll('[data-ct="flyer"]').forEach(function (slot) {
+        slot.classList.add('flyer-card--cancelled');
+        slot.removeAttribute('aria-label'); /* the notice text itself is the label now */
+        slot.innerHTML =
+          '<div class="flyer-cancel">' +
+            '<div><span class="flyer-cancel__date">' + esc(when.charAt(0).toUpperCase() + when.slice(1)) + '</span></div>' +
+            '<div><p class="flyer-cancel__title">' + esc(trText(ausfall.title)) + '</p></div>' +
+          '</div>';
+      });
+    } else if (data.url) {
       document.querySelectorAll('[data-ct="flyer"] img').forEach(function (img) {
         img.src = BASE + String(data.url).replace(/^\//, '');
         img.alt = data.alt;
@@ -488,16 +502,85 @@
     });
   }
 
+  /* ---------- cancelled date (data/content/ausfall.json) ----------
+     Active from now until the end of that day, then it switches itself off.
+     ChurchTools may still list the date, so the calendar filter lives here. */
+  var ausfallP = null;
+  function loadAusfall() {
+    if (!ausfallP) {
+      ausfallP = getJSON(URLS.ausfall).then(function (a) {
+        if (!a || a.enabled === false || !/^\d{4}-\d{2}-\d{2}$/.test(a.date || '')) return null;
+        var t = now();
+        var today = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+        return today <= a.date ? a : null;
+      }).catch(function () { return null; });
+    }
+    return ausfallP;
+  }
+  function dropCancelled(d, a) {
+    if (!a) return d;
+    return { events: d.events.filter(function (e) {
+      return !(e.start.slice(0, 10) === a.date && (!a.type || e.type === a.type));
+    }) };
+  }
+
+  /* popup on entry — once per visit, not on every page change */
+  function showAusfallPopup(a) {
+    var key = 'jp-ausfall-' + a.date;
+    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (err) { /* private mode: show it */ }
+    var opener = document.activeElement;
+    var box = document.createElement('div');
+    box.className = 'notice';
+    box.innerHTML =
+      '<div class="notice__backdrop"></div>' +
+      '<div class="notice__dialog" role="alertdialog" aria-modal="true" aria-labelledby="notice-h" aria-describedby="notice-p" tabindex="-1">' +
+        '<button type="button" class="notice__close" aria-label="' + esc(UI.close) + '">' +
+          '<svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">' +
+          '<path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.6"/></svg>' +
+        '</button>' +
+        '<div><h2 class="h2 notice__title" id="notice-h">' + esc(trText(a.title)) + '</h2></div>' +
+        '<div><p class="notice__text" id="notice-p">' + esc(trText(a.text)) + '</p></div>' +
+        '<div class="notice__actions"><button type="button" class="btn btn--primary btn--lg notice__ok">' + esc(trText(a.button || 'Verstanden')) + '</button></div>' +
+      '</div>';
+    document.body.appendChild(box);
+    document.documentElement.classList.add('lightbox-open'); /* the sanctioned overlay scroll lock */
+    var dialog = box.querySelector('.notice__dialog');
+    dialog.focus();
+
+    function close() {
+      box.remove();
+      document.documentElement.classList.remove('lightbox-open');
+      document.removeEventListener('keydown', onKey);
+      if (opener && opener.focus) opener.focus();
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') {
+        var f = box.querySelectorAll('button'), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === dialog)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+    box.querySelector('.notice__backdrop').addEventListener('click', close);
+    box.querySelector('.notice__close').addEventListener('click', close);
+    box.querySelector('.notice__ok').addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+  }
+
   /* ---------- boot: fetch only what the page needs ---------- */
   function boot() {
+    Promise.all([loadAusfall(), loadDict()]).then(function (res) {
+      if (res[0]) showAusfallPopup(res[0]);
+    });
     if (document.querySelector('[data-ct="events"]')) {
       Promise.all([
         getJSON(URLS.events).catch(function () { return getJSON(URLS.eventsFallback); }),
         /* dates kept by hand are optional — a missing file is not an error */
         getJSON(URLS.termine).catch(function () { return { events: [] }; }),
+        loadAusfall(),
         loadDict()
       ]).then(function (res) {
-        var d = mergeEvents(res[0], res[1]);
+        var d = dropCancelled(mergeEvents(res[0], res[1]), res[2]);
         renderHomeEvents(d);
         initCalendar(d);
       }).catch(function (e) { console.warn('[data] events:', e.message); });
@@ -513,9 +596,10 @@
           .catch(function () { return {}; }),
         wantsHighlights ? getJSON(URLS.highlights).catch(function () { return {}; })
                         : Promise.resolve({}),
+        loadAusfall(),
         loadDict()
       ]).then(function (res) {
-        if (wantsFlyer) renderFlyer(res[0]);
+        if (wantsFlyer) renderFlyer(res[0], res[2]);
         if (wantsHighlights) renderHighlights(res[1], res[0].special || []);
       }).catch(function (e) { console.warn('[data] flyer/highlights:', e.message); });
     }
