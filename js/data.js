@@ -524,10 +524,8 @@
     }) };
   }
 
-  /* popup on entry — once per visit, not on every page change */
+  /* popup on entry — on every page load while the date is active */
   function showAusfallPopup(a) {
-    var key = 'jp-ausfall-' + a.date;
-    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (err) { /* private mode: show it */ }
     var opener = document.activeElement;
     var box = document.createElement('div');
     box.className = 'notice';

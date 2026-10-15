@@ -462,7 +462,7 @@
 }
 
 /* ================= NOTICE (cancelled date, data/content/ausfall.json) =================
-   Popup on entry, built by js/data.js once per visit. Shares the lightbox's
+   Popup on entry, built by js/data.js on every page load. Shares the lightbox's
    scroll lock (html.lightbox-open) and its open animation. */
 .notice {
   position: fixed;
@@ -480,12 +480,15 @@
 }
 .notice__dialog {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(100%, 30rem);
-  padding: clamp(2rem, 1.5rem + 2vw, 2.75rem) clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  min-height: min(100%, 28rem);
+  padding: clamp(3rem, 2.25rem + 2.5vw, 4rem) clamp(1.5rem, 1rem + 2vw, 2.5rem) clamp(2rem, 1.5rem + 2vw, 2.75rem);
   border-radius: var(--radius);
   background: var(--paper);
   box-shadow: var(--shadow-soft);
-  text-align: center;
+  text-align: left;
   outline: none;
   animation: lb-rise var(--t-slow) var(--ease);
 }
@@ -510,7 +513,7 @@
   margin-top: var(--space-md);
   color: var(--ink-2);
 }
-.notice__actions { margin-top: var(--space-xl); }
+.notice__actions { margin-top: auto; padding-top: var(--space-xl); } /* button sits at the bottom of the taller card */
 @media (max-width: 37.5rem) {
   .notice__actions .btn { width: 100%; }
 }
