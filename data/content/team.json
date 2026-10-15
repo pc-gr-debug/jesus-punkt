@@ -19,7 +19,7 @@
         "Jugendbereich",
         "Lobpreis"
       ],
-      "photo": null
+      "photo": "/img/team/friederike.webp"
     },
     {
       "id": "claus-wittnebel",
@@ -28,7 +28,7 @@
       "roles": [
         "Jugendbereich"
       ],
-      "photo": null
+      "photo": "/img/team/claus.webp"
     },
     {
       "id": "tymur-sheikh",
@@ -74,7 +74,7 @@
       "roles": [
         "Finanzen"
       ],
-      "photo": null
+      "photo": "/img/team/guenther.webp"
     },
     {
       "id": "saskia-lobert",
@@ -103,7 +103,7 @@
       "roles": [
         "Hausmeister"
       ],
-      "photo": ""
+      "photo": "/img/team/dmytro.webp"
     },
     {
       "id": "iryna-sibahatova",
@@ -112,7 +112,7 @@
       "roles": [
         "Thekendienst"
       ],
-      "photo": ""
+      "photo": "/img/team/iryna.webp"
     }
   ],
   "_comment": "Reference shape for GET /api/team (ChurchTools persons + group roles) — one entry per person, all roles aggregated. group: leitung | personal (CMS-assignable)."

@@ -255,7 +255,7 @@ collections:
                 default: personal
                 options:
                   - { label: Gemeindeleitung, value: leitung }
-                  - { label: Personal, value: personal }
+                  - { label: Mitarbeiter, value: personal }
               - { name: roles, label: "Rollen (z. B. Pastor, Lobpreis, Technik)", widget: list, field: { name: role, label: Rolle, widget: string } }
               - { name: photo, label: "Foto (3:4 · nur mit Einverständnis!)", widget: image, required: false, media_folder: /img/team, public_folder: /img/team }
       - name: galerie
