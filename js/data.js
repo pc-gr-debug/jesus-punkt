@@ -524,8 +524,17 @@
     }) };
   }
 
-  /* popup on entry — on every page load while the date is active */
+  /* popup on entry — capped at 3 per visitor: the first two page loads, then once
+     more on the 5th (after a couple of page changes), never again. Counted per date
+     in localStorage; if storage is blocked it shows on every load. */
+  var AUSFALL_SHOW_ON = [1, 2, 5];
   function showAusfallPopup(a) {
+    try {
+      var key = 'jp-ausfall-' + a.date;
+      var n = (parseInt(localStorage.getItem(key), 10) || 0) + 1;
+      localStorage.setItem(key, String(n));
+      if (AUSFALL_SHOW_ON.indexOf(n) === -1) return;
+    } catch (err) { /* private mode / blocked storage: show it */ }
     var opener = document.activeElement;
     var box = document.createElement('div');
     box.className = 'notice';
