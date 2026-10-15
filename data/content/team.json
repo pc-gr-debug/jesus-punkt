@@ -68,15 +68,6 @@
       "photo": "/img/team/anja.webp"
     },
     {
-      "id": "ulrike-huhn",
-      "name": "Ulrike Huhn",
-      "group": "personal",
-      "roles": [
-        "Hauswirtschaft"
-      ],
-      "photo": null
-    },
-    {
       "id": "guenther-seidt",
       "name": "Günther Seidt",
       "group": "personal",
@@ -101,9 +92,27 @@
       "name": "Yurii Uglov",
       "group": "personal",
       "roles": [
-        "Hausmeister"
+        "Technik"
       ],
       "photo": "/img/team/yurii.webp"
+    },
+    {
+      "id": "dmytro-pokhydnia",
+      "name": "Dmytro Pokhydnia",
+      "group": "personal",
+      "roles": [
+        "Hausmeister"
+      ],
+      "photo": ""
+    },
+    {
+      "id": "iryna-sibahatova",
+      "name": "Iryna Sibahatova",
+      "group": "personal",
+      "roles": [
+        "Theke"
+      ],
+      "photo": ""
     }
   ],
   "_comment": "Reference shape for GET /api/team (ChurchTools persons + group roles) — one entry per person, all roles aggregated. group: leitung | personal (CMS-assignable)."
